@@ -65,3 +65,11 @@ core
 /nettle.tps
 /nettle.vr
 /nettle.vrs
+
+*.log
+*.tlog
+*.pdb
+*.ildb
+*.suo
+*.sdf
+[Oo]bj/
