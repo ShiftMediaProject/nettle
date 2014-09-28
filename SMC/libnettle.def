@@ -227,3 +227,4 @@ EXPORTS
     nettle_yarrow256_update
     nettle_yarrow_key_event_estimate
     nettle_yarrow_key_event_init
+    memxor

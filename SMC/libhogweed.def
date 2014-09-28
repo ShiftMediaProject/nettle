@@ -1,4 +1,6 @@
 EXPORTS
+    _nettle_dsa_sign
+    _nettle_dsa_verify
     nettle_R_SignFinal
     nettle_R_SignInit
     nettle_R_SignUpdate
