@@ -93,7 +93,6 @@
     <ClInclude Include="..\yarrow.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="nettle-stdint.h" />
-    <ClInclude Include="version.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\aes-decrypt-internal.c" />

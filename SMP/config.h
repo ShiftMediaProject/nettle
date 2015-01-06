@@ -1,5 +1,3 @@
-/* Define if building universal (internal helper macro) */
-/* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* The normal alignment of `uint64_t', in bytes. */
 #define ALIGNOF_UINT64_T 8
@@ -95,20 +93,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "nettle-bugs@lists.lysator.liu.se"
-
-/* Define to the full name of this package. */
-#define PACKAGE_NAME "nettle"
-
-/* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "nettle"
-
-/* Define to the home page for this package. */
-#define PACKAGE_URL ""
-
-#include "version.h"
-
 /* The size of `char', as computed by sizeof. */
 #define SIZEOF_CHAR 1
 
@@ -148,32 +132,8 @@
 /* Define if you have openssl's libcrypto (used for benchmarking) */
 /* #undef WITH_OPENSSL */
 
-/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
-   significant byte first (like Motorola and SPARC, unlike Intel). */
-#if defined AC_APPLE_UNIVERSAL_BUILD
-# if defined __BIG_ENDIAN__
-#  define WORDS_BIGENDIAN 1
-# endif
-#else
-# ifndef WORDS_BIGENDIAN
-/* #  undef WORDS_BIGENDIAN */
-# endif
-#endif
-
-/* Define to empty if `const' does not conform to ANSI C. */
-/* #undef const */
-
 /* Define to `int' if <sys/types.h> doesn't define. */
 #define gid_t int
-
-/* Define to `__inline__' or `__inline' if that's what the C compiler
-   calls it, or to nothing if 'inline' is not supported under any name.  */
-#ifndef __cplusplus
-/* #undef inline */
-#endif
-
-/* Define to `unsigned int' if <sys/types.h> does not define. */
-/* #undef size_t */
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #define uid_t int
