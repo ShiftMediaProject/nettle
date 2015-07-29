@@ -19,6 +19,13 @@ define(<PROLOGUE>,
 <.globl C_NAME($1)
 .type C_NAME($1),TYPE_FUNCTION
 C_NAME($1):>,
+COFF_STYLE, <yes>,
+<.globl C_NAME($1)
+.def C_NAME($1)
+.scl 2
+.type 32
+.endef
+C_NAME($1):>,
 <.globl C_NAME($1)
 C_NAME($1):>)>)
 
@@ -61,11 +68,7 @@ STRUCTURE(ARCFOUR)
   UCHAR(I)
   UCHAR(J)
 
-dnl Offsets in aes_ctx and aes_table
-STRUCTURE(AES)
-  STRUCT(KEYS, 4*60)
-  UNSIGNED(NROUNDS)
-
+dnl Offsets in aes_table
 define(AES_SBOX_SIZE,	256)dnl
 define(AES_TABLE_SIZE,	1024)dnl
 
@@ -75,5 +78,15 @@ STRUCTURE(AES)
   STRUCT(TABLE1, AES_TABLE_SIZE)
   STRUCT(TABLE2, AES_TABLE_SIZE)
   STRUCT(TABLE3, AES_TABLE_SIZE)
+
+C For 64-bit implementation
+STRUCTURE(P1305)
+  STRUCT(R0, 8)
+  STRUCT(R1, 8)
+  STRUCT(S1, 8)
+  STRUCT(PAD, 12)
+  STRUCT(H2, 4)
+  STRUCT(H0, 8)
+  STRUCT(H1, 8)
 
 divert

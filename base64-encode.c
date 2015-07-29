@@ -1,26 +1,33 @@
 /* base64-encode.c
- *
- */
 
-/* nettle, low-level cryptographics library
- *
- * Copyright (C) 2002 Niels Möller
- *  
- * The nettle library is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
- * 
- * The nettle library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
- * License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with the nettle library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02111-1301, USA.
- */
+   Copyright (C) 2002 Niels Möller
+
+   This file is part of GNU Nettle.
+
+   GNU Nettle is free software: you can redistribute it and/or
+   modify it under the terms of either:
+
+     * the GNU Lesser General Public License as published by the Free
+       Software Foundation; either version 3 of the License, or (at your
+       option) any later version.
+
+   or
+
+     * the GNU General Public License as published by the Free
+       Software Foundation; either version 2 of the License, or (at your
+       option) any later version.
+
+   or both in parallel, as here.
+
+   GNU Nettle is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received copies of the GNU General Public License and
+   the GNU Lesser General Public License along with this program.  If
+   not, see http://www.gnu.org/licenses/.
+*/
 
 #if HAVE_CONFIG_H
 # include "config.h"
@@ -39,7 +46,7 @@ static const uint8_t encode_table[64] =
 #define ENCODE(x) (encode_table[0x3F & (x)])
 
 void
-base64_encode_raw(uint8_t *dst, unsigned length, const uint8_t *src)
+base64_encode_raw(uint8_t *dst, size_t length, const uint8_t *src)
 {
   const uint8_t *in = src + length;
   uint8_t *out = dst + BASE64_ENCODE_RAW_LENGTH(length);
@@ -140,7 +147,7 @@ base64_encode_init(struct base64_encode_ctx *ctx)
 }
 
 /* Encodes a single byte. */
-unsigned
+size_t
 base64_encode_single(struct base64_encode_ctx *ctx,
 		     uint8_t *dst,
 		     uint8_t src)
@@ -165,16 +172,16 @@ base64_encode_single(struct base64_encode_ctx *ctx,
 
 /* Returns the number of output characters. DST should point to an
  * area of size at least BASE64_ENCODE_LENGTH(length). */
-unsigned
+size_t
 base64_encode_update(struct base64_encode_ctx *ctx,
 		     uint8_t *dst,
-		     unsigned length,
+		     size_t length,
 		     const uint8_t *src)
 {
-  unsigned done = 0;
-  unsigned left = length;
+  size_t done = 0;
+  size_t left = length;
   unsigned left_over;
-  unsigned bulk;
+  size_t bulk;
   
   while (ctx->bits && left)
     {
@@ -208,7 +215,7 @@ base64_encode_update(struct base64_encode_ctx *ctx,
 
 /* DST should point to an area of size at least
  * BASE64_ENCODE_FINAL_SIZE */
-unsigned
+size_t
 base64_encode_final(struct base64_encode_ctx *ctx,
 		    uint8_t *dst)
 {

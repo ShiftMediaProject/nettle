@@ -32,14 +32,14 @@ test_main(void)
     /* Test overlapping areas */
     uint8_t buffer[] = "Helloxxxx";
     struct base64_decode_ctx ctx;
-    unsigned dst_length;
+    size_t dst_length;
     
     ASSERT(BASE64_ENCODE_RAW_LENGTH(5) == 8);
     base64_encode_raw(buffer, 5, buffer);
     ASSERT(MEMEQ(9, buffer, "SGVsbG8=x"));
 
     base64_decode_init(&ctx);
-    dst_length = 8;
+    dst_length = 0; /* Output parameter only. */
     ASSERT(base64_decode_update(&ctx, &dst_length, buffer, 8, buffer));
     ASSERT(dst_length == 5);
     

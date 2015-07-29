@@ -1,24 +1,33 @@
-/* hogweed-benchmark.c */
+/* hogweed-benchmark.c
 
-/* nettle, low-level cryptographics library
- *
- * Copyright (C) 2013 Niels Möller
- *
- * The nettle library is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
- *
- * The nettle library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with the nettle library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02111-1301, USA.
- */
+   Copyright (C) 2013, 2014 Niels Möller
+
+   This file is part of GNU Nettle.
+
+   GNU Nettle is free software: you can redistribute it and/or
+   modify it under the terms of either:
+
+     * the GNU Lesser General Public License as published by the Free
+       Software Foundation; either version 3 of the License, or (at your
+       option) any later version.
+
+   or
+
+     * the GNU General Public License as published by the Free
+       Software Foundation; either version 2 of the License, or (at your
+       option) any later version.
+
+   or both in parallel, as here.
+
+   GNU Nettle is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received copies of the GNU General Public License and
+   the GNU Lesser General Public License along with this program.  If
+   not, see http://www.gnu.org/licenses/.
+*/
 
 #if HAVE_CONFIG_H
 # include "config.h"
@@ -48,6 +57,7 @@
 #include "../gmp-glue.h"
 
 #if WITH_OPENSSL
+#include <openssl/rsa.h>
 #include <openssl/ec.h>
 #include <openssl/ecdsa.h>
 #include <openssl/objects.h>
@@ -233,7 +243,7 @@ bench_rsa_init (unsigned size)
 static void
 bench_rsa_sign (void *p)
 {
-  struct rsa_ctx *ctx = (struct rsa_ctx *) p;
+  struct rsa_ctx *ctx = p;
 
   mpz_t s;
   mpz_init (s);
@@ -244,16 +254,15 @@ bench_rsa_sign (void *p)
 static void
 bench_rsa_verify (void *p)
 {
-  struct rsa_ctx *ctx = (struct rsa_ctx *) p;
-  int res = rsa_sha256_verify_digest (&ctx->pub, ctx->digest, ctx->s);
-  if (!res)
+  struct rsa_ctx *ctx = p;
+  if (! rsa_sha256_verify_digest (&ctx->pub, ctx->digest, ctx->s))
     die ("Internal error, rsa_sha256_verify_digest failed.\n");
 }
 
 static void
 bench_rsa_clear (void *p)
 {
-  struct rsa_ctx *ctx = (struct rsa_ctx *) p;
+  struct rsa_ctx *ctx = p;
 
   rsa_public_key_clear (&ctx->pub);
   rsa_private_key_clear (&ctx->key);
@@ -264,9 +273,10 @@ bench_rsa_clear (void *p)
 }
 
 struct dsa_ctx
-{  
-  struct dsa_public_key pub;
-  struct dsa_private_key key;
+{
+  struct dsa_params params;
+  mpz_t pub;
+  mpz_t key;
   struct knuth_lfib_ctx lfib;
   struct dsa_signature s;
   uint8_t *digest;
@@ -292,8 +302,9 @@ bench_dsa_init (unsigned size)
 
   ctx = xalloc(sizeof(*ctx));
 
-  dsa_public_key_init (&ctx->pub);
-  dsa_private_key_init (&ctx->key);
+  dsa_params_init (&ctx->params);
+  mpz_init (ctx->pub);
+  mpz_init (ctx->key);
   dsa_signature_init (&ctx->s);
   knuth_lfib_init (&ctx->lfib, 1);
 
@@ -303,14 +314,15 @@ bench_dsa_init (unsigned size)
   if (! (sexp_transport_iterator_first (&i, sizeof(dsa1024) - 1, dsa1024)
 	 && sexp_iterator_check_type (&i, "private-key")
 	 && sexp_iterator_check_type (&i, "dsa")
-	 && dsa_keypair_from_sexp_alist (&ctx->pub, &ctx->key, 0, DSA_SHA1_Q_BITS, &i)) )
+	 && dsa_keypair_from_sexp_alist (&ctx->params, ctx->pub, ctx->key,
+					 0, DSA_SHA1_Q_BITS, &i)) )
     die ("Internal error.\n");
 
   ctx->digest = hash_string (&nettle_sha1, 3, "foo");
 
-  dsa_sha1_sign_digest (&ctx->pub, &ctx->key,
-			&ctx->lfib, (nettle_random_func *)knuth_lfib_random,
-			ctx->digest, &ctx->s);
+  dsa_sign (&ctx->params, ctx->key,
+	    &ctx->lfib, (nettle_random_func *)knuth_lfib_random,
+	    SHA1_DIGEST_SIZE, ctx->digest, &ctx->s);
 
   return ctx;
 }
@@ -318,31 +330,31 @@ bench_dsa_init (unsigned size)
 static void
 bench_dsa_sign (void *p)
 {
-  struct dsa_ctx *ctx = (struct dsa_ctx *) p;
+  struct dsa_ctx *ctx = p;
   struct dsa_signature s;
 
   dsa_signature_init (&s);
-  dsa_sha1_sign_digest (&ctx->pub, &ctx->key,
-			&ctx->lfib, (nettle_random_func *)knuth_lfib_random,
-			ctx->digest, &s);
+  dsa_sign (&ctx->params, ctx->key,
+	    &ctx->lfib, (nettle_random_func *)knuth_lfib_random,
+	    SHA1_DIGEST_SIZE, ctx->digest, &s);
   dsa_signature_clear (&s);
 }
 
 static void
 bench_dsa_verify (void *p)
 {
-  struct dsa_ctx *ctx = (struct dsa_ctx *) p;
-  int res = dsa_sha1_verify_digest (&ctx->pub, ctx->digest, &ctx->s);
-  if (!res)
+  struct dsa_ctx *ctx = p;
+  if (! dsa_verify (&ctx->params, ctx->pub, SHA1_DIGEST_SIZE, ctx->digest, &ctx->s))
     die ("Internal error, dsa_sha1_verify_digest failed.\n");
 }
 
 static void
 bench_dsa_clear (void *p)
 {
-  struct dsa_ctx *ctx = (struct dsa_ctx *) p;
-  dsa_public_key_clear (&ctx->pub);
-  dsa_private_key_clear (&ctx->key);
+  struct dsa_ctx *ctx = p;
+  dsa_params_clear (&ctx->params);
+  mpz_clear (ctx->pub);
+  mpz_clear (ctx->key);
   dsa_signature_clear (&ctx->s);
   free (ctx->digest);
   free (ctx);
@@ -456,7 +468,7 @@ bench_ecdsa_init (unsigned size)
 static void
 bench_ecdsa_sign (void *p)
 {
-  struct ecdsa_ctx *ctx = (struct ecdsa_ctx *) p;
+  struct ecdsa_ctx *ctx = p;
   struct dsa_signature s;
 
   dsa_signature_init (&s);
@@ -470,18 +482,17 @@ bench_ecdsa_sign (void *p)
 static void
 bench_ecdsa_verify (void *p)
 {
-  struct ecdsa_ctx *ctx = (struct ecdsa_ctx *) p;
-  int res = ecdsa_verify (&ctx->pub, 
-			  ctx->digest_size, ctx->digest,
-			  &ctx->s);
-  if (!res)
+  struct ecdsa_ctx *ctx = p;
+  if (! ecdsa_verify (&ctx->pub, 
+		      ctx->digest_size, ctx->digest,
+		      &ctx->s))
     die ("Internal error, _ecdsa_verify failed.\n");    
 }
 
 static void
 bench_ecdsa_clear (void *p)
 {
-  struct ecdsa_ctx *ctx = (struct ecdsa_ctx *) p;
+  struct ecdsa_ctx *ctx = p;
 
   ecc_point_clear (&ctx->pub);
   ecc_scalar_clear (&ctx->key);
@@ -492,7 +503,64 @@ bench_ecdsa_clear (void *p)
 }
 
 #if WITH_OPENSSL
-struct openssl_ctx
+struct openssl_rsa_ctx
+{
+  RSA *key;
+  unsigned char *ref;
+  unsigned char *signature;
+  unsigned int siglen;
+  uint8_t *digest;
+};
+
+static void *
+bench_openssl_rsa_init (unsigned size)
+{
+  struct openssl_rsa_ctx *ctx = xalloc (sizeof (*ctx));
+
+  ctx->key = RSA_generate_key (size, 65537, NULL, NULL);
+  ctx->ref = xalloc (RSA_size (ctx->key));
+  ctx->signature = xalloc (RSA_size (ctx->key));
+  ctx->digest = hash_string (&nettle_sha1, 3, "foo");
+
+  if (! RSA_sign (NID_sha1, ctx->digest, SHA1_DIGEST_SIZE,
+		  ctx->ref, &ctx->siglen, ctx->key))
+    die ("OpenSSL RSA_sign failed.\n");
+
+  return ctx;
+}
+
+static void
+bench_openssl_rsa_sign (void *p)
+{
+  const struct openssl_rsa_ctx *ctx = p;
+  unsigned siglen;
+
+  if (! RSA_sign (NID_sha1, ctx->digest, SHA1_DIGEST_SIZE,
+		  ctx->signature, &siglen, ctx->key))
+    die ("OpenSSL RSA_sign failed.\n");
+}
+
+static void
+bench_openssl_rsa_verify (void *p)
+{
+  const struct openssl_rsa_ctx *ctx = p;
+  if (! RSA_verify (NID_sha1, ctx->digest, SHA1_DIGEST_SIZE,
+		    ctx->ref, ctx->siglen, ctx->key))
+    die ("OpenSSL RSA_verify failed.\n");    
+}
+
+static void
+bench_openssl_rsa_clear (void *p)
+{
+  struct openssl_rsa_ctx *ctx = p;
+  RSA_free (ctx->key);
+  free (ctx->ref);
+  free (ctx->signature);
+  free (ctx->digest);
+  free (ctx);
+}
+
+struct openssl_ecdsa_ctx
 {
   EC_KEY *key;
   ECDSA_SIG *signature;
@@ -501,32 +569,27 @@ struct openssl_ctx
 };
 
 static void *
-bench_openssl_init (unsigned size)
+bench_openssl_ecdsa_init (unsigned size)
 {
-  struct openssl_ctx *ctx = xalloc (sizeof (*ctx));
+  struct openssl_ecdsa_ctx *ctx = xalloc (sizeof (*ctx));
 
-  /* Apparently, secp192r1 and secp256r1 are missing */
   switch (size)
     {
-#if 0
     case 192:
-      ctx->key = EC_KEY_new_by_curve_name (NID_secp192r1);
+      ctx->key = EC_KEY_new_by_curve_name (NID_X9_62_prime192v1);
       ctx->digest_length = 24; /* truncated */
       ctx->digest = hash_string (&nettle_sha224, 3, "abc");
       break;
-#endif
     case 224:
       ctx->key = EC_KEY_new_by_curve_name (NID_secp224r1);
       ctx->digest_length = SHA224_DIGEST_SIZE;
       ctx->digest = hash_string (&nettle_sha224, 3, "abc");
       break;
-#if 0
     case 256:
-      ctx->key = EC_KEY_new_by_curve_name (NID_secp256r1);
+      ctx->key = EC_KEY_new_by_curve_name (NID_X9_62_prime256v1);
       ctx->digest_length = SHA256_DIGEST_SIZE;
       ctx->digest = hash_string (&nettle_sha256, 3, "abc");
       break;
-#endif
     case 384:
       ctx->key = EC_KEY_new_by_curve_name (NID_secp384r1);
       ctx->digest_length = SHA384_DIGEST_SIZE;
@@ -551,26 +614,25 @@ bench_openssl_init (unsigned size)
 }
 
 static void
-bench_openssl_sign (void *p)
+bench_openssl_ecdsa_sign (void *p)
 {
-  const struct openssl_ctx *ctx = (const struct openssl_ctx *) p;
+  const struct openssl_ecdsa_ctx *ctx = p;
   ECDSA_SIG *sig = ECDSA_do_sign (ctx->digest, ctx->digest_length, ctx->key);
   ECDSA_SIG_free (sig);
 }
 
 static void
-bench_openssl_verify (void *p)
+bench_openssl_ecdsa_verify (void *p)
 {
-  const struct openssl_ctx *ctx = (const struct openssl_ctx *) p;
-  int res = ECDSA_do_verify (ctx->digest, ctx->digest_length,
-			     ctx->signature, ctx->key);
-  if (res != 1)
+  const struct openssl_ecdsa_ctx *ctx = p;
+  if (ECDSA_do_verify (ctx->digest, ctx->digest_length,
+			 ctx->signature, ctx->key) != 1)
     die ("Openssl ECDSA_do_verify failed.\n");      
 }
 static void
-bench_openssl_clear (void *p)
+bench_openssl_ecdsa_clear (void *p)
 {
-  struct openssl_ctx *ctx = (struct openssl_ctx *) p;
+  struct openssl_ecdsa_ctx *ctx = p;
   ECDSA_SIG_free (ctx->signature);
   EC_KEY_free (ctx->key);
   free (ctx->digest);
@@ -581,6 +643,10 @@ bench_openssl_clear (void *p)
 struct alg alg_list[] = {
   { "rsa",   1024, bench_rsa_init,   bench_rsa_sign,   bench_rsa_verify,   bench_rsa_clear },
   { "rsa",   2048, bench_rsa_init,   bench_rsa_sign,   bench_rsa_verify,   bench_rsa_clear },
+#if WITH_OPENSSL
+  { "rsa (openssl)",  1024, bench_openssl_rsa_init, bench_openssl_rsa_sign, bench_openssl_rsa_verify, bench_openssl_rsa_clear },
+  { "rsa (openssl)",  2048, bench_openssl_rsa_init, bench_openssl_rsa_sign, bench_openssl_rsa_verify, bench_openssl_rsa_clear },
+#endif
   { "dsa",   1024, bench_dsa_init,   bench_dsa_sign,   bench_dsa_verify,   bench_dsa_clear },
 #if 0
   { "dsa",2048, bench_dsa_init, bench_dsa_sign,   bench_dsa_verify, bench_dsa_clear },
@@ -591,9 +657,11 @@ struct alg alg_list[] = {
   { "ecdsa",  384, bench_ecdsa_init, bench_ecdsa_sign, bench_ecdsa_verify, bench_ecdsa_clear },
   { "ecdsa",  521, bench_ecdsa_init, bench_ecdsa_sign, bench_ecdsa_verify, bench_ecdsa_clear },
 #if WITH_OPENSSL
-  { "ecdsa (openssl)",  224, bench_openssl_init, bench_openssl_sign, bench_openssl_verify, bench_openssl_clear },
-  { "ecdsa (openssl)",  384, bench_openssl_init, bench_openssl_sign, bench_openssl_verify, bench_openssl_clear },
-  { "ecdsa (openssl)",  521, bench_openssl_init, bench_openssl_sign, bench_openssl_verify, bench_openssl_clear },
+  { "ecdsa (openssl)",  192, bench_openssl_ecdsa_init, bench_openssl_ecdsa_sign, bench_openssl_ecdsa_verify, bench_openssl_ecdsa_clear },
+  { "ecdsa (openssl)",  224, bench_openssl_ecdsa_init, bench_openssl_ecdsa_sign, bench_openssl_ecdsa_verify, bench_openssl_ecdsa_clear },
+  { "ecdsa (openssl)",  256, bench_openssl_ecdsa_init, bench_openssl_ecdsa_sign, bench_openssl_ecdsa_verify, bench_openssl_ecdsa_clear },
+  { "ecdsa (openssl)",  384, bench_openssl_ecdsa_init, bench_openssl_ecdsa_sign, bench_openssl_ecdsa_verify, bench_openssl_ecdsa_clear },
+  { "ecdsa (openssl)",  521, bench_openssl_ecdsa_init, bench_openssl_ecdsa_sign, bench_openssl_ecdsa_verify, bench_openssl_ecdsa_clear },
 #endif
 };
 

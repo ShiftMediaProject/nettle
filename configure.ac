@@ -2,7 +2,7 @@ dnl -*- mode: shell-script; sh-indentation: 2; -*-
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([nettle], [2.7.1], [nettle-bugs@lists.lysator.liu.se])
+AC_INIT([nettle], [3.0], [nettle-bugs@lists.lysator.liu.se])
 AC_PREREQ(2.61)
 AC_CONFIG_SRCDIR([arcfour.c])
 # Needed to stop autoconf from looking for files in parent directories.
@@ -10,11 +10,11 @@ AC_CONFIG_AUX_DIR([.])
 
 AC_CONFIG_HEADER([config.h])
 
-LIBNETTLE_MAJOR=4
-LIBNETTLE_MINOR=7
+LIBNETTLE_MAJOR=5
+LIBNETTLE_MINOR=0
 
-LIBHOGWEED_MAJOR=2
-LIBHOGWEED_MINOR=5
+LIBHOGWEED_MAJOR=3
+LIBHOGWEED_MINOR=0
 
 AC_CANONICAL_HOST
 
@@ -135,7 +135,10 @@ if test x$enable_dependency_tracking = xyes ; then
 
   AC_CONFIG_COMMANDS([dummy-dep-files],
   [(cd "$srcdir" && find . '(' -name '*.c' -o -name '*.cxx' ')' -print) \
- | sed 's/\.c\(xx\)\{0,1\}$//' | (while read f; do echo > "$f.o.d"; echo > "$f.po.d"; done)
+ | sed 's/\.cx*$//' | (while read f; do \
+      test -f "$f.o.d" || echo > "$f.o.d"; \
+      test -f "$f.po.d" || echo > "$f.po.d"; \
+   done)
 ])
 fi
 
@@ -259,21 +262,23 @@ fi
 # to a new object file).
 asm_replace_list="aes-encrypt-internal.asm aes-decrypt-internal.asm \
 		arcfour-crypt.asm camellia-crypt-internal.asm \
-		md5-compress.asm memxor.asm \
+		md5-compress.asm memxor.asm poly1305-internal.asm \
+		chacha-core-internal.asm \
 		salsa20-crypt.asm salsa20-core-internal.asm \
 		serpent-encrypt.asm serpent-decrypt.asm \
 		sha1-compress.asm sha256-compress.asm sha512-compress.asm \
 		sha3-permute.asm umac-nh.asm umac-nh-n.asm machine.m4"
 
 # Assembler files which generate additional object files if they are used.
-asm_optional_list=""
-
+asm_nettle_optional_list="gcm-hash8.asm"
+asm_hogweed_optional_list=""
 if test "x$enable_public_key" = "xyes" ; then
-  asm_optional_list="ecc-192-modp.asm ecc-224-modp.asm ecc-256-redc.asm \
-      ecc-384-modp.asm ecc-521-modp.asm"
+  asm_hogweed_optional_list="ecc-192-modp.asm ecc-224-modp.asm \
+    ecc-256-redc.asm ecc-384-modp.asm ecc-521-modp.asm"
 fi
 
-OPT_ASM_SOURCES=""
+OPT_ASM_NETTLE_SOURCES=""
+OPT_ASM_HOGWEED_SOURCES=""
 
 asm_file_list=""
 
@@ -291,18 +296,34 @@ if test "x$enable_assembler" = xyes ; then
     done
     dnl Workaround for AC_CONFIG_LINKS, which complains if we use the
     dnl same destination argument $tmp_f multiple times.
-    for tmp_o in $asm_optional_list ; do
+    for tmp_n in $asm_nettle_optional_list ; do
       for asm_dir in $asm_path ; do
-	if test -f "$srcdir/$asm_dir/$tmp_o"; then
-	  asm_file_list="$asm_file_list $tmp_o"
-	  AC_CONFIG_LINKS($tmp_o:$asm_dir/$tmp_o)
+	if test -f "$srcdir/$asm_dir/$tmp_n"; then
+	  asm_file_list="$asm_file_list $tmp_n"
+	  AC_CONFIG_LINKS($tmp_n:$asm_dir/$tmp_n)
 	  while read tmp_func ; do
 	    AC_DEFINE_UNQUOTED(HAVE_NATIVE_$tmp_func)
 	    eval HAVE_NATIVE_$tmp_func=yes
 	  done <<EOF
-[`sed -n 's/[^ 	]*PROLOGUE(_*\(nettle_\)*\([^)]*\)).*$/\2/p' < "$srcdir/$asm_dir/$tmp_o"`]
+[`sed -n 's/[^ 	]*PROLOGUE(_*\(nettle_\)*\([^)]*\)).*$/\2/p' < "$srcdir/$asm_dir/$tmp_n"`]
 EOF
-	  OPT_ASM_SOURCES="$OPT_ASM_SOURCES $tmp_o"
+	  OPT_ASM_NETTLE_SOURCES="$OPT_ASM_NETTLE_SOURCES $tmp_n"
+	  break
+	fi
+      done
+    done	
+    for tmp_h in $asm_hogweed_optional_list ; do
+      for asm_dir in $asm_path ; do
+	if test -f "$srcdir/$asm_dir/$tmp_h"; then
+	  asm_file_list="$asm_file_list $tmp_h"
+	  AC_CONFIG_LINKS($tmp_h:$asm_dir/$tmp_h)
+	  while read tmp_func ; do
+	    AC_DEFINE_UNQUOTED(HAVE_NATIVE_$tmp_func)
+	    eval HAVE_NATIVE_$tmp_func=yes
+	  done <<EOF
+[`sed -n 's/[^ 	]*PROLOGUE(_*\(nettle_\)*\([^)]*\)).*$/\2/p' < "$srcdir/$asm_dir/$tmp_h"`]
+EOF
+	  OPT_ASM_HOGWEED_SOURCES="$OPT_ASM_HOGWEED_SOURCES $tmp_h"
 	  break
 	fi
       done
@@ -312,9 +333,19 @@ EOF
       AC_MSG_WARN([No assembler files found.])
     fi
   fi
+  case "$host_os" in
+    darwin*)
+      ASM_RODATA='.section __TEXT,__const'
+      ;;
+    *)
+      ASM_RODATA='.section .rodata'
+      ;;
+  esac
 fi
 
-AC_SUBST([OPT_ASM_SOURCES])
+AC_SUBST([OPT_ASM_NETTLE_SOURCES])
+AC_SUBST([OPT_ASM_HOGWEED_SOURCES])
+AC_SUBST([ASM_RODATA])
 
 AH_VERBATIM([HAVE_NATIVE],
 [/* Define to 1 each of the following for which a native (ie. CPU specific)
@@ -328,7 +359,8 @@ AH_VERBATIM([HAVE_NATIVE],
 #undef HAVE_NATIVE_ecc_384_modp
 #undef HAVE_NATIVE_ecc_384_redc
 #undef HAVE_NATIVE_ecc_521_modp
-#undef HAVE_NATIVE_ecc_521_redc])
+#undef HAVE_NATIVE_ecc_521_redc
+#undef HAVE_NATIVE_gcm_hash8])
 
 # Besides getting correct dependencies, the explicit rules also tell
 # make that the .s files "ought to exist", so they are preferred over
@@ -424,8 +456,8 @@ case "$host_os" in
     LIBHOGWEED_FORLINK=libhogweed.so
     LIBHOGWEED_SONAME='$(LIBHOGWEED_FORLINK).$(LIBHOGWEED_MAJOR)'
     LIBHOGWEED_FILE='$(LIBHOGWEED_SONAME).$(LIBHOGWEED_MINOR)'
-    LIBHOGWEED_LINK='$(CC) $(CFLAGS) $(LDFLAGS) -L. -G -h $(LIBHOGWEED_SONAME)'
-    LIBHOGWEED_LIBS='-lnettle -lgmp'
+    LIBHOGWEED_LINK='$(CC) $(CFLAGS) $(LDFLAGS) -G -h $(LIBHOGWEED_SONAME)'
+    LIBHOGWEED_LIBS='libnettle.so -lgmp'
     ;;
   *)
     LIBNETTLE_FORLINK=libnettle.so
@@ -437,13 +469,12 @@ case "$host_os" in
     LIBHOGWEED_FORLINK=libhogweed.so
     LIBHOGWEED_SONAME='$(LIBHOGWEED_FORLINK).$(LIBHOGWEED_MAJOR)'
     LIBHOGWEED_FILE='$(LIBHOGWEED_SONAME).$(LIBHOGWEED_MINOR)'
-    LIBHOGWEED_LINK='$(CC) $(CFLAGS) $(LDFLAGS) -L. -shared -Wl,-soname=$(LIBHOGWEED_SONAME)'
+    LIBHOGWEED_LINK='$(CC) $(CFLAGS) $(LDFLAGS) -shared -Wl,-soname=$(LIBHOGWEED_SONAME)'
     # Requested by debian, to make linking with only -lhogweed work
     # (does not work in general, e.g., with static linking all of
     # -lhogweed -lgmp -lnettle are still required). Also makes dlopen
     # of libhogweed.so work, without having to use RTLD_GLOBAL.
-    # Depends on -L. above, to locate nettle.so.
-    LIBHOGWEED_LIBS='-lnettle -lgmp'
+    LIBHOGWEED_LIBS='libnettle.so -lgmp'
     ;;
 esac
 
@@ -456,6 +487,7 @@ AC_SUBST([CCPIC_MAYBE])
 
 ASM_SYMBOL_PREFIX=''
 ASM_ELF_STYLE='no'
+ASM_COFF_STYLE='no'
 # GNU as default is to use @
 ASM_TYPE_FUNCTION='@function'
 ASM_TYPE_PROGBITS='@progbits'
@@ -475,7 +507,7 @@ if test x$enable_assembler = xyes ; then
         elif grep a_global_symbol conftest.out >/dev/null ; then
           nettle_cv_asm_underscore=no
         else
-          AC_MSG_WARN([nm doesn't list a_global_symbol at all])
+          AC_MSG_WARN([nm does not list a_global_symbol at all])
 	fi],
       [AC_MSG_WARN([test program with a single global could not be compiled!?])])])
   if test x$nettle_cv_asm_underscore = xyes ; then
@@ -523,6 +555,23 @@ foo:
     fi
   fi
 
+  AC_CACHE_CHECK([for COFF-style .type directive],
+    [nettle_cv_asm_coff_type],
+      [GMP_TRY_ASSEMBLE([
+.text
+.globl _foo
+.def _foo
+.scl 2
+.type 32
+.endef
+_foo:
+],
+        [nettle_cv_asm_coff_type=yes],
+        [nettle_cv_asm_coff_type=no])])
+  if test "x$nettle_cv_asm_coff_type" = "xyes" ; then
+    ASM_COFF_STYLE=yes
+  fi
+
   AC_CACHE_CHECK([if we should use a .note.GNU-stack section],
   nettle_cv_asm_gnu_stack,
   [ # Default
@@ -558,6 +607,7 @@ fi
 
 AC_SUBST(ASM_SYMBOL_PREFIX)
 AC_SUBST(ASM_ELF_STYLE)
+AC_SUBST(ASM_COFF_STYLE)
 AC_SUBST(ASM_TYPE_FUNCTION)
 AC_SUBST(ASM_TYPE_PROGBITS)
 AC_SUBST(ASM_MARK_NOEXEC_STACK)
@@ -598,21 +648,18 @@ AC_TYPE_UID_T
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
 AC_CHECK_SIZEOF(long)
-AC_CHECK_ALIGNOF(uint64_t)
+AC_CHECK_SIZEOF(size_t)
 
-ALIGNOF_UINT64_T="$ac_cv_alignof_uint64_t"
-AC_SUBST(ALIGNOF_UINT64_T)
-
-AC_CHECK_HEADERS([openssl/blowfish.h openssl/des.h openssl/cast.h openssl/aes.h],,
+AC_CHECK_HEADERS([openssl/blowfish.h openssl/des.h openssl/cast.h openssl/aes.h openssl/ecdsa.h],,
 [enable_openssl=no
  break])
+
+AC_CHECK_HEADERS([valgrind/memcheck.h])
 
 LSH_FUNC_ALLOCA
 LSH_FUNC_STRERROR
 
-# Needed by the supplied memcmp.c
 AC_C_BIGENDIAN
-AC_REPLACE_FUNCS(memxor)
 
 LSH_GCC_ATTRIBUTES
 
@@ -645,31 +692,35 @@ if test "x$nettle_cv_fcntl_locking" = "xyes" ; then
 fi
 
 # Checks for libraries
-AC_CHECK_LIB(gmp, __gmpz_getlimbn,,
-    [AC_MSG_WARN(
-[GNU MP not found, or not 3.1 or up, see http://gmplib.org/.
-Support for public key algorithms will be unavailable.])]
-    enable_public_key=no)
+if test "x$enable_public_key" = "xyes" ; then
+  AC_CHECK_LIB(gmp, __gmpz_getlimbn,,
+      [AC_MSG_WARN(
+  [GNU MP not found, or not 3.1 or up, see http://gmplib.org/.
+  Support for public key algorithms will be unavailable.])]
+      enable_public_key=no)
 
-# Add -R flags needed to run programs linked with gmp
-LSH_RPATH_FIX
-
-# Check for gmp limb size
-nettle_cv_gmp_numb_bits=0
-if test "$enable_public_key" = yes; then
-  AC_MSG_CHECKING([for GMP limb size])
-  AC_COMPUTE_INT(nettle_cv_gmp_numb_bits, [GMP_NUMB_BITS],
-      [#include <gmp.h>],
-      [AC_MSG_FAILURE([cannot find value of GMP_NUMB_BITS])])
-
-  AC_MSG_RESULT([$nettle_cv_gmp_numb_bits bits])
+  # Add -R flags needed to run programs linked with gmp
+  LSH_RPATH_FIX
 fi
 
-GMP_NUMB_BITS="$nettle_cv_gmp_numb_bits"
-AC_SUBST([GMP_NUMB_BITS])
-
-AH_TEMPLATE([HAVE_MPZ_POWM_SEC], [Define if mpz_powm_sec is available (appeared in GMP-5)])
-AC_CHECK_FUNC(__gmpz_powm_sec, [AC_DEFINE(HAVE_MPZ_POWM_SEC)])
+if test "x$enable_public_key" = "xyes" ; then
+  # Check for gmp limb size
+  nettle_cv_gmp_numb_bits=0
+  if test "$enable_public_key" = yes; then
+    AC_MSG_CHECKING([for GMP limb size])
+    AC_COMPUTE_INT(nettle_cv_gmp_numb_bits, [GMP_NUMB_BITS],
+        [#include <gmp.h>],
+        [AC_MSG_FAILURE([cannot find value of GMP_NUMB_BITS])])
+  
+    AC_MSG_RESULT([$nettle_cv_gmp_numb_bits bits])
+  fi
+  
+  GMP_NUMB_BITS="$nettle_cv_gmp_numb_bits"
+  AC_SUBST([GMP_NUMB_BITS])
+  
+  AH_TEMPLATE([HAVE_MPZ_POWM_SEC], [Define if mpz_powm_sec is available (appeared in GMP-5)])
+  AC_CHECK_FUNC(__gmpz_powm_sec, [AC_DEFINE(HAVE_MPZ_POWM_SEC)])
+fi
 
 AH_TEMPLATE([WITH_HOGWEED], [Defined if public key features are enabled])
 

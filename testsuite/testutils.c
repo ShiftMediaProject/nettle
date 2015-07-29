@@ -63,11 +63,13 @@ xalloc(size_t size)
 static struct tstring *tstring_first = NULL;
 
 struct tstring *
-tstring_alloc (unsigned length)
+tstring_alloc (size_t length)
 {
-  struct tstring *s = xalloc(sizeof(struct tstring) + length - 1);
+  struct tstring *s = xalloc(sizeof(struct tstring) + length);
   s->length = length;
   s->next = tstring_first;
+  /* NUL-terminate, for convenience. */
+  s->data[length] = '\0';
   tstring_first = s;
   return s;
 }
@@ -84,19 +86,19 @@ tstring_clear(void)
 }
 
 struct tstring *
-tstring_data(unsigned length, const char *data)
+tstring_data(size_t length, const char *data)
 {
   struct tstring *s = tstring_alloc (length);
   memcpy (s->data, data, length);
   return s;
 }
 
-static unsigned
+static size_t
 decode_hex_length(const char *h)
 {
   const unsigned char *hex = (const unsigned char *) h;
-  unsigned count;
-  unsigned i;
+  size_t count;
+  size_t i;
   
   for (count = i = 0; hex[i]; i++)
     {
@@ -116,7 +118,7 @@ static void
 decode_hex(uint8_t *dst, const char *h)
 {  
   const unsigned char *hex = (const unsigned char *) h;
-  unsigned i = 0;
+  size_t i = 0;
   
   for (;;)
   {
@@ -147,7 +149,7 @@ struct tstring *
 tstring_hex(const char *hex)
 {
   struct tstring *s;
-  unsigned length = decode_hex_length(hex);
+  size_t length = decode_hex_length(hex);
 
   s = tstring_alloc(length);
 
@@ -162,9 +164,9 @@ tstring_print_hex(const struct tstring *s)
 }
 
 void
-print_hex(unsigned length, const uint8_t *data)
+print_hex(size_t length, const uint8_t *data)
 {
-  unsigned i;
+  size_t i;
   
   for (i = 0; i < length; i++)
     {
@@ -215,11 +217,12 @@ test_cipher(const struct nettle_cipher *cipher,
 {
   void *ctx = xalloc(cipher->context_size);
   uint8_t *data = xalloc(cleartext->length);
-  unsigned length;
+  size_t length;
   ASSERT (cleartext->length == ciphertext->length);
   length = cleartext->length;
 
-  cipher->set_encrypt_key(ctx, key->length, key->data);
+  ASSERT (key->length == cipher->key_size);
+  cipher->set_encrypt_key(ctx, key->data);
   cipher->encrypt(ctx, length, data, cleartext->data);
 
   if (!MEMEQ(length, data, ciphertext->data))
@@ -233,7 +236,7 @@ test_cipher(const struct nettle_cipher *cipher,
       fprintf(stderr, "\n");
       FAIL();
     }
-  cipher->set_decrypt_key(ctx, key->length, key->data);
+  cipher->set_decrypt_key(ctx, key->data);
   cipher->decrypt(ctx, length, data, data);
 
   if (!MEMEQ(length, data, cleartext->data))
@@ -262,15 +265,16 @@ test_cipher_cbc(const struct nettle_cipher *cipher,
   void *ctx = xalloc(cipher->context_size);
   uint8_t *data;
   uint8_t *iv = xalloc(cipher->block_size);
-  unsigned length;
+  size_t length;
 
   ASSERT (cleartext->length == ciphertext->length);
   length = cleartext->length;
 
+  ASSERT (key->length == cipher->key_size);
   ASSERT (iiv->length == cipher->block_size);
 
   data = xalloc(length);  
-  cipher->set_encrypt_key(ctx, key->length, key->data);
+  cipher->set_encrypt_key(ctx, key->data);
   memcpy(iv, iiv->data, cipher->block_size);
 
   cbc_encrypt(ctx, cipher->encrypt,
@@ -288,7 +292,7 @@ test_cipher_cbc(const struct nettle_cipher *cipher,
       fprintf(stderr, "\n");
       FAIL();
     }
-  cipher->set_decrypt_key(ctx, key->length, key->data);
+  cipher->set_decrypt_key(ctx, key->data);
   memcpy(iv, iiv->data, cipher->block_size);
 
   cbc_decrypt(ctx, cipher->decrypt,
@@ -323,12 +327,13 @@ test_cipher_ctr(const struct nettle_cipher *cipher,
   uint8_t *data;
   uint8_t *ctr = xalloc(cipher->block_size);
   uint8_t *octr = xalloc(cipher->block_size);
-  unsigned length;
-  unsigned low, nblocks;
+  size_t length, nblocks;
+  unsigned low;
 
   ASSERT (cleartext->length == ciphertext->length);
   length = cleartext->length;
 
+  ASSERT (key->length == cipher->key_size);
   ASSERT (ictr->length == cipher->block_size);
 
   /* Compute expected counter value after the operation. */
@@ -344,7 +349,7 @@ test_cipher_ctr(const struct nettle_cipher *cipher,
 
   data = xalloc(length);  
 
-  cipher->set_encrypt_key(ctx, key->length, key->data);
+  cipher->set_encrypt_key(ctx, key->data);
   memcpy(ctr, ictr->data, cipher->block_size);
 
   ctr_crypt(ctx, cipher->encrypt,
@@ -391,17 +396,18 @@ test_cipher_ctr(const struct nettle_cipher *cipher,
   free(ctr);
 }
 
+#if 0
 void
 test_cipher_stream(const struct nettle_cipher *cipher,
 		   const struct tstring *key,
 		   const struct tstring *cleartext,
 		   const struct tstring *ciphertext)
 {
-  unsigned block;
+  size_t block;
   
   void *ctx = xalloc(cipher->context_size);
   uint8_t *data;
-  unsigned length;
+  size_t length;
 
   ASSERT (cleartext->length == ciphertext->length);
   length = cleartext->length;
@@ -410,7 +416,7 @@ test_cipher_stream(const struct nettle_cipher *cipher,
 
   for (block = 1; block <= length; block++)
     {
-      unsigned i;
+      size_t i;
 
       memset(data, 0x17, length + 1);
       cipher->set_encrypt_key(ctx, key->length, key->data);
@@ -426,7 +432,8 @@ test_cipher_stream(const struct nettle_cipher *cipher,
       
       if (!MEMEQ(length, data, ciphertext->data))
 	{
-	  fprintf(stderr, "Encrypt failed, block size %d\nInput:", block);
+	  fprintf(stderr, "Encrypt failed, block size %lu\nInput:",
+		  (unsigned long) block);
 	  tstring_print_hex(cleartext);
 	  fprintf(stderr, "\nOutput: ");
 	  print_hex(length, data);
@@ -457,33 +464,42 @@ test_cipher_stream(const struct nettle_cipher *cipher,
   free(ctx);
   free(data);
 }
+#endif
 
 void
 test_aead(const struct nettle_aead *aead,
+	  nettle_hash_update_func *set_nonce,
 	  const struct tstring *key,
 	  const struct tstring *authtext,
 	  const struct tstring *cleartext,
 	  const struct tstring *ciphertext,
-	  const struct tstring *iv,
+	  const struct tstring *nonce,
 	  const struct tstring *digest)
 {
   void *ctx = xalloc(aead->context_size);
   uint8_t *data;
-  uint8_t *buffer = xalloc(aead->block_size);
-  unsigned length;
+  uint8_t *buffer = xalloc(aead->digest_size);
+  size_t length;
 
   ASSERT (cleartext->length == ciphertext->length);
   length = cleartext->length;
 
-  ASSERT (digest->length == aead->block_size);
+  ASSERT (key->length == aead->key_size);
+  ASSERT (digest->length <= aead->digest_size);
 
   data = xalloc(length);
   
   /* encryption */
-  memset(buffer, 0, aead->block_size);
-  aead->set_key(ctx, key->length, key->data);
+  memset(buffer, 0, aead->digest_size);
+  aead->set_encrypt_key(ctx, key->data);
 
-  aead->set_iv(ctx, iv->length, iv->data);
+  if (nonce->length != aead->nonce_size)
+    {
+      ASSERT (set_nonce);
+      set_nonce (ctx, nonce->length, nonce->data);
+    }
+  else
+    aead->set_nonce(ctx, nonce->data);
 
   if (authtext->length)
     aead->update(ctx, authtext->length, authtext->data);
@@ -491,14 +507,23 @@ test_aead(const struct nettle_aead *aead,
   if (length)
     aead->encrypt(ctx, length, data, cleartext->data);
 
-  aead->digest(ctx, aead->block_size, buffer);
+  aead->digest(ctx, digest->length, buffer);
 
   ASSERT(MEMEQ(length, data, ciphertext->data));
-  ASSERT(MEMEQ(aead->block_size, buffer, digest->data));
+  ASSERT(MEMEQ(digest->length, buffer, digest->data));
 
   /* decryption */
-  memset(buffer, 0, aead->block_size);
-  aead->set_iv(ctx, iv->length, iv->data);
+  memset(buffer, 0, aead->digest_size);
+
+  aead->set_decrypt_key(ctx, key->data);
+
+  if (nonce->length != aead->nonce_size)
+    {
+      ASSERT (set_nonce);
+      set_nonce (ctx, nonce->length, nonce->data);
+    }
+  else
+    aead->set_nonce(ctx, nonce->data);
 
   if (authtext->length)
     aead->update(ctx, authtext->length, authtext->data);
@@ -506,10 +531,10 @@ test_aead(const struct nettle_aead *aead,
   if (length)
     aead->decrypt(ctx, length, data, data);
 
-  aead->digest(ctx, aead->block_size, buffer);
+  aead->digest(ctx, digest->length, buffer);
 
   ASSERT(MEMEQ(length, data, cleartext->data));
-  ASSERT(MEMEQ(aead->block_size, buffer, digest->data));
+  ASSERT(MEMEQ(digest->length, buffer, digest->data));
 
   free(ctx);
   free(data);
@@ -543,7 +568,6 @@ test_hash(const struct nettle_hash *hash,
 
   memset(buffer, 0, hash->digest_size);
 
-  hash->init(ctx);
   hash->update(ctx, msg->length, msg->data);
   hash->digest(ctx, hash->digest_size - 1, buffer);
 
@@ -574,14 +598,14 @@ test_hash(const struct nettle_hash *hash,
 
 void
 test_hash_large(const struct nettle_hash *hash,
-		unsigned count, unsigned length,
+		size_t count, size_t length,
 		uint8_t c,
 		const struct tstring *digest)
 {
   void *ctx = xalloc(hash->context_size);
   uint8_t *buffer = xalloc(hash->digest_size);
   uint8_t *data = xalloc(length);
-  unsigned i;
+  size_t i;
 
   ASSERT (digest->length == hash->digest_size);
 
@@ -589,7 +613,13 @@ test_hash_large(const struct nettle_hash *hash,
 
   hash->init(ctx);
   for (i = 0; i < count; i++)
-    hash->update(ctx, length, data);
+    {
+      hash->update(ctx, length, data);
+      if (i % (count / 50) == 0)
+	fprintf (stderr, ".");
+    }
+  fprintf (stderr, "\n");
+  
   hash->digest(ctx, hash->digest_size, buffer);
 
   print_hex(hash->digest_size, buffer);
@@ -603,16 +633,16 @@ test_hash_large(const struct nettle_hash *hash,
 
 void
 test_armor(const struct nettle_armor *armor,
-           unsigned data_length,
+           size_t data_length,
            const uint8_t *data,
            const uint8_t *ascii)
 {
-  unsigned ascii_length = strlen(ascii);
+  size_t ascii_length = strlen(ascii);
   uint8_t *buffer = xalloc(1 + ascii_length);
   uint8_t *check = xalloc(1 + armor->decode_length(ascii_length));
   void *encode = xalloc(armor->encode_context_size);
   void *decode = xalloc(armor->decode_context_size);
-  unsigned done;
+  size_t done;
 
   ASSERT(ascii_length
 	 <= (armor->encode_length(data_length) + armor->encode_final_length));
@@ -646,19 +676,19 @@ test_armor(const struct nettle_armor *armor,
   free(decode);
 }
 
-#if HAVE_LIBGMP
-/* Missing in current gmp */
+#if WITH_HOGWEED
+
+#ifndef mpz_combit
+/* Missing in older gmp */
 static void
-mpz_togglebit (mpz_t x, unsigned long int bit)
+mpz_combit (mpz_t x, unsigned long int bit)
 {
   if (mpz_tstbit(x, bit))
     mpz_clrbit(x, bit);
   else
     mpz_setbit(x, bit);
 }
-#endif /* HAVE_LIBGMP */
-
-#if WITH_HOGWEED
+#endif
 
 mp_limb_t *
 xalloc_limbs (mp_size_t n)
@@ -798,7 +828,7 @@ test_rsa_md5(struct rsa_public_key *pub,
 		 "The magic words are squeamish ossifrage", signature));
 
   /* Try bad signature */
-  mpz_togglebit(signature, 17);
+  mpz_combit(signature, 17);
   ASSERT (!VERIFY(pub, md5,
 		  "The magic words are squeamish ossifrage", signature));
 
@@ -836,7 +866,7 @@ test_rsa_sha1(struct rsa_public_key *pub,
 		 "The magic words are squeamish ossifrage", signature));
 
   /* Try bad signature */
-  mpz_togglebit(signature, 17);
+  mpz_combit(signature, 17);
   ASSERT (!VERIFY(pub, sha1,
 		  "The magic words are squeamish ossifrage", signature));
 
@@ -874,7 +904,7 @@ test_rsa_sha256(struct rsa_public_key *pub,
 		 "The magic words are squeamish ossifrage", signature));
 
   /* Try bad signature */
-  mpz_togglebit(signature, 17);
+  mpz_combit(signature, 17);
   ASSERT (!VERIFY(pub, sha256,
 		  "The magic words are squeamish ossifrage", signature));
 
@@ -912,7 +942,7 @@ test_rsa_sha512(struct rsa_public_key *pub,
 		 "The magic words are squeamish ossifrage", signature));
 
   /* Try bad signature */
-  mpz_togglebit(signature, 17);
+  mpz_combit(signature, 17);
   ASSERT (!VERIFY(pub, sha512,
 		  "The magic words are squeamish ossifrage", signature));
 
@@ -1035,7 +1065,7 @@ test_dsa160(const struct dsa_public_key *pub,
 		     &signature));
 
   /* Try bad signature */
-  mpz_togglebit(signature.r, 17);
+  mpz_combit(signature.r, 17);
   ASSERT (!DSA_VERIFY(pub, sha1,
 		      "The magic words are squeamish ossifrage",
 		      &signature));
@@ -1085,7 +1115,7 @@ test_dsa256(const struct dsa_public_key *pub,
 		     &signature));
 
   /* Try bad signature */
-  mpz_togglebit(signature.r, 17);
+  mpz_combit(signature.r, 17);
   ASSERT (!DSA_VERIFY(pub, sha256,
 		      "The magic words are squeamish ossifrage",
 		      &signature));
@@ -1093,33 +1123,135 @@ test_dsa256(const struct dsa_public_key *pub,
   dsa_signature_clear(&signature);
 }
 
+#if 0
 void
-test_dsa_key(struct dsa_public_key *pub,
-	     struct dsa_private_key *key,
+test_dsa_sign(const struct dsa_public_key *pub,
+	      const struct dsa_private_key *key,
+	      const struct nettle_hash *hash,
+	      const struct dsa_signature *expected)
+{
+  void *ctx = xalloc (hash->context_size);
+  uint8_t *digest = xalloc (hash->digest_size);
+  uint8_t *bad_digest = xalloc (hash->digest_size);
+  struct dsa_signature signature;
+  struct knuth_lfib_ctx lfib;
+  
+  dsa_signature_init(&signature);
+  knuth_lfib_init(&lfib, 1111);
+
+  hash->init(ctx);
+  
+  hash->update(ctx, LDATA("The magic words are squeamish ossifrage"));
+  hash->digest(ctx, hash->digest_size, digest);
+  ASSERT (dsa_sign(pub, key,
+		   &lfib, (nettle_random_func *) knuth_lfib_random,
+		   hash->digest_size, digest, &signature));
+  
+  if (verbose)
+    {
+      fprintf(stderr, "dsa-%s signature: ", hash->name);
+      mpz_out_str(stderr, 16, signature.r);
+      fprintf(stderr, ", ");
+      mpz_out_str(stderr, 16, signature.s);
+      fprintf(stderr, "\n");
+    }
+
+  if (expected)
+    ASSERT (mpz_cmp (signature.r, expected->r) == 0
+	    && mpz_cmp (signature.s, expected->s) == 0);
+  
+  /* Try correct data */
+  ASSERT (dsa_verify(pub, hash->digest_size, digest,
+		     &signature));
+  /* Try bad data */
+  hash->update(ctx, LDATA("The magick words are squeamish ossifrage"));
+  hash->digest(ctx, hash->digest_size, bad_digest);
+  
+  ASSERT (!dsa_verify(pub, hash->digest_size, bad_digest,
+		      &signature));
+
+  /* Try bad signature */
+  mpz_combit(signature.r, 17);
+  ASSERT (!dsa_verify(pub, hash->digest_size, digest,
+		      &signature));
+
+  free (ctx);
+  free (digest);
+  free (bad_digest);
+  dsa_signature_clear(&signature);
+}
+#endif
+
+void
+test_dsa_verify(const struct dsa_params *params,
+		const mpz_t pub,
+		const struct nettle_hash *hash,
+		struct tstring *msg,
+		const struct dsa_signature *ref)
+{
+  void *ctx = xalloc (hash->context_size);
+  uint8_t *digest = xalloc (hash->digest_size);
+  struct dsa_signature signature;
+
+  dsa_signature_init (&signature);
+
+  hash->init(ctx);
+  
+  hash->update (ctx, msg->length, msg->data);
+  hash->digest (ctx, hash->digest_size, digest);
+
+  mpz_set (signature.r, ref->r);
+  mpz_set (signature.s, ref->s);
+
+  ASSERT (dsa_verify (params, pub,
+		       hash->digest_size, digest,
+		       &signature));
+
+  /* Try bad signature */
+  mpz_combit(signature.r, 17);
+  ASSERT (!dsa_verify (params, pub,
+		       hash->digest_size, digest,
+		       &signature));
+  
+  /* Try bad data */
+  digest[hash->digest_size / 2-1] ^= 8;
+  ASSERT (!dsa_verify (params, pub,
+		       hash->digest_size, digest,
+		       ref));
+
+  free (ctx);
+  free (digest);
+  dsa_signature_clear(&signature);  
+}
+
+void
+test_dsa_key(const struct dsa_params *params,
+	     const mpz_t pub,
+	     const mpz_t key,
 	     unsigned q_size)
 {
   mpz_t t;
 
   mpz_init(t);
 
-  ASSERT(mpz_sizeinbase(pub->q, 2) == q_size);
-  ASSERT(mpz_sizeinbase(pub->p, 2) >= DSA_SHA1_MIN_P_BITS);
+  ASSERT(mpz_sizeinbase(params->q, 2) == q_size);
+  ASSERT(mpz_sizeinbase(params->p, 2) >= DSA_SHA1_MIN_P_BITS);
   
-  ASSERT(mpz_probab_prime_p(pub->p, 10));
+  ASSERT(mpz_probab_prime_p(params->p, 10));
 
-  ASSERT(mpz_probab_prime_p(pub->q, 10));
+  ASSERT(mpz_probab_prime_p(params->q, 10));
 
-  mpz_fdiv_r(t, pub->p, pub->q);
+  mpz_fdiv_r(t, params->p, params->q);
 
   ASSERT(0 == mpz_cmp_ui(t, 1));
 
-  ASSERT(mpz_cmp_ui(pub->g, 1) > 0);
+  ASSERT(mpz_cmp_ui(params->g, 1) > 0);
   
-  mpz_powm(t, pub->g, pub->q, pub->p);
+  mpz_powm(t, params->g, params->q, params->p);
   ASSERT(0 == mpz_cmp_ui(t, 1));
   
-  mpz_powm(t, pub->g, key->x, pub->p);
-  ASSERT(0 == mpz_cmp(t, pub->y));
+  mpz_powm(t, params->g, key, params->p);
+  ASSERT(0 == mpz_cmp(t, pub));
 
   mpz_clear(t);
 }

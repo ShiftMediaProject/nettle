@@ -1,21 +1,34 @@
-C nettle, low-level cryptographics library
-C 
-C Copyright (C) 2010, Niels Möller
-C  
-C The nettle library is free software; you can redistribute it and/or modify
-C it under the terms of the GNU Lesser General Public License as published by
-C the Free Software Foundation; either version 2.1 of the License, or (at your
-C option) any later version.
-C 
-C The nettle library is distributed in the hope that it will be useful, but
-C WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-C or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-C License for more details.
-C 
-C You should have received a copy of the GNU Lesser General Public License
-C along with the nettle library; see the file COPYING.LIB.  If not, write to
-C the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-C MA 02111-1301, USA.
+C x86_64/memxor.asm
+
+ifelse(<
+   Copyright (C) 2010, Niels Möller
+
+   This file is part of GNU Nettle.
+
+   GNU Nettle is free software: you can redistribute it and/or
+   modify it under the terms of either:
+
+     * the GNU Lesser General Public License as published by the Free
+       Software Foundation; either version 3 of the License, or (at your
+       option) any later version.
+
+   or
+
+     * the GNU General Public License as published by the Free
+       Software Foundation; either version 2 of the License, or (at your
+       option) any later version.
+
+   or both in parallel, as here.
+
+   GNU Nettle is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received copies of the GNU General Public License and
+   the GNU Lesser General Public License along with this program.  If
+   not, see http://www.gnu.org/licenses/.
+>)
 
 C Register usage:
 define(<DST>, <%rax>) C Originally in %rdi
@@ -34,22 +47,22 @@ define(<USE_SSE2>, <no>)
 
 	.text
 
-	C memxor(uint8_t *dst, const uint8_t *src, size_t n)
+	C memxor(void *dst, const void *src, size_t n)
 	C 	          %rdi               %rsi      %rdx
 	ALIGN(16)
 
-PROLOGUE(memxor)
+PROLOGUE(nettle_memxor)
 	W64_ENTRY(3, 0)
 	mov	%rdx, %r10
 	mov	%rdi, %rdx
 	jmp 	.Lmemxor3_entry
-EPILOGUE(memxor)
+EPILOGUE(nettle_memxor)
 
-	C memxor3(uint8_t *dst, const uint8_t *a, const uint8_t *b, size_t n)
+	C memxor3(void *dst, const void *a, const void *b, size_t n)
 	C 	          %rdi              %rsi              %rdx      %rcx
 	ALIGN(16)
 	
-PROLOGUE(memxor3)
+PROLOGUE(nettle_memxor3)
 	W64_ENTRY(4, 0)
 	C %cl needed for shift count, so move away N
 	mov	%rcx, N
@@ -258,4 +271,4 @@ ifelse(USE_SSE2, yes, <
 >)	
 	
 
-EPILOGUE(memxor3)
+EPILOGUE(nettle_memxor3)

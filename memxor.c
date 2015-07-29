@@ -1,27 +1,33 @@
 /* memxor.c
- *
- */
 
-/* nettle, low-level cryptographics library
- *
- * Copyright (C) 1991, 1993, 1995 Free Software Foundation, Inc.
- * Copyright (C) 2010 Niels Möller
- *  
- * The nettle library is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
- * 
- * The nettle library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
- * License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with the nettle library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02111-1301, USA.
- */
+   Copyright (C) 2010 Niels Möller
+
+   This file is part of GNU Nettle.
+
+   GNU Nettle is free software: you can redistribute it and/or
+   modify it under the terms of either:
+
+     * the GNU Lesser General Public License as published by the Free
+       Software Foundation; either version 3 of the License, or (at your
+       option) any later version.
+
+   or
+
+     * the GNU General Public License as published by the Free
+       Software Foundation; either version 2 of the License, or (at your
+       option) any later version.
+
+   or both in parallel, as here.
+
+   GNU Nettle is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received copies of the GNU General Public License and
+   the GNU Lesser General Public License along with this program.  If
+   not, see http://www.gnu.org/licenses/.
+*/
 
 /* Implementation inspired by memcmp in glibc, contributed to the FSF
    by Torbjorn Granlund.
@@ -34,6 +40,9 @@
 #include <limits.h>
 
 #include "memxor.h"
+
+/* For uintptr_t */
+#include "nettle-types.h"
 
 typedef unsigned long int word_t;
 
@@ -75,7 +84,7 @@ memxor_common_alignment (word_t *dst, const word_t *src, size_t n)
    words, not bytes. Assumes we can read complete words at the start
    and end of the src operand. */
 static void
-memxor_different_alignment (word_t *dst, const uint8_t *src, size_t n)
+memxor_different_alignment (word_t *dst, const char *src, size_t n)
 {
   size_t i;
   int shl, shr;
@@ -111,10 +120,11 @@ memxor_different_alignment (word_t *dst, const uint8_t *src, size_t n)
 
 /* XOR LEN bytes starting at SRCADDR onto DESTADDR. Result undefined
    if the source overlaps with the destination. Return DESTADDR. */
-uint8_t *
-memxor(uint8_t *dst, const uint8_t *src, size_t n)
+void *
+memxor(void *dst_in, const void *src_in, size_t n)
 {
-  uint8_t *orig_dst = dst;
+  char *dst = dst_in;
+  const char *src = src_in;
 
   if (n >= WORD_T_THRESH)
     {
@@ -137,7 +147,7 @@ memxor(uint8_t *dst, const uint8_t *src, size_t n)
   for (; n > 0; n--)
     *dst++ ^= *src++;
 
-  return orig_dst;
+  return dst_in;
 }
 
 
@@ -153,7 +163,7 @@ memxor3_common_alignment (word_t *dst,
 
 static void
 memxor3_different_alignment_b (word_t *dst,
-			       const word_t *a, const uint8_t *b, unsigned offset, size_t n)
+			       const word_t *a, const char *b, unsigned offset, size_t n)
 {
   int shl, shr;
   const word_t *b_word;
@@ -187,7 +197,7 @@ memxor3_different_alignment_b (word_t *dst,
 
 static void
 memxor3_different_alignment_ab (word_t *dst,
-				const uint8_t *a, const uint8_t *b,
+				const char *a, const char *b,
 				unsigned offset, size_t n)
 {
   int shl, shr;
@@ -224,7 +234,7 @@ memxor3_different_alignment_ab (word_t *dst,
 
 static void
 memxor3_different_alignment_all (word_t *dst,
-				 const uint8_t *a, const uint8_t *b,
+				 const char *a, const char *b,
 				 unsigned a_offset, unsigned b_offset,
 				 size_t n)
 {
@@ -271,9 +281,13 @@ memxor3_different_alignment_all (word_t *dst,
    the start of the destination area. This feature is used only
    internally by cbc decrypt, and it is not advertised or documented
    to nettle users. */
-uint8_t *
-memxor3(uint8_t *dst, const uint8_t *a, const uint8_t *b, size_t n)
+void *
+memxor3(void *dst_in, const void *a_in, const void *b_in, size_t n)
 {
+  char *dst = dst_in;
+  const char *a = a_in;
+  const char *b = b_in;
+
   if (n >= WORD_T_THRESH)
     {
       unsigned i;

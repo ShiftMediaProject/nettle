@@ -22,6 +22,9 @@ base64-test$(EXEEXT): base64-test.$(OBJEXT)
 camellia-test$(EXEEXT): camellia-test.$(OBJEXT)
 	$(LINK) camellia-test.$(OBJEXT) $(TEST_OBJS) -o camellia-test$(EXEEXT)
 
+chacha-test$(EXEEXT): chacha-test.$(OBJEXT)
+	$(LINK) chacha-test.$(OBJEXT) $(TEST_OBJS) -o chacha-test$(EXEEXT)
+
 des-test$(EXEEXT): des-test.$(OBJEXT)
 	$(LINK) des-test.$(OBJEXT) $(TEST_OBJS) -o des-test$(EXEEXT)
 
@@ -70,6 +73,12 @@ sha384-test$(EXEEXT): sha384-test.$(OBJEXT)
 sha512-test$(EXEEXT): sha512-test.$(OBJEXT)
 	$(LINK) sha512-test.$(OBJEXT) $(TEST_OBJS) -o sha512-test$(EXEEXT)
 
+sha512-224-test$(EXEEXT): sha512-224-test.$(OBJEXT)
+	$(LINK) sha512-224-test.$(OBJEXT) $(TEST_OBJS) -o sha512-224-test$(EXEEXT)
+
+sha512-256-test$(EXEEXT): sha512-256-test.$(OBJEXT)
+	$(LINK) sha512-256-test.$(OBJEXT) $(TEST_OBJS) -o sha512-256-test$(EXEEXT)
+
 sha3-permute-test$(EXEEXT): sha3-permute-test.$(OBJEXT)
 	$(LINK) sha3-permute-test.$(OBJEXT) $(TEST_OBJS) -o sha3-permute-test$(EXEEXT)
 
@@ -103,6 +112,18 @@ ctr-test$(EXEEXT): ctr-test.$(OBJEXT)
 gcm-test$(EXEEXT): gcm-test.$(OBJEXT)
 	$(LINK) gcm-test.$(OBJEXT) $(TEST_OBJS) -o gcm-test$(EXEEXT)
 
+eax-test$(EXEEXT): eax-test.$(OBJEXT)
+	$(LINK) eax-test.$(OBJEXT) $(TEST_OBJS) -o eax-test$(EXEEXT)
+
+ccm-test$(EXEEXT): ccm-test.$(OBJEXT)
+	$(LINK) ccm-test.$(OBJEXT) $(TEST_OBJS) -o ccm-test$(EXEEXT)
+
+poly1305-test$(EXEEXT): poly1305-test.$(OBJEXT)
+	$(LINK) poly1305-test.$(OBJEXT) $(TEST_OBJS) -o poly1305-test$(EXEEXT)
+
+chacha-poly1305-test$(EXEEXT): chacha-poly1305-test.$(OBJEXT)
+	$(LINK) chacha-poly1305-test.$(OBJEXT) $(TEST_OBJS) -o chacha-poly1305-test$(EXEEXT)
+
 hmac-test$(EXEEXT): hmac-test.$(OBJEXT)
 	$(LINK) hmac-test.$(OBJEXT) $(TEST_OBJS) -o hmac-test$(EXEEXT)
 
@@ -114,6 +135,9 @@ meta-hash-test$(EXEEXT): meta-hash-test.$(OBJEXT)
 
 meta-cipher-test$(EXEEXT): meta-cipher-test.$(OBJEXT)
 	$(LINK) meta-cipher-test.$(OBJEXT) $(TEST_OBJS) -o meta-cipher-test$(EXEEXT)
+
+meta-aead-test$(EXEEXT): meta-aead-test.$(OBJEXT)
+	$(LINK) meta-aead-test.$(OBJEXT) $(TEST_OBJS) -o meta-aead-test$(EXEEXT)
 
 meta-armor-test$(EXEEXT): meta-armor-test.$(OBJEXT)
 	$(LINK) meta-armor-test.$(OBJEXT) $(TEST_OBJS) -o meta-armor-test$(EXEEXT)
