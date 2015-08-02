@@ -1,12 +1,4 @@
 EXPORTS
-    _nettle_dsa_sign
-    _nettle_dsa_verify
-    nettle_R_SignFinal
-    nettle_R_SignInit
-    nettle_R_SignUpdate
-    nettle_R_VerifyFinal
-    nettle_R_VerifyInit
-    nettle_R_VerifyUpdate
     nettle_asn1_der_decode_bitstring
     nettle_asn1_der_decode_bitstring_last
     nettle_asn1_der_decode_constructed
@@ -15,11 +7,15 @@ EXPORTS
     nettle_asn1_der_get_uint32
     nettle_asn1_der_iterator_first
     nettle_asn1_der_iterator_next
+    nettle_dsa_compat_generate_keypair
     nettle_dsa_generate_keypair
+    nettle_dsa_generate_params
     nettle_dsa_keypair_from_sexp_alist
     nettle_dsa_keypair_to_sexp
     nettle_dsa_openssl_private_key_from_der_iterator
+    nettle_dsa_params_clear
     nettle_dsa_params_from_der_iterator
+    nettle_dsa_params_init
     nettle_dsa_private_key_clear
     nettle_dsa_private_key_init
     nettle_dsa_public_key_clear
@@ -35,14 +31,17 @@ EXPORTS
     nettle_dsa_sha256_sign_digest
     nettle_dsa_sha256_verify
     nettle_dsa_sha256_verify_digest
+    nettle_dsa_sign
     nettle_dsa_signature_clear
     nettle_dsa_signature_from_sexp
     nettle_dsa_signature_init
+    nettle_dsa_verify
     nettle_ecc_a_to_j
     nettle_ecc_add_jja
     nettle_ecc_add_jja_itch
     nettle_ecc_add_jjj
     nettle_ecc_add_jjj_itch
+    nettle_ecc_bit_size
     nettle_ecc_dup_jj
     nettle_ecc_dup_jj_itch
     nettle_ecc_ecdsa_sign
@@ -82,7 +81,6 @@ EXPORTS
     nettle_mpz_set_str_256_u
     nettle_mpz_sizeinbase_256_s
     nettle_mpz_sizeinbase_256_u
-    nettle_next_prime
     nettle_openssl_provate_key_from_der
     nettle_pgp_armor
     nettle_pgp_crc24

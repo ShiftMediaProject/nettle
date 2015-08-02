@@ -21,9 +21,6 @@
     <ClInclude Include="..\nettle-meta.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
-    <ClInclude Include="..\nettle-stdint.h">
-      <Filter>Header Files\nettle</Filter>
-    </ClInclude>
     <ClInclude Include="..\nettle-types.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
@@ -43,9 +40,6 @@
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
     <ClInclude Include="..\rsa.h">
-      <Filter>Header Files\nettle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rsa-compat.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
     <ClInclude Include="..\salsa20.h">
@@ -165,6 +159,27 @@
     <ClInclude Include="nettle-stdint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\eax.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ccm.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\chacha.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\chacha-poly1305.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dsa-compat.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly1305.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bignum.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ecc-generic-modq.c">
@@ -263,9 +278,6 @@
     <ClCompile Include="..\rsa-blind.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\rsa-compat.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\rsa-decrypt.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -353,9 +365,6 @@
     <ClCompile Include="..\bignum.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\bignum-next-prime.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\bignum-random.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -435,6 +444,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ecc-generic-modp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dsa-gen-params.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dsa-hash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dsa-compat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dsa-compat-keygen.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,4 @@
 
-/* The normal alignment of `uint64_t', in bytes. */
-#define ALIGNOF_UINT64_T 8
-
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
    */
@@ -38,9 +35,6 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
-/* Define to 1 if you have the `memxor' function. */
-/* #undef HAVE_MEMXOR */
-
 /* Define if mpz_powm_sec is available (appeared in GMP-5) */
 #define HAVE_MPZ_POWM_SEC 1
 
@@ -56,6 +50,7 @@
 /* #undef HAVE_NATIVE_ecc_384_redc */
 /* #undef HAVE_NATIVE_ecc_521_modp */
 /* #undef HAVE_NATIVE_ecc_521_redc */
+/* #undef HAVE_NATIVE_gcm_hash8 */
 
 /* Define to 1 if you have the <openssl/aes.h> header file. */
 /* #undef HAVE_OPENSSL_AES_H */
@@ -68,6 +63,9 @@
 
 /* Define to 1 if you have the <openssl/des.h> header file. */
 /* #undef HAVE_OPENSSL_DES_H */
+
+/* Define to 1 if you have the <openssl/ecdsa.h> header file. */
+/* #undef HAVE_OPENSSL_ECDSA_H */
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -104,6 +102,9 @@
 
 /* The size of `short', as computed by sizeof. */
 #define SIZEOF_SHORT 2
+
+/* The size of `size_t', as computed by sizeof. */
+#define SIZEOF_SIZE_T 8
 
 /* The size of `void*', as computed by sizeof. */
 #if defined(__x86_64) || defined(_M_X64)

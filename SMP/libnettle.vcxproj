@@ -49,15 +49,21 @@
     <ClInclude Include="..\asn1.h" />
     <ClInclude Include="..\base16.h" />
     <ClInclude Include="..\base64.h" />
+    <ClInclude Include="..\bignum.h" />
     <ClInclude Include="..\blowfish.h" />
     <ClInclude Include="..\buffer.h" />
     <ClInclude Include="..\camellia.h" />
     <ClInclude Include="..\cast128.h" />
     <ClInclude Include="..\cbc.h" />
+    <ClInclude Include="..\ccm.h" />
+    <ClInclude Include="..\chacha-poly1305.h" />
+    <ClInclude Include="..\chacha.h" />
     <ClInclude Include="..\ctr.h" />
     <ClInclude Include="..\des-compat.h" />
     <ClInclude Include="..\des.h" />
+    <ClInclude Include="..\dsa-compat.h" />
     <ClInclude Include="..\dsa.h" />
+    <ClInclude Include="..\eax.h" />
     <ClInclude Include="..\ecc-curve.h" />
     <ClInclude Include="..\ecc.h" />
     <ClInclude Include="..\ecdsa.h" />
@@ -72,14 +78,13 @@
     <ClInclude Include="..\md5.h" />
     <ClInclude Include="..\memxor.h" />
     <ClInclude Include="..\nettle-meta.h" />
-    <ClInclude Include="..\nettle-stdint.h" />
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
     <ClInclude Include="..\pkcs1.h" />
+    <ClInclude Include="..\poly1305.h" />
     <ClInclude Include="..\realloc.h" />
     <ClInclude Include="..\ripemd160.h" />
-    <ClInclude Include="..\rsa-compat.h" />
     <ClInclude Include="..\rsa.h" />
     <ClInclude Include="..\salsa20.h" />
     <ClInclude Include="..\serpent.h" />
@@ -100,12 +105,21 @@
     <ClCompile Include="..\aes-encrypt-internal.c" />
     <ClCompile Include="..\aes-encrypt-table.c" />
     <ClCompile Include="..\aes-encrypt.c" />
-    <ClCompile Include="..\aes-meta.c" />
+    <ClCompile Include="..\aes-invert-internal.c" />
     <ClCompile Include="..\aes-set-decrypt-key.c" />
     <ClCompile Include="..\aes-set-encrypt-key.c" />
+    <ClCompile Include="..\aes-set-key-internal.c" />
+    <ClCompile Include="..\aes128-meta.c" />
+    <ClCompile Include="..\aes128-set-decrypt-key.c" />
+    <ClCompile Include="..\aes128-set-encrypt-key.c" />
+    <ClCompile Include="..\aes192-meta.c" />
+    <ClCompile Include="..\aes192-set-decrypt-key.c" />
+    <ClCompile Include="..\aes192-set-encrypt-key.c" />
+    <ClCompile Include="..\aes256-meta.c" />
+    <ClCompile Include="..\aes256-set-decrypt-key.c" />
+    <ClCompile Include="..\aes256-set-encrypt-key.c" />
     <ClCompile Include="..\aesdata.c" />
     <ClCompile Include="..\arcfour-crypt.c" />
-    <ClCompile Include="..\arcfour-meta.c" />
     <ClCompile Include="..\arcfour.c" />
     <ClCompile Include="..\arctwo-meta.c" />
     <ClCompile Include="..\arctwo.c" />
@@ -118,20 +132,50 @@
     <ClCompile Include="..\blowfish.c" />
     <ClCompile Include="..\buffer-init.c" />
     <ClCompile Include="..\buffer.c" />
+    <ClCompile Include="..\camellia-absorb.c" />
     <ClCompile Include="..\camellia-crypt-internal.c" />
-    <ClCompile Include="..\camellia-crypt.c" />
-    <ClCompile Include="..\camellia-meta.c" />
-    <ClCompile Include="..\camellia-set-decrypt-key.c" />
-    <ClCompile Include="..\camellia-set-encrypt-key.c" />
+    <ClCompile Include="..\camellia-invert-key.c" />
     <ClCompile Include="..\camellia-table.c" />
+    <ClCompile Include="..\camellia128-crypt.c" />
+    <ClCompile Include="..\camellia128-meta.c" />
+    <ClCompile Include="..\camellia128-set-decrypt-key.c" />
+    <ClCompile Include="..\camellia128-set-encrypt-key.c" />
+    <ClCompile Include="..\camellia192-meta.c" />
+    <ClCompile Include="..\camellia256-crypt.c" />
+    <ClCompile Include="..\camellia256-meta.c" />
+    <ClCompile Include="..\camellia256-set-decrypt-key.c" />
+    <ClCompile Include="..\camellia256-set-encrypt-key.c" />
     <ClCompile Include="..\cast128-meta.c" />
     <ClCompile Include="..\cast128.c" />
     <ClCompile Include="..\cbc.c" />
+    <ClCompile Include="..\ccm-aes128.c" />
+    <ClCompile Include="..\ccm-aes192.c" />
+    <ClCompile Include="..\ccm-aes256.c" />
+    <ClCompile Include="..\ccm.c" />
+    <ClCompile Include="..\chacha-core-internal.c" />
+    <ClCompile Include="..\chacha-crypt.c" />
+    <ClCompile Include="..\chacha-poly1305-meta.c" />
+    <ClCompile Include="..\chacha-poly1305.c" />
+    <ClCompile Include="..\chacha-set-key.c" />
+    <ClCompile Include="..\chacha-set-nonce.c" />
     <ClCompile Include="..\ctr.c" />
     <ClCompile Include="..\des-compat.c" />
     <ClCompile Include="..\des.c" />
     <ClCompile Include="..\des3.c" />
+    <ClCompile Include="..\eax-aes128-meta.c" />
+    <ClCompile Include="..\eax-aes128.c" />
+    <ClCompile Include="..\eax.c" />
     <ClCompile Include="..\gcm-aes.c" />
+    <ClCompile Include="..\gcm-aes128-meta.c" />
+    <ClCompile Include="..\gcm-aes128.c" />
+    <ClCompile Include="..\gcm-aes192-meta.c" />
+    <ClCompile Include="..\gcm-aes192.c" />
+    <ClCompile Include="..\gcm-aes256-meta.c" />
+    <ClCompile Include="..\gcm-aes256.c" />
+    <ClCompile Include="..\gcm-camellia128-meta.c" />
+    <ClCompile Include="..\gcm-camellia128.c" />
+    <ClCompile Include="..\gcm-camellia256-meta.c" />
+    <ClCompile Include="..\gcm-camellia256.c" />
     <ClCompile Include="..\gcm.c" />
     <ClCompile Include="..\gosthash94-meta.c" />
     <ClCompile Include="..\gosthash94.c" />
@@ -153,19 +197,25 @@
     <ClCompile Include="..\md5-meta.c" />
     <ClCompile Include="..\md5.c" />
     <ClCompile Include="..\memxor.c" />
+    <ClCompile Include="..\nettle-meta-aeads.c" />
     <ClCompile Include="..\nettle-meta-armors.c" />
     <ClCompile Include="..\nettle-meta-ciphers.c" />
     <ClCompile Include="..\nettle-meta-hashes.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha1.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha256.c" />
     <ClCompile Include="..\pbkdf2.c" />
+    <ClCompile Include="..\poly1305-aes.c" />
+    <ClCompile Include="..\poly1305-internal.c" />
     <ClCompile Include="..\realloc.c" />
     <ClCompile Include="..\ripemd160-compress.c" />
     <ClCompile Include="..\ripemd160-meta.c" />
     <ClCompile Include="..\ripemd160.c" />
+    <ClCompile Include="..\salsa20-128-set-key.c" />
+    <ClCompile Include="..\salsa20-256-set-key.c" />
     <ClCompile Include="..\salsa20-core-internal.c" />
     <ClCompile Include="..\salsa20-crypt.c" />
     <ClCompile Include="..\salsa20-set-key.c" />
+    <ClCompile Include="..\salsa20-set-nonce.c" />
     <ClCompile Include="..\salsa20r12-crypt.c" />
     <ClCompile Include="..\serpent-decrypt.c" />
     <ClCompile Include="..\serpent-encrypt.c" />
@@ -189,6 +239,8 @@
     <ClCompile Include="..\sha3-permute.c" />
     <ClCompile Include="..\sha3.c" />
     <ClCompile Include="..\sha384-meta.c" />
+    <ClCompile Include="..\sha512-224-meta.c" />
+    <ClCompile Include="..\sha512-256-meta.c" />
     <ClCompile Include="..\sha512-compress.c" />
     <ClCompile Include="..\sha512-meta.c" />
     <ClCompile Include="..\sha512.c" />
@@ -403,10 +455,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -426,10 +483,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -441,11 +498,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -489,10 +549,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -512,10 +577,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -527,11 +592,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -579,10 +647,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -602,10 +675,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -617,11 +690,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -666,10 +742,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -689,10 +770,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -704,11 +785,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -766,10 +850,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -789,10 +878,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -804,11 +893,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -866,10 +958,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -889,10 +986,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -904,11 +1001,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -965,10 +1065,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -988,10 +1093,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -1003,11 +1108,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1064,10 +1172,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -1087,10 +1200,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -1102,11 +1215,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1164,10 +1280,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -1187,10 +1308,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -1202,11 +1323,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1262,10 +1386,15 @@ copy ..\buffer.h $(OutDir)\include\nettle
 copy ..\camellia.h $(OutDir)\include\nettle
 copy ..\cast128.h $(OutDir)\include\nettle
 copy ..\cbc.h $(OutDir)\include\nettle
+copy ..\ccm.h $(OutDir)\include\nettle
+copy ..\chacha.h $(OutDir)\include\nettle
+copy ..\chacha-poly1305.h $(OutDir)\include\nettle
 copy ..\ctr.h $(OutDir)\include\nettle
 copy ..\des.h $(OutDir)\include\nettle
 copy ..\des-compat.h $(OutDir)\include\nettle
 copy ..\dsa.h $(OutDir)\include\nettle
+copy ..\dsa-compat.h $(OutDir)\include\nettle
+copy ..\eax.h $(OutDir)\include\nettle
 copy ..\ecc.h $(OutDir)\include\nettle
 copy ..\ecc-curve.h $(OutDir)\include\nettle
 copy ..\ecdsa.h $(OutDir)\include\nettle
@@ -1285,10 +1414,10 @@ copy ..\nettle-types.h $(OutDir)\include\nettle
 copy ..\pbkdf2.h $(OutDir)\include\nettle
 copy ..\pgp.h $(OutDir)\include\nettle
 copy ..\pkcs1.h $(OutDir)\include\nettle
+copy ..\poly1305.h $(OutDir)\include\nettle
 copy ..\realloc.h $(OutDir)\include\nettle
 copy ..\ripemd160.h $(OutDir)\include\nettle
 copy ..\rsa.h $(OutDir)\include\nettle
-copy ..\rsa-compat.h $(OutDir)\include\nettle
 copy ..\salsa20.h $(OutDir)\include\nettle
 copy ..\serpent.h $(OutDir)\include\nettle
 copy ..\sexp.h $(OutDir)\include\nettle
@@ -1300,11 +1429,14 @@ copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
-copy ..\COPYING.LIB $(OutDir)\licenses\nettle.txt</Command>
+copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if exist ..\config.h (
 del ..\config.h
+)
+if exist ..\nettle-stdint.h (
+del ..\nettle-stdint.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
