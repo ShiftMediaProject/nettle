@@ -2,7 +2,7 @@ dnl -*- mode: shell-script; sh-indentation: 2; -*-
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([nettle], [3.1], [nettle-bugs@lists.lysator.liu.se])
+AC_INIT([nettle], [3.1.1], [nettle-bugs@lists.lysator.liu.se])
 AC_PREREQ(2.61)
 AC_CONFIG_SRCDIR([arcfour.c])
 # Needed to stop autoconf from looking for files in parent directories.
@@ -11,10 +11,10 @@ AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_HEADER([config.h])
 
 LIBNETTLE_MAJOR=6
-LIBNETTLE_MINOR=0
+LIBNETTLE_MINOR=1
 
 LIBHOGWEED_MAJOR=4
-LIBHOGWEED_MINOR=0
+LIBHOGWEED_MINOR=1
 
 dnl Note double square brackets, for extra m4 quoting.
 MAJOR_VERSION=`echo $PACKAGE_VERSION | sed 's/^\([[^.]]*\)\..*/\1/'`
@@ -467,7 +467,7 @@ EOF
 	  dnl Note double square brackets, for extra m4 quoting.
 	  tmp_bits=`grep GMP_NUMB_BITS "$srcdir/$asm_dir/$tmp_h" \
             | sed 's/^.*GMP_NUMB_BITS(\([[0-9]]*\)).*$/\1/'`
-	  if test "$tmp_bits" && test "$tmp_bits" != '${GMP_NUMB_BITS}' ; then
+	  if test "$tmp_bits" && test "$tmp_bits" != "${GMP_NUMB_BITS}" ; then
 	     AC_MSG_WARN([skipping $tmp_h, because GMP_NUMB_BITS != $tmp_bits])
 	     continue
 	  fi

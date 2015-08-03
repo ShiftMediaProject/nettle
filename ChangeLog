@@ -1,4 +1,26 @@
-2015-03-31  Niels Möller  <nisse@diamant.hack.org>
+2015-04-24  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released nettle-3.1.1.
+
+	* configure.ac: Bump package version, to nettle-3.1.1.
+	(LIBNETTLE_MINOR, LIBHOGWEED_MINOR): Bump minor versions, to
+	libnettle.so.6.1 and and libhogweed.so.4.1.
+
+2015-04-22  Niels Möller  <nisse@lysator.liu.se>
+
+	* x86_64/gcm-hash8.asm: Use ".value" instead of ".short", since
+	the latter is not supported by the Sun/Oracle assembler.
+
+2015-04-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac: Fix shell quoting in test of GMP_NUMB_BITS asm
+	compatibility. Reported by Edward Sheldrake.
+
+2015-04-07  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released nettle-3.1.
+
+2015-03-31  Niels Möller  <nisse@lysator.liu.se>
 
 	* x86_64/ecc-224-modp.asm: Require that GMP_NUMB_BITS == 64.
 	* x86_64/ecc-521-modp.asm: Likewise. Note that the other
@@ -16,7 +38,7 @@
 	* Makefile.in (clean-here): Unconditionally delete *.a (including
 	stub libraries like *.dll.a).
 
-2015-03-30  Niels Möller  <nisse@diamant.hack.org>
+2015-03-30  Niels Möller  <nisse@lysator.liu.se>
 
 	* version.h.in (GMP_NUMB_BITS) [NETTLE_USE_MINI_GMP]: Move
 	definition here (uses configure substitution).
@@ -29,7 +51,7 @@
 	version.h, not bignum.h. Allow leading underscore on mini-gmp
 	symbols.
 
-2015-03-26  Niels Möller  <nisse@diamant.hack.org>
+2015-03-26  Niels Möller  <nisse@lysator.liu.se>
 
 	* Makefile.in (PRE_CPPFLAGS): Drop -I$(srcdir), no longer needed.
 	(HEADERS): Added bignum.h. Removed version.h.
@@ -46,7 +68,7 @@
 
 	* version.h.in (NETTLE_USE_MINI_GMP): Substitute here.
 
-2015-03-25  Niels Möller  <nisse@diamant.hack.org>
+2015-03-25  Niels Möller  <nisse@lysator.liu.se>
 
 	* configure.ac (MAJOR_VERSION, MINOR_VERSION): Tweak sed
 	expressions, to tolerate version suffixes.
@@ -57,7 +79,7 @@
 	* ed25519-sha512-pubkey.c: Fix stack overwrite. The digest array
 	must have room for a complete sha512 digest.
 
-2015-03-19  Niels Möller  <nisse@diamant.hack.org>
+2015-03-19  Niels Möller  <nisse@lysator.liu.se>
 
 	* Makefile.in (OPT_HOGWEED_SOURCES): Deleted make variable.
 	(nettle_SOURCES, hogweed_SOURCES): Don't include optional sources
@@ -85,7 +107,7 @@
 	variables.
 	* version.h.in: New file, defining version numbers.
 
-2015-03-18  Niels Möller  <nisse@diamant.hack.org>
+2015-03-18  Niels Möller  <nisse@lysator.liu.se>
 
 	EdDSA interface change, use plain strings to represent keys.
 	* eddsa.h (_ED25519_LIMB_SIZE): Deleted constant.
@@ -110,13 +132,13 @@
 	* testsuite/ed25519-test.c (test_one): Test
 	ed25519_sha512_public_key, and adapt to new ed25519 interface.
 
-2015-03-14  Niels Möller  <nisse@diamant.hack.org>
+2015-03-14  Niels Möller  <nisse@lysator.liu.se>
 
 	* ccm.c (memeql_sec): New function, more side-channel silent than
 	memcmp.
 	(ccm_decrypt_message): Use it.
 
-2015-03-12  Niels Möller  <nisse@diamant.hack.org>
+2015-03-12  Niels Möller  <nisse@lysator.liu.se>
 
 	* base64.h (struct base64_encode_ctx): Micro optimization of
 	struct layout, saving a few bytes.
@@ -125,7 +147,7 @@
 
 	* nettle.texinfo (ASCII encoding): Document base64url functions.
 
-2015-03-10  Niels Möller  <nisse@diamant.hack.org>
+2015-03-10  Niels Möller  <nisse@lysator.liu.se>
 
 	* nettle.texinfo: Update documentation of curve25519_mul. Say that
 	the output is undefined for points belonging to the twist rather
@@ -137,7 +159,7 @@
 	of curve25519_mul return value.
 	* testsuite/curve25519-dh-test.c (test_a): Likewise.
 
-2015-02-26  Niels Möller  <nisse@diamant.hack.org>
+2015-02-26  Niels Möller  <nisse@lysator.liu.se>
 
 	* nettle.texinfo: Document curve25519 and eddsa.
 
@@ -188,7 +210,7 @@
 2015-02-05  Niels Möller  <nisse@lysator.liu.se>
 
 	* configure.ac (LIBHOGWEED_MAJOR): Undo latest bump, 4 should be
-	enough (previous release, nettle-3.1, used 3).
+	enough (previous release, nettle-3.0, used 3).
 
 2015-01-30  Niels Möller  <nisse@lysator.liu.se>
 
@@ -1357,7 +1379,7 @@
 
 2014-06-07  Niels Möller  <nisse@lysator.liu.se>
 
-	* Released nettle-3.0
+	* Released nettle-3.0.
 
 2014-06-04  Niels Möller  <nisse@lysator.liu.se>
 
