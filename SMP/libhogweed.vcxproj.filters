@@ -180,14 +180,14 @@
     <ClInclude Include="..\bignum.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\eddsa.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\curve25519.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\ecc-generic-modq.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ecc-generic-redc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ecc-hash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -195,12 +195,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ecc-mod.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ecc-modp.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ecc-modq.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ecc-mul-a.c">
@@ -332,9 +326,6 @@
     <ClCompile Include="..\sec-add-1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sec-modinv.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sec-sub-1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -443,9 +434,6 @@
     <ClCompile Include="..\ecc-ecdsa-verify.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ecc-generic-modp.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\dsa-gen-params.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -456,6 +444,78 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\dsa-compat-keygen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-mul-g-eh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-pm1-redc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-pp1-redc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-25519.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-add-eh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-add-ehh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-dup-eh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-eh-to-a.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-mod-arith.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-mod-inv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-mul-a-eh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\curve25519-mul.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\curve25519-mul-g.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\curve25519-eh-to-x.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-pubkey.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-sign.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-verify.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-compress.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-decompress.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-expand.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eddsa-hash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ed25519-sha512-verify.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ed25519-sha512-pubkey.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ed25519-sha512-sign.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

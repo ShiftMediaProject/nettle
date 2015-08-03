@@ -1,5 +1,5 @@
 EXPORTS
-	nettle_MD5Final
+    nettle_MD5Final
     nettle_MD5Init
     nettle_MD5Update
     nettle_aeads
@@ -61,6 +61,9 @@ EXPORTS
     nettle_base64_encode_raw
     nettle_base64_encode_single
     nettle_base64_encode_update
+    nettle_base64url
+    nettle_base64url_decode_init
+    nettle_base64url_encode_init
     nettle_blowfish128_set_key
     nettle_blowfish_decrypt
     nettle_blowfish_encrypt
@@ -135,6 +138,7 @@ EXPORTS
     nettle_chacha_poly1305_update
     nettle_chacha_set_key
     nettle_chacha_set_nonce
+    nettle_chacha_set_nonce96
     nettle_ciphers
     nettle_ctr_crypt
     nettle_des3_decrypt

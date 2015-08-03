@@ -7,6 +7,8 @@ EXPORTS
     nettle_asn1_der_get_uint32
     nettle_asn1_der_iterator_first
     nettle_asn1_der_iterator_next
+    nettle_curve25519_mul
+    nettle_curve25519_mul_g
     nettle_dsa_compat_generate_keypair
     nettle_dsa_generate_keypair
     nettle_dsa_generate_params
@@ -36,24 +38,11 @@ EXPORTS
     nettle_dsa_signature_from_sexp
     nettle_dsa_signature_init
     nettle_dsa_verify
-    nettle_ecc_a_to_j
-    nettle_ecc_add_jja
-    nettle_ecc_add_jja_itch
-    nettle_ecc_add_jjj
-    nettle_ecc_add_jjj_itch
     nettle_ecc_bit_size
-    nettle_ecc_dup_jj
-    nettle_ecc_dup_jj_itch
     nettle_ecc_ecdsa_sign
     nettle_ecc_ecdsa_sign_itch
     nettle_ecc_ecdsa_verify
     nettle_ecc_ecdsa_verify_itch
-    nettle_ecc_j_to_a
-    nettle_ecc_j_to_a_itch
-    nettle_ecc_mul_a
-    nettle_ecc_mul_a_itch
-    nettle_ecc_mul_g
-    nettle_ecc_mul_g_itch
     nettle_ecc_point_clear
     nettle_ecc_point_get
     nettle_ecc_point_init
@@ -71,6 +60,9 @@ EXPORTS
     nettle_ecdsa_generate_keypair
     nettle_ecdsa_sign
     nettle_ecdsa_verify
+    nettle_ed25519_sha512_public_key
+    nettle_ed25519_sha512_sign
+    nettle_ed25519_sha512_verify
     nettle_mpz_get_str_256
     nettle_mpz_init_set_str_256_s
     nettle_mpz_init_set_str_256_u

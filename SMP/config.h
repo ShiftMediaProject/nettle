@@ -1,4 +1,7 @@
 
+/* Define if building universal (internal helper macro) */
+/* #undef AC_APPLE_UNIVERSAL_BUILD */
+
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
    */
@@ -23,11 +26,17 @@
 /* Define if the compiler understands __attribute__ */
 /* #undef HAVE_GCC_ATTRIBUTE */
 
+/* Define to 1 if you have the `getline' function. */
+/* #undef HAVE_GETLINE */
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `gmp' library (-lgmp). */
 #define HAVE_LIBGMP 1
+
+/* Define if compiler and linker supports __attribute__ ifunc */
+/* #undef HAVE_LINK_IFUNC */
 
 /* Define to 1 if you have the <malloc.h> header file. */
 #define HAVE_MALLOC_H 1
@@ -35,15 +44,13 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
-/* Define if mpz_powm_sec is available (appeared in GMP-5) */
-#define HAVE_MPZ_POWM_SEC 1
-
 /* Define to 1 each of the following for which a native (ie. CPU specific)
     implementation of the corresponding routine exists.  */
 /* #undef HAVE_NATIVE_ecc_192_modp */
 /* #undef HAVE_NATIVE_ecc_192_redc */
 /* #undef HAVE_NATIVE_ecc_224_modp */
 /* #undef HAVE_NATIVE_ecc_224_redc */
+/* #undef HAVE_NATIVE_ecc_25519_modp */
 /* #undef HAVE_NATIVE_ecc_256_modp */
 /* #undef HAVE_NATIVE_ecc_256_redc */
 /* #undef HAVE_NATIVE_ecc_384_modp */
@@ -51,6 +58,13 @@
 /* #undef HAVE_NATIVE_ecc_521_modp */
 /* #undef HAVE_NATIVE_ecc_521_redc */
 /* #undef HAVE_NATIVE_gcm_hash8 */
+/* #undef HAVE_NATIVE_salsa20_core */
+/* #undef HAVE_NATIVE_sha1_compress */
+/* #undef HAVE_NATIVE_sha256_compress */
+/* #undef HAVE_NATIVE_sha512_compress */
+/* #undef HAVE_NATIVE_sha3_permute */
+/* #undef HAVE_NATIVE_umac_nh */
+/* #undef HAVE_NATIVE_umac_nh_n */
 
 /* Define to 1 if you have the <openssl/aes.h> header file. */
 /* #undef HAVE_OPENSSL_AES_H */
@@ -66,6 +80,9 @@
 
 /* Define to 1 if you have the <openssl/ecdsa.h> header file. */
 /* #undef HAVE_OPENSSL_ECDSA_H */
+
+/* Define to 1 if you have the `secure_getenv' function. */
+/* #undef HAVE_SECURE_GETENV */
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -90,6 +107,9 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
+
+/* Define to 1 if you have the <valgrind/memcheck.h> header file. */
+/* #undef HAVE_VALGRIND_MEMCHECK_H */
 
 /* The size of `char', as computed by sizeof. */
 #define SIZEOF_CHAR 1
@@ -133,8 +153,32 @@
 /* Define if you have openssl's libcrypto (used for benchmarking) */
 /* #undef WITH_OPENSSL */
 
+/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+   significant byte first (like Motorola and SPARC, unlike Intel). */
+#if defined AC_APPLE_UNIVERSAL_BUILD
+# if defined __BIG_ENDIAN__
+#  define WORDS_BIGENDIAN 1
+# endif
+#else
+# ifndef WORDS_BIGENDIAN
+/* #  undef WORDS_BIGENDIAN */
+# endif
+#endif
+
+/* Define to empty if `const' does not conform to ANSI C. */
+/* #undef const */
+
 /* Define to `int' if <sys/types.h> doesn't define. */
 #define gid_t int
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+/* #undef inline */
+#endif
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+/* #undef size_t */
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #define uid_t int

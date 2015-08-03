@@ -180,6 +180,12 @@
     <ClInclude Include="..\bignum.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\curve25519.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\eddsa.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\umac96.c">
@@ -666,6 +672,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\aes-invert-internal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base64url-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base64url-decode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base64url-encode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\memxor3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
