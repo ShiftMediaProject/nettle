@@ -1,6 +1,8 @@
-/* ecc-generic-modp.c
+C arm/fat/aes-decrypt-internal-2.asm
 
-   Copyright (C) 2013 Niels Möller
+
+ifelse(<
+   Copyright (C) 2015 Niels Möller
 
    This file is part of GNU Nettle.
 
@@ -27,24 +29,7 @@
    You should have received copies of the GNU General Public License and
    the GNU Lesser General Public License along with this program.  If
    not, see http://www.gnu.org/licenses/.
-*/
+>)
 
-/* Development of Nettle's ECC support was funded by the .SE Internet Fund. */
-
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
-
-#include <assert.h>
-
-#include "ecc-internal.h"
-
-void
-ecc_generic_modp (const struct ecc_curve *ecc, mp_limb_t *rp)
-{
-  assert (ecc->Bmodp_size < ecc->size);
-  
-  ecc_mod (rp, 2*ecc->size, ecc->size, ecc->Bmodp, ecc->Bmodp_size,
-	   ecc->Bmodp_shifted,
-	   ecc->size * GMP_NUMB_BITS - ecc->bit_size);
-}
+define(<fat_transform>, <$1_armv6>)
+include_src(<arm/v6/aes-decrypt-internal.asm>)

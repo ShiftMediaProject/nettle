@@ -36,8 +36,26 @@
 
 #include "nettle-meta.h"
 
-#include <gmp.h>
 #include "nettle-types.h"
+
+/* For NETTLE_USE_MINI_GMP */
+#include "version.h"
+
+#if NETTLE_USE_MINI_GMP
+# include "mini-gmp.h"
+
+# define GMP_NUMB_MASK (~(mp_limb_t) 0)
+
+/* Functions missing in older gmp versions, and checked for with ifdef */
+# define mpz_limbs_read mpz_limbs_read
+# define mpn_copyd mpn_copyd
+# define mpn_sqr mpn_sqr
+# define mpz_combit mpz_combit
+# define mpz_import mpz_import
+# define mpz_export mpz_export
+#else
+# include <gmp.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {

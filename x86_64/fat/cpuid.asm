@@ -1,6 +1,7 @@
-/* ecc-modq.c
+C x86_64/fat/cpuid.asm
 
-   Copyright (C) 2013 Niels Möller
+ifelse(<
+   Copyright (C) 2015 Niels Möller
 
    This file is part of GNU Nettle.
 
@@ -27,42 +28,31 @@
    You should have received copies of the GNU General Public License and
    the GNU Lesser General Public License along with this program.  If
    not, see http://www.gnu.org/licenses/.
-*/
+>)
 
-/* Development of Nettle's ECC support was funded by the .SE Internet Fund. */
+C Input argument
+C cpuid input: %edi
+C output pointer: %rsi 	
 
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
+	.file "cpuid.asm"
 
-#include <assert.h>
+	C void _nettle_cpuid(uint32_t in, uint32_t *out)
 
-#include "ecc-internal.h"
+	.text
+	ALIGN(16)
+PROLOGUE(_nettle_cpuid)
+	W64_ENTRY(2)
+	push	%rbx
+	
+	movl	%edi, %eax
+	cpuid
+	mov	%eax, (%rsi)
+	mov	%ebx, 4(%rsi)
+	mov	%ecx, 8(%rsi)
+	mov	%edx, 12(%rsi)
 
-/* Arithmetic mod q, the group order. */
+	pop	%rbx
+	W64_EXIT(2)
+	ret
+EPILOGUE(_nettle_cpuid)
 
-void
-ecc_modq_add (const struct ecc_curve *ecc, mp_limb_t *rp,
-	      const mp_limb_t *ap, const mp_limb_t *bp)
-{
-  mp_limb_t cy;
-  cy = mpn_add_n (rp, ap, bp, ecc->size);
-  cy = cnd_add_n (cy, rp, ecc->Bmodq, ecc->size);
-  cy = cnd_add_n (cy, rp, ecc->Bmodq, ecc->size);
-  assert (cy == 0);  
-}
-
-void
-ecc_modq_mul (const struct ecc_curve *ecc, mp_limb_t *rp,
-	      const mp_limb_t *ap, const mp_limb_t *bp)
-{
-  mpn_mul_n (rp, ap, bp, ecc->size);
-  ecc->modq (ecc, rp);
-}
-
-void
-ecc_modq_inv (const struct ecc_curve *ecc, mp_limb_t *rp, mp_limb_t *ap,
-	      mp_limb_t *scratch)
-{
-  sec_modinv (rp, ap, ecc->size, ecc->q, ecc->qp1h, ecc->bit_size, scratch);
-}

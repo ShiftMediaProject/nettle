@@ -38,9 +38,15 @@ TS_HOGWEED_SOURCES = sexp-test.c sexp-format-test.c \
 		     pkcs1-test.c \
 		     rsa-test.c rsa-encrypt-test.c rsa-keygen-test.c \
 		     dsa-test.c dsa-keygen-test.c \
+		     curve25519-dh-test.c \
 		     ecc-mod-test.c ecc-modinv-test.c ecc-redc-test.c \
+		     ecc-sqrt-test.c \
+		     ecc-dup-test.c ecc-add-test.c \
 		     ecc-mul-g-test.c ecc-mul-a-test.c \
-		     ecdsa-sign-test.c ecdsa-verify-test.c ecdsa-keygen-test.c
+		     ecdsa-sign-test.c ecdsa-verify-test.c \
+		     ecdsa-keygen-test.c ecdh-test.c \
+		     eddsa-compress-test.c eddsa-sign-test.c \
+		     eddsa-verify-test.c ed25519-test.c
 
 TS_SOURCES = $(TS_NETTLE_SOURCES) $(TS_HOGWEED_SOURCES)
 CXX_SOURCES = cxx-test.cxx
@@ -108,7 +114,7 @@ $(TARGETS) $(EXTRA_TARGETS): testutils.$(OBJEXT) ../nettle-internal.$(OBJEXT) \
 
 # --partial-loads-ok=yes is needed for memxor's handling of unaligned
 # data.
-VALGRIND = valgrind --error-exitcode=1 --leak-check=full --partial-loads-ok=yes --show-reachable=yes
+VALGRIND = valgrind --error-exitcode=1 --leak-check=full --show-reachable=yes @IF_ASM@ --partial-loads-ok=yes
 
 # The PATH update is for locating dlls on w*ndows.
 check: $(TS_ALL)

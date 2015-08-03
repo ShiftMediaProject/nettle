@@ -12,10 +12,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#if HAVE_LIBGMP
-# include "bignum.h"
-#endif
-
 #if WITH_HOGWEED
 # include "rsa.h"
 # include "dsa-compat.h"
@@ -24,11 +20,14 @@
 # include "ecc-internal.h"
 # include "ecdsa.h"
 # include "gmp-glue.h"
+# if NETTLE_USE_MINI_GMP
+#  include "knuth-lfib.h"
+# endif
 
 /* Undo dsa-compat name mangling */
 #undef dsa_generate_keypair
 #define dsa_generate_keypair nettle_dsa_generate_keypair
-#endif
+#endif /* WITH_HOGWEED */
 
 #include "nettle-meta.h"
 
@@ -161,8 +160,30 @@ test_armor(const struct nettle_armor *armor,
            const uint8_t *ascii);
 
 #if WITH_HOGWEED
+#ifndef mpn_zero_p
+int
+mpn_zero_p (mp_srcptr ap, mp_size_t n);
+#endif
+
+void
+mpn_out_str (FILE *f, int base, const mp_limb_t *xp, mp_size_t xn);
+
+#if NETTLE_USE_MINI_GMP
+typedef struct knuth_lfib_ctx gmp_randstate_t[1];
+
+void gmp_randinit_default (struct knuth_lfib_ctx *ctx);
+#define gmp_randclear(state)
+void mpz_urandomb (mpz_t r, struct knuth_lfib_ctx *ctx, mp_bitcnt_t bits);
+/* This is cheating */
+#define mpz_rrandomb mpz_urandomb
+
+#endif /* NETTLE_USE_MINI_GMP */
+
 mp_limb_t *
 xalloc_limbs (mp_size_t n);
+
+void
+write_mpn (FILE *f, int base, const mp_limb_t *xp, mp_size_t n);
 
 void
 test_rsa_set_key_1(struct rsa_public_key *pub,
@@ -225,11 +246,22 @@ test_dsa_key(const struct dsa_params *params,
 
 extern const struct ecc_curve * const ecc_curves[];
 
+struct ecc_ref_point
+{
+  const char *x;
+  const char *y;
+};
+
+void
+test_ecc_point (const struct ecc_curve *ecc,
+		const struct ecc_ref_point *ref,
+		const mp_limb_t *p);
+
 void
 test_ecc_mul_a (unsigned curve, unsigned n, const mp_limb_t *p);
 
 void
-test_ecc_mul_j (unsigned curve, unsigned n, const mp_limb_t *p);
+test_ecc_mul_h (unsigned curve, unsigned n, const mp_limb_t *p);
 
 #endif /* WITH_HOGWEED */
   

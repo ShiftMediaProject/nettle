@@ -187,6 +187,9 @@ dsa-test$(EXEEXT): dsa-test.$(OBJEXT)
 dsa-keygen-test$(EXEEXT): dsa-keygen-test.$(OBJEXT)
 	$(LINK) dsa-keygen-test.$(OBJEXT) $(TEST_OBJS) -o dsa-keygen-test$(EXEEXT)
 
+curve25519-dh-test$(EXEEXT): curve25519-dh-test.$(OBJEXT)
+	$(LINK) curve25519-dh-test.$(OBJEXT) $(TEST_OBJS) -o curve25519-dh-test$(EXEEXT)
+
 ecc-mod-test$(EXEEXT): ecc-mod-test.$(OBJEXT)
 	$(LINK) ecc-mod-test.$(OBJEXT) $(TEST_OBJS) -o ecc-mod-test$(EXEEXT)
 
@@ -195,6 +198,15 @@ ecc-modinv-test$(EXEEXT): ecc-modinv-test.$(OBJEXT)
 
 ecc-redc-test$(EXEEXT): ecc-redc-test.$(OBJEXT)
 	$(LINK) ecc-redc-test.$(OBJEXT) $(TEST_OBJS) -o ecc-redc-test$(EXEEXT)
+
+ecc-sqrt-test$(EXEEXT): ecc-sqrt-test.$(OBJEXT)
+	$(LINK) ecc-sqrt-test.$(OBJEXT) $(TEST_OBJS) -o ecc-sqrt-test$(EXEEXT)
+
+ecc-dup-test$(EXEEXT): ecc-dup-test.$(OBJEXT)
+	$(LINK) ecc-dup-test.$(OBJEXT) $(TEST_OBJS) -o ecc-dup-test$(EXEEXT)
+
+ecc-add-test$(EXEEXT): ecc-add-test.$(OBJEXT)
+	$(LINK) ecc-add-test.$(OBJEXT) $(TEST_OBJS) -o ecc-add-test$(EXEEXT)
 
 ecc-mul-g-test$(EXEEXT): ecc-mul-g-test.$(OBJEXT)
 	$(LINK) ecc-mul-g-test.$(OBJEXT) $(TEST_OBJS) -o ecc-mul-g-test$(EXEEXT)
@@ -210,6 +222,21 @@ ecdsa-verify-test$(EXEEXT): ecdsa-verify-test.$(OBJEXT)
 
 ecdsa-keygen-test$(EXEEXT): ecdsa-keygen-test.$(OBJEXT)
 	$(LINK) ecdsa-keygen-test.$(OBJEXT) $(TEST_OBJS) -o ecdsa-keygen-test$(EXEEXT)
+
+ecdh-test$(EXEEXT): ecdh-test.$(OBJEXT)
+	$(LINK) ecdh-test.$(OBJEXT) $(TEST_OBJS) -o ecdh-test$(EXEEXT)
+
+eddsa-compress-test$(EXEEXT): eddsa-compress-test.$(OBJEXT)
+	$(LINK) eddsa-compress-test.$(OBJEXT) $(TEST_OBJS) -o eddsa-compress-test$(EXEEXT)
+
+eddsa-sign-test$(EXEEXT): eddsa-sign-test.$(OBJEXT)
+	$(LINK) eddsa-sign-test.$(OBJEXT) $(TEST_OBJS) -o eddsa-sign-test$(EXEEXT)
+
+eddsa-verify-test$(EXEEXT): eddsa-verify-test.$(OBJEXT)
+	$(LINK) eddsa-verify-test.$(OBJEXT) $(TEST_OBJS) -o eddsa-verify-test$(EXEEXT)
+
+ed25519-test$(EXEEXT): ed25519-test.$(OBJEXT)
+	$(LINK) ed25519-test.$(OBJEXT) $(TEST_OBJS) -o ed25519-test$(EXEEXT)
 
 sha1-huge-test$(EXEEXT): sha1-huge-test.$(OBJEXT)
 	$(LINK) sha1-huge-test.$(OBJEXT) $(TEST_OBJS) -o sha1-huge-test$(EXEEXT)

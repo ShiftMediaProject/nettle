@@ -1,6 +1,6 @@
-/* sec-modinv.c
+/* ecc-mod-inv.c
 
-   Copyright (C) 2013 Niels Möller
+   Copyright (C) 2013, 2014 Niels Möller
 
    This file is part of GNU Nettle.
 
@@ -54,33 +54,25 @@ cnd_neg (int cnd, mp_limb_t *rp, const mp_limb_t *ap, mp_size_t n)
     }
 }
 
-static void
-cnd_swap (int cnd, mp_limb_t *ap, mp_limb_t *bp, mp_size_t n)
-{
-  mp_limb_t mask = - (mp_limb_t) (cnd != 0);
-  mp_size_t i;
-  for (i = 0; i < n; i++)
-    {
-      mp_limb_t a, b, t;
-      a = ap[i];
-      b = bp[i];
-      t = (a ^ b) & mask;
-      ap[i] = a ^ t;
-      bp[i] = b ^ t;
-    }
-}
-
 /* Compute a^{-1} mod m, with running time depending only on the size.
-   Also needs (m+1)/2, and m must be odd. */
-void
-sec_modinv (mp_limb_t *vp, mp_limb_t *ap, mp_size_t n,
-	    const mp_limb_t *mp, const mp_limb_t *mp1h, mp_size_t bit_size,
-	    mp_limb_t *scratch)
-{
-#define bp scratch
-#define dp (scratch + n)
-#define up (scratch + 2*n)
+   Returns zero if a == 0 (mod m), to be consistent with a^{phi(m)-1}.
+   Also needs (m+1)/2, and m must be odd.
 
+   Needs 2n limbs available at rp, and 2n additional scratch limbs.
+*/
+
+/* FIXME: Could use mpn_sec_invert (in GMP-6), but with a bit more
+   scratch need since it doesn't precompute (m+1)/2. */
+void
+ecc_mod_inv (const struct ecc_modulo *m,
+	     mp_limb_t *vp, const mp_limb_t *in_ap,
+	     mp_limb_t *scratch)
+{
+#define ap scratch
+#define bp (scratch + n)
+#define up (vp + n)
+
+  mp_size_t n = m->size;
   /* Avoid the mp_bitcnt_t type for compatibility with older GMP
      versions. */  
   unsigned i;
@@ -100,10 +92,11 @@ sec_modinv (mp_limb_t *vp, mp_limb_t *ap, mp_size_t n,
 
   up[0] = 1;
   mpn_zero (up+1, n - 1);
-  mpn_copyi (bp, mp, n);
+  mpn_copyi (bp, m->m, n);
   mpn_zero (vp, n);
+  mpn_copyi (ap, in_ap, n);
 
-  for (i = bit_size + GMP_NUMB_BITS * n; i-- > 0; )
+  for (i = m->bit_size + GMP_NUMB_BITS * n; i-- > 0; )
     {
       mp_limb_t odd, swap, cy;
       
@@ -145,37 +138,22 @@ sec_modinv (mp_limb_t *vp, mp_limb_t *ap, mp_size_t n,
       assert (bp[0] & 1);
       odd = ap[0] & 1;
 
-      /* Which variant is fastest depends on the speed of the various
-	 cnd_* functions. Assembly implementation would help. */
-#if 1
       swap = cnd_sub_n (odd, ap, bp, n);
       cnd_add_n (swap, bp, ap, n);
       cnd_neg (swap, ap, ap, n);
-#else
-      swap = odd & mpn_sub_n (dp, ap, bp, n);
-      cnd_copy (swap, bp, ap, n);
-      cnd_neg (swap, dp, dp, n);
-      cnd_copy (odd, ap, dp, n);
-#endif
 
-#if 1
       cnd_swap (swap, up, vp, n);
       cy = cnd_sub_n (odd, up, vp, n);
-      cy -= cnd_add_n (cy, up, mp, n);
-#else
-      cy = cnd_sub_n (odd, up, vp, n);
-      cnd_add_n (swap, vp, up, n);
-      cnd_neg (swap, up, up, n);
-      cnd_add_n (cy ^ swap, up, mp, n);
-#endif
+      cy -= cnd_add_n (cy, up, m->m, n);
+
       cy = mpn_rshift (ap, ap, n, 1);
       assert (cy == 0);
       cy = mpn_rshift (up, up, n, 1);
-      cy = cnd_add_n (cy, up, mp1h, n);
+      cy = cnd_add_n (cy, up, m->mp1h, n);
       assert (cy == 0);
     }
   assert ( (ap[0] | ap[n-1]) == 0);
+#undef ap
 #undef bp
-#undef dp
 #undef up
 }

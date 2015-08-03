@@ -33,9 +33,7 @@
 #ifndef NETTLE_GMP_GLUE_H_INCLUDED
 #define NETTLE_GMP_GLUE_H_INCLUDED
 
-#include <gmp.h>
-
-#include "nettle-stdint.h"
+#include "bignum.h"
 
 #ifdef mpz_limbs_read
 #define GMP_HAVE_mpz_limbs_read 1
@@ -68,11 +66,14 @@
 #define mpn_sqr(rp, ap, n) mpn_mul_n((rp), (ap), (ap), (n))
 #endif
 
+#define cnd_swap _nettle_cnd_swap
 #define mpz_limbs_cmp _nettle_mpz_limbs_cmp
 #define mpz_limbs_read_n _nettle_mpz_limbs_read_n
 #define mpz_limbs_copy _nettle_mpz_limbs_copy
 #define mpz_set_n _nettle_mpz_set_n
 #define mpn_set_base256 _nettle_mpn_set_base256
+#define mpn_set_base256_le _nettle_mpn_set_base256_le
+#define mpn_get_base256_le _nettle_mpn_get_base256_le
 #define gmp_alloc_limbs _nettle_gmp_alloc_limbs
 #define gmp_free_limbs _nettle_gmp_free_limbs
 #define gmp_free _nettle_gmp_free
@@ -143,6 +144,9 @@ void
 mpn_zero (mp_ptr ptr, mp_size_t n);
 #endif /* !GMP_HAVE_mpn_copyd */
 
+void
+cnd_swap (mp_limb_t cnd, mp_limb_t *ap, mp_limb_t *bp, mp_size_t n);
+
 /* Convenience functions */
 int
 mpz_limbs_cmp (mpz_srcptr a, const mp_limb_t *bp, mp_size_t bn);
@@ -155,7 +159,7 @@ mpz_limbs_read_n (mpz_ptr x, mp_size_t n);
 
 /* Copy limbs, with zero-padding. */
 /* FIXME: Reorder arguments, on the theory that the first argument of
-   an _mpz_* fucntion should be an mpz_t? Or rename to _mpz_get_limbs,
+   an _mpz_* function should be an mpz_t? Or rename to _mpz_get_limbs,
    with argument order consistent with mpz_get_*. */
 void
 mpz_limbs_copy (mp_limb_t *xp, mpz_srcptr x, mp_size_t n);
@@ -168,6 +172,14 @@ mpz_set_n (mpz_t r, const mp_limb_t *xp, mp_size_t xn);
 void
 mpn_set_base256 (mp_limb_t *rp, mp_size_t rn,
 		 const uint8_t *xp, size_t xn);
+
+void
+mpn_set_base256_le (mp_limb_t *rp, mp_size_t rn,
+		    const uint8_t *xp, size_t xn);
+
+void
+mpn_get_base256_le (uint8_t *rp, size_t rn,
+		    const mp_limb_t *xp, mp_size_t xn);
 
 
 mp_limb_t *

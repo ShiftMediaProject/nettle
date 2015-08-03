@@ -2,7 +2,7 @@
 
    Compile time constant (but machine dependent) tables.
 
-   Copyright (C) 2013 Niels Möller
+   Copyright (C) 2013, 2014 Niels Möller
 
    This file is part of GNU Nettle.
 
@@ -37,6 +37,7 @@
 # include "config.h"
 #endif
 
+#include "ecc.h"
 #include "ecc-internal.h"
 
 #define USE_REDC 0
@@ -46,7 +47,7 @@
 #if HAVE_NATIVE_ecc_521_modp
 #define ecc_521_modp nettle_ecc_521_modp
 void
-ecc_521_modp (const struct ecc_curve *ecc, mp_limb_t *rp);
+ecc_521_modp (const struct ecc_modulo *m, mp_limb_t *rp);
 
 #else
 
@@ -56,7 +57,7 @@ ecc_521_modp (const struct ecc_curve *ecc, mp_limb_t *rp);
 
 /* Result may be *slightly* larger than 2^521 */
 static void
-ecc_521_modp (const struct ecc_curve *ecc UNUSED, mp_limb_t *rp)
+ecc_521_modp (const struct ecc_modulo *m UNUSED, mp_limb_t *rp)
 {
   /* FIXME: Should use mpn_addlsh_n_ip1 */
   mp_limb_t hi;
@@ -76,31 +77,63 @@ ecc_521_modp (const struct ecc_curve *ecc UNUSED, mp_limb_t *rp)
 
 const struct ecc_curve nettle_secp_521r1 =
 {
-  521,
-  ECC_LIMB_SIZE,    
-  ECC_BMODP_SIZE,
-  ECC_BMODQ_SIZE,
+  {
+    521,
+    ECC_LIMB_SIZE,    
+    ECC_BMODP_SIZE,
+    ECC_REDC_SIZE,
+    ECC_MOD_INV_ITCH (ECC_LIMB_SIZE),
+    0,
+
+    ecc_p,
+    ecc_Bmodp,
+    ecc_Bmodp_shifted,
+    ecc_redc_ppm1,
+    ecc_pp1h,
+
+    ecc_521_modp,
+    ecc_521_modp,
+    ecc_mod_inv,
+    NULL,
+  },
+  {
+    521,
+    ECC_LIMB_SIZE,    
+    ECC_BMODQ_SIZE,
+    0,
+    ECC_MOD_INV_ITCH (ECC_LIMB_SIZE),
+    0,
+
+    ecc_q,
+    ecc_Bmodq,
+    ecc_Bmodq_shifted,
+    NULL,
+    ecc_qp1h,
+
+    ecc_mod,
+    ecc_mod,
+    ecc_mod_inv,
+    NULL,
+  },
+  
   USE_REDC,
-  ECC_REDC_SIZE,
   ECC_PIPPENGER_K,
   ECC_PIPPENGER_C,
-  ecc_p,
+
+  ECC_ADD_JJJ_ITCH (ECC_LIMB_SIZE),
+  ECC_MUL_A_ITCH (ECC_LIMB_SIZE),
+  ECC_MUL_G_ITCH (ECC_LIMB_SIZE),
+  ECC_J_TO_A_ITCH (ECC_LIMB_SIZE),
+
+  ecc_add_jjj,
+  ecc_mul_a,
+  ecc_mul_g,
+  ecc_j_to_a,
+
   ecc_b,
-  ecc_q,
   ecc_g,
-  ecc_redc_g,
-  ecc_521_modp,
-  ecc_generic_redc,
-  ecc_521_modp,
-  ecc_generic_modq,
-  ecc_Bmodp,
-  ecc_Bmodp_shifted,
-  ecc_pp1h,
-  ecc_redc_ppm1,
+  NULL,
   ecc_unit,
-  ecc_Bmodq,
-  ecc_Bmodq_shifted,
-  ecc_qp1h,
   ecc_table
 };
 

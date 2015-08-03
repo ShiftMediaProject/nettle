@@ -38,24 +38,17 @@
 #include "ecc.h"
 #include "ecc-internal.h"
 
-mp_size_t
-ecc_j_to_a_itch (const struct ecc_curve *ecc)
-{
-  /* Needs 2*ecc->size + scratch for ecc_modq_inv */
-  return ECC_J_TO_A_ITCH (ecc->size);
-}
-
 void
 ecc_j_to_a (const struct ecc_curve *ecc,
-	    int flags,
+	    int op,
 	    mp_limb_t *r, const mp_limb_t *p,
 	    mp_limb_t *scratch)
 {
 #define izp   scratch
-#define up   (scratch + ecc->size)
-#define iz2p (scratch + ecc->size)
-#define iz3p (scratch + 2*ecc->size)
-#define izBp (scratch + 3*ecc->size)
+#define up   (scratch + 2*ecc->p.size)
+#define iz2p (scratch + ecc->p.size)
+#define iz3p (scratch + 2*ecc->p.size)
+#define izBp (scratch + 3*ecc->p.size)
 #define tp    scratch
 
   mp_limb_t cy;
@@ -65,38 +58,30 @@ ecc_j_to_a (const struct ecc_curve *ecc,
       /* Set v = (r_z / B^2)^-1,
 
 	 r_x = p_x v^2 / B^3 =  ((v/B * v)/B * p_x)/B
-	 r_y = p_y v^3 / B^4 = (((v/B * v)/B * v)/B * p_x)/B
-
-	 Skip the first redc, if we want to stay in Montgomery
-	 representation.
+	 r_y = p_y v^3 / B^4 = (((v/B * v)/B * v)/B * p_y)/B
       */
 
-      mpn_copyi (up, p + 2*ecc->size, ecc->size);
-      mpn_zero (up + ecc->size, ecc->size);
-      ecc->redc (ecc, up);
-      mpn_zero (up + ecc->size, ecc->size);
-      ecc->redc (ecc, up);
+      mpn_copyi (up, p + 2*ecc->p.size, ecc->p.size);
+      mpn_zero (up + ecc->p.size, ecc->p.size);
+      ecc->p.reduce (&ecc->p, up);
+      mpn_zero (up + ecc->p.size, ecc->p.size);
+      ecc->p.reduce (&ecc->p, up);
 
-      ecc_modp_inv (ecc, izp, up, up + ecc->size);
+      ecc->p.invert (&ecc->p, izp, up, up + ecc->p.size);
 
-      if (flags & 1)
-	{
-	  /* Divide this common factor by B */
-	  mpn_copyi (izBp, izp, ecc->size);
-	  mpn_zero (izBp + ecc->size, ecc->size);
-	  ecc->redc (ecc, izBp);
+      /* Divide this common factor by B */
+      mpn_copyi (izBp, izp, ecc->p.size);
+      mpn_zero (izBp + ecc->p.size, ecc->p.size);
+      ecc->p.reduce (&ecc->p, izBp);
 
-	  ecc_modp_mul (ecc, iz2p, izp, izBp);
-	}
-      else
-	ecc_modp_sqr (ecc, iz2p, izp);	
+      ecc_modp_mul (ecc, iz2p, izp, izBp);
     }
   else
     {
       /* Set s = p_z^{-1}, r_x = p_x s^2, r_y = p_y s^3 */
 
-      mpn_copyi (up, p+2*ecc->size, ecc->size); /* p_z */
-      ecc_modp_inv (ecc, izp, up, up + ecc->size);
+      mpn_copyi (up, p+2*ecc->p.size, ecc->p.size); /* p_z */
+      ecc->p.invert (&ecc->p, izp, up, up + ecc->p.size);
 
       ecc_modp_sqr (ecc, iz2p, izp);
     }
@@ -104,18 +89,27 @@ ecc_j_to_a (const struct ecc_curve *ecc,
   ecc_modp_mul (ecc, iz3p, iz2p, p);
   /* ecc_modp (and ecc_modp_mul) may return a value up to 2p - 1, so
      do a conditional subtraction. */
-  cy = mpn_sub_n (r, iz3p, ecc->p, ecc->size);
-  cnd_copy (cy, r, iz3p, ecc->size);
+  cy = mpn_sub_n (r, iz3p, ecc->p.m, ecc->p.size);
+  cnd_copy (cy, r, iz3p, ecc->p.size);
 
-  if (flags & 2)
-    /* Skip y coordinate */
-    return;
-
+  if (op)
+    {
+      /* Skip y coordinate */
+      if (op > 1)
+	{
+	  /* Also reduce the x coordinate mod ecc->q. It should
+	     already be < 2*ecc->q, so one subtraction should
+	     suffice. */
+	  cy = mpn_sub_n (scratch, r, ecc->q.m, ecc->p.size);
+	  cnd_copy (cy == 0, r, scratch, ecc->p.size);
+	}
+      return;
+    }
   ecc_modp_mul (ecc, iz3p, iz2p, izp);
-  ecc_modp_mul (ecc, tp, iz3p, p + ecc->size);
+  ecc_modp_mul (ecc, tp, iz3p, p + ecc->p.size);
   /* And a similar subtraction. */
-  cy = mpn_sub_n (r + ecc->size, tp, ecc->p, ecc->size);
-  cnd_copy (cy, r + ecc->size, tp, ecc->size);
+  cy = mpn_sub_n (r + ecc->p.size, tp, ecc->p.m, ecc->p.size);
+  cnd_copy (cy, r + ecc->p.size, tp, ecc->p.size);
 
 #undef izp
 #undef up

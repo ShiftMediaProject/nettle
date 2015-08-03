@@ -47,6 +47,7 @@
 
 #include "dsa.h"
 #include "rsa.h"
+#include "curve25519.h"
 
 #include "nettle-meta.h"
 #include "sexp.h"
@@ -146,6 +147,11 @@ bench_alg (const struct alg *alg)
   void *ctx;
 
   ctx = alg->init(alg->size);
+  if (ctx == NULL)
+    {
+      printf("%15s %4d N/A\n", alg->name, alg->size);
+      return;
+    }
 
   sign = time_function (alg->sign, ctx);
   verify = time_function (alg->verify, ctx);
@@ -521,6 +527,7 @@ bench_openssl_rsa_init (unsigned size)
   ctx->ref = xalloc (RSA_size (ctx->key));
   ctx->signature = xalloc (RSA_size (ctx->key));
   ctx->digest = hash_string (&nettle_sha1, 3, "foo");
+  RSA_blinding_off(ctx->key);
 
   if (! RSA_sign (NID_sha1, ctx->digest, SHA1_DIGEST_SIZE,
 		  ctx->ref, &ctx->siglen, ctx->key))
@@ -603,7 +610,10 @@ bench_openssl_ecdsa_init (unsigned size)
     default:
       die ("Internal error.\n");
     }
-  assert (ctx->key);
+
+  /* This curve isn't supported in this build of openssl */
+  if (ctx->key == NULL)
+    return NULL;
 
   if (!EC_KEY_generate_key( ctx->key))
     die ("Openssl EC_KEY_generate_key failed.\n");
@@ -639,6 +649,47 @@ bench_openssl_ecdsa_clear (void *p)
   free (ctx);
 }
 #endif
+
+struct curve25519_ctx
+{
+  char x[CURVE25519_SIZE];
+  char s[CURVE25519_SIZE];
+};
+
+static void
+bench_curve25519_mul_g (void *p)
+{
+  struct curve25519_ctx *ctx = p;
+  char q[CURVE25519_SIZE];
+  curve25519_mul_g (q, ctx->s);
+}
+
+static void
+bench_curve25519_mul (void *p)
+{
+  struct curve25519_ctx *ctx = p;
+  char q[CURVE25519_SIZE];
+  curve25519_mul (q, ctx->s, ctx->x);
+}
+
+static void
+bench_curve25519 (void)
+{
+  double mul_g;
+  double mul;
+  struct knuth_lfib_ctx lfib;
+  struct curve25519_ctx ctx;
+  knuth_lfib_init (&lfib, 2);
+
+  knuth_lfib_random (&lfib, sizeof(ctx.s), ctx.s);
+  curve25519_mul_g (ctx.x, ctx.s);
+
+  mul_g = time_function (bench_curve25519_mul_g, &ctx);
+  mul = time_function (bench_curve25519_mul, &ctx);
+
+  printf("%15s %4d %9.4f %9.4f\n",
+	 "curve25519", 255, 1e-3/mul_g, 1e-3/mul);
+}
 
 struct alg alg_list[] = {
   { "rsa",   1024, bench_rsa_init,   bench_rsa_sign,   bench_rsa_verify,   bench_rsa_clear },
@@ -683,6 +734,9 @@ main (int argc, char **argv)
   for (i = 0; i < numberof(alg_list); i++)
     if (!filter || strstr (alg_list[i].name, filter))
       bench_alg (&alg_list[i]);
+
+  if (!filter || strstr("curve25519", filter))
+    bench_curve25519();
 
   return EXIT_SUCCESS;
 }

@@ -11,9 +11,9 @@ TAGS
 *.so
 *.exe
 *.dll
+*.dylib
 core
 /*.d
-/*.po
 /*.s
 /*.tar.gz
 /*.tar.gz.asc
@@ -37,7 +37,7 @@ core
 /aesdata
 /desdata
 /eccdata
-/eccdata.stamp
+/*.stamp
 /gcmdata
 /shadata
 /twofishdata
@@ -49,6 +49,7 @@ core
 /ecc-256.h
 /ecc-384.h
 /ecc-521.h
+/ecc-25519.h
 /nettle.aux
 /nettle.cp
 /nettle.cps
@@ -66,3 +67,5 @@ core
 /nettle.tps
 /nettle.vr
 /nettle.vrs
+/libhogweed.map
+/libnettle.map

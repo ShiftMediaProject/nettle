@@ -38,6 +38,7 @@
 
 const struct nettle_armor * const nettle_armors[] = {
   &nettle_base64,
+  &nettle_base64url,
   &nettle_base16,
   NULL
 };

@@ -2,6 +2,7 @@
 
 #include "testutils.h"
 
+#include "base16.h"
 #include "cbc.h"
 #include "ctr.h"
 #include "knuth-lfib.h"
@@ -11,37 +12,12 @@
 #include <assert.h>
 #include <ctype.h>
 
-/* -1 means invalid */
-static const signed char hex_digits[0x100] =
-  {
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-     0, 1, 2, 3, 4, 5, 6, 7, 8, 9,-1,-1,-1,-1,-1,-1,
-    -1,10,11,12,13,14,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,10,11,12,13,14,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-  };
-
 void
 die(const char *format, ...)
 {
   va_list args;
   va_start(args, format);
-#if WITH_HOGWEED
-  gmp_vfprintf(stderr, format, args);
-#else
   vfprintf(stderr, format, args);
-#endif
   va_end(args);
 
   abort ();
@@ -93,67 +69,19 @@ tstring_data(size_t length, const char *data)
   return s;
 }
 
-static size_t
-decode_hex_length(const char *h)
-{
-  const unsigned char *hex = (const unsigned char *) h;
-  size_t count;
-  size_t i;
-  
-  for (count = i = 0; hex[i]; i++)
-    {
-      if (isspace(hex[i]))
-	continue;
-      if (hex_digits[hex[i]] < 0)
-	abort();
-      count++;
-    }
-
-  if (count % 2)
-    abort();
-  return count / 2;  
-}
-
-static void
-decode_hex(uint8_t *dst, const char *h)
-{  
-  const unsigned char *hex = (const unsigned char *) h;
-  size_t i = 0;
-  
-  for (;;)
-  {
-    int high, low;
-    
-    while (*hex && isspace(*hex))
-      hex++;
-
-    if (!*hex)
-      return;
-
-    high = hex_digits[*hex++];
-    ASSERT (high >= 0);
-
-    while (*hex && isspace(*hex))
-      hex++;
-
-    ASSERT (*hex);
-
-    low = hex_digits[*hex++];
-    ASSERT (low >= 0);
-
-    dst[i++] = (high << 4) | low;
-  }
-}
-
 struct tstring *
 tstring_hex(const char *hex)
 {
+  struct base16_decode_ctx ctx;
   struct tstring *s;
-  size_t length = decode_hex_length(hex);
+  size_t length = strlen(hex);
 
-  s = tstring_alloc(length);
+  s = tstring_alloc(BASE16_DECODE_LENGTH (length));
+  base16_decode_init (&ctx);
+  ASSERT (base16_decode_update (&ctx, &s->length, s->data,
+				length, hex));
+  ASSERT (base16_decode_final (&ctx));
 
-  decode_hex(s->data, hex);
   return s;
 }
 
@@ -689,6 +617,45 @@ mpz_combit (mpz_t x, unsigned long int bit)
     mpz_setbit(x, bit);
 }
 #endif
+
+#ifndef mpn_zero_p
+int
+mpn_zero_p (mp_srcptr ap, mp_size_t n)
+{
+  while (--n >= 0)
+    {
+      if (ap[n] != 0)
+	return 0;
+    }
+  return 1;
+}
+#endif
+
+void
+mpn_out_str (FILE *f, int base, const mp_limb_t *xp, mp_size_t xn)
+{
+  mpz_t x;
+  mpz_out_str (f, base, mpz_roinit_n (x, xp, xn));
+}
+
+#if NETTLE_USE_MINI_GMP
+void
+gmp_randinit_default (struct knuth_lfib_ctx *ctx)
+{
+  knuth_lfib_init (ctx, 17);
+}
+void
+mpz_urandomb (mpz_t r, struct knuth_lfib_ctx *ctx, mp_bitcnt_t bits)
+{
+  size_t bytes = (bits+7)/8;
+  uint8_t *buf = xalloc (bytes);
+
+  knuth_lfib_random (ctx, bytes, buf);
+  buf[bytes-1] &= 0xff >> (8*bytes - bits);
+  nettle_mpz_set_str_256_u (r, bytes, buf);
+  free (buf);
+}
+#endif /* NETTLE_USE_MINI_GMP */
 
 mp_limb_t *
 xalloc_limbs (mp_size_t n)
@@ -1262,6 +1229,7 @@ const struct ecc_curve * const ecc_curves[] = {
   &nettle_secp_256r1,
   &nettle_secp_384r1,
   &nettle_secp_521r1,
+  &_nettle_curve25519,
   NULL
 };
 
@@ -1280,27 +1248,31 @@ test_mpn (const char *ref, const mp_limb_t *xp, mp_size_t n)
   return res;
 }
 
-struct ecc_ref_point
+void
+write_mpn (FILE *f, int base, const mp_limb_t *xp, mp_size_t n)
 {
-  const char *x;
-  const char *y;
-};
+  mpz_t t;
+  mpz_out_str (f, base, mpz_roinit_n (t,xp, n));
+}
 
-static void
+void
 test_ecc_point (const struct ecc_curve *ecc,
 		const struct ecc_ref_point *ref,
 		const mp_limb_t *p)
 {
-  if (! (test_mpn (ref->x, p, ecc->size)
-	 && test_mpn (ref->y, p + ecc->size, ecc->size) ))
+  if (! (test_mpn (ref->x, p, ecc->p.size)
+	 && test_mpn (ref->y, p + ecc->p.size, ecc->p.size) ))
     {
-      gmp_fprintf (stderr, "Incorrect point!\n"
-		   "got: x = %Nx\n"
-		   "     y = %Nx\n"
-		   "ref: x = %s\n"
-		   "     y = %s\n",
-		   p, ecc->size, p + ecc->size, ecc->size,
-		   ref->x, ref->y);
+      fprintf (stderr, "Incorrect point!\n"
+	       "got: x = ");
+      write_mpn (stderr, 16, p, ecc->p.size);
+      fprintf (stderr, "\n"
+	       "     y = ");
+      write_mpn (stderr, 16, p + ecc->p.size, ecc->p.size);
+      fprintf (stderr, "\n"
+	       "ref: x = %s\n"
+	       "     y = %s\n",
+	       ref->x, ref->y);
       abort();
     }
 }
@@ -1309,7 +1281,7 @@ void
 test_ecc_mul_a (unsigned curve, unsigned n, const mp_limb_t *p)
 {
   /* For each curve, the points 2 g, 3 g and 4 g */
-  static const struct ecc_ref_point ref[5][3] = {
+  static const struct ecc_ref_point ref[6][3] = {
     { { "dafebf5828783f2ad35534631588a3f629a70fb16982a888",
 	"dd6bda0d993da0fa46b27bbc141b868f59331afa5c7e93ab" },
       { "76e32a2557599e6edcd283201fb2b9aadfd0d359cbb263da",
@@ -1363,20 +1335,67 @@ test_ecc_mul_a (unsigned curve, unsigned n, const mp_limb_t *p)
 	"82"
 	"096f84261279d2b673e0178eb0b4abb65521aef6e6e32e1b5ae63fe2f19907f2"
 	"79f283e54ba385405224f750a95b85eebb7faef04699d1d9e21f47fc346e4d0d" },
+    },
+    { { "36ab384c9f5a046c3d043b7d1833e7ac080d8e4515d7a45f83c5a14e2843ce0e",
+	"2260cdf3092329c21da25ee8c9a21f5697390f51643851560e5f46ae6af8a3c9" },
+      { "67ae9c4a22928f491ff4ae743edac83a6343981981624886ac62485fd3f8e25c",
+	"1267b1d177ee69aba126a18e60269ef79f16ec176724030402c3684878f5b4d4" },
+      { "203da8db56cff1468325d4b87a3520f91a739ec193ce1547493aa657c4c9f870",
+	"47d0e827cb1595e1470eb88580d5716c4cf22832ea2f0ff0df38ab61ca32112f" },
     }
   };
-  assert (curve < 5);
-  assert (n >= 2 && n <= 4);
-  test_ecc_point (ecc_curves[curve], &ref[curve][n-2], p);
+  assert (curve < 6);
+  assert (n <= 4);
+  if (n == 0)
+    {
+      /* Makes sense for curve25519 only */
+      const struct ecc_curve *ecc = ecc_curves[curve];
+      assert (ecc->p.bit_size == 255);
+      if (!mpn_zero_p (p, ecc->p.size)
+	  || mpn_cmp (p + ecc->p.size, ecc->unit, ecc->p.size) != 0)
+	{
+	  fprintf (stderr, "Incorrect point (expected (0, 1))!\n"
+		   "got: x = ");
+	  write_mpn (stderr, 16, p, ecc->p.size);
+	  fprintf (stderr, "\n"
+		   "     y = ");
+	  write_mpn (stderr, 16, p + ecc->p.size, ecc->p.size);
+	  fprintf (stderr, "\n");
+	  abort();
+	}
+    }
+  else if (n == 1)
+    {
+      const struct ecc_curve *ecc = ecc_curves[curve];
+      if (mpn_cmp (p, ecc->g, 2*ecc->p.size) != 0)
+	{
+	  fprintf (stderr, "Incorrect point (expected g)!\n"
+		   "got: x = ");
+	  write_mpn (stderr, 16, p, ecc->p.size);
+	  fprintf (stderr, "\n"
+		   "     y = ");
+	  write_mpn (stderr, 16, p + ecc->p.size, ecc->p.size);
+	  fprintf (stderr, "\n"
+		   "ref: x = ");
+	  write_mpn (stderr, 16, ecc->g, ecc->p.size);
+	  fprintf (stderr, "\n"
+		   "     y = ");
+	  write_mpn (stderr, 16, ecc->g + ecc->p.size, ecc->p.size);
+	  fprintf (stderr, "\n");
+	  abort();
+	}
+    }
+  else
+    test_ecc_point (ecc_curves[curve], &ref[curve][n-2], p);
 }
 
 void
-test_ecc_mul_j (unsigned curve, unsigned n, const mp_limb_t *p)
+test_ecc_mul_h (unsigned curve, unsigned n, const mp_limb_t *p)
 {
   const struct ecc_curve *ecc = ecc_curves[curve];
   mp_limb_t *np = xalloc_limbs (ecc_size_a (ecc));
-  mp_limb_t *scratch = xalloc_limbs (ecc_j_to_a_itch(ecc));
-  ecc_j_to_a (ecc, 1, np, p, scratch);
+  mp_limb_t *scratch = xalloc_limbs (ecc->h_to_a_itch);
+  ecc->h_to_a (ecc, 0, np, p, scratch);
 
   test_ecc_mul_a (curve, n, np);
 

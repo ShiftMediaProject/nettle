@@ -51,7 +51,7 @@ ecdsa_sign (const struct ecc_scalar *key,
 {
   /* At most 936 bytes. */
   TMP_DECL(k, mp_limb_t, ECC_MAX_SIZE + ECC_ECDSA_SIGN_ITCH (ECC_MAX_SIZE));
-  mp_limb_t size = key->ecc->size;
+  mp_limb_t size = key->ecc->p.size;
   mp_limb_t *rp = mpz_limbs_write (signature->r, size);
   mp_limb_t *sp = mpz_limbs_write (signature->s, size);
 
@@ -61,7 +61,7 @@ ecdsa_sign (const struct ecc_scalar *key,
      timing is still independent of the secret k finally used. */
   do
     {
-      ecc_modq_random (key->ecc, k, random_ctx, random, k + size);
+      ecc_mod_random (&key->ecc->q, k, random_ctx, random, k + size);
       ecc_ecdsa_sign (key->ecc, key->p, k, digest_length, digest,
 		   rp, sp, k + size);
       mpz_limbs_finish (signature->r, size);

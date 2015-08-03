@@ -42,12 +42,14 @@ extern "C" {
 
 /* Name mangling */
 #define base64_encode_init nettle_base64_encode_init
+#define base64url_encode_init nettle_base64url_encode_init
 #define base64_encode_single nettle_base64_encode_single
 #define base64_encode_update nettle_base64_encode_update
 #define base64_encode_final nettle_base64_encode_final
 #define base64_encode_raw nettle_base64_encode_raw
 #define base64_encode_group nettle_base64_encode_group
 #define base64_decode_init nettle_base64_decode_init
+#define base64url_decode_init nettle_base64url_decode_init
 #define base64_decode_single nettle_base64_decode_single
 #define base64_decode_update nettle_base64_decode_update
 #define base64_decode_final nettle_base64_decode_final
@@ -71,12 +73,18 @@ extern "C" {
 
 struct base64_encode_ctx
 {
-  unsigned word;   /* Leftover bits */
-  unsigned bits;  /* Number of bits, always 0, 2, or 4. */
+  const uint8_t *alphabet; /* Alphabet to use for encoding */
+  unsigned short word;     /* Leftover bits */
+  unsigned char bits;      /* Number of bits, always 0, 2, or 4. */
 };
 
+/* Initialize encoding context for base-64 */
 void
 base64_encode_init(struct base64_encode_ctx *ctx);
+
+/* Initialize encoding context for URL safe alphabet, RFC 4648. */
+void
+base64url_encode_init(struct base64_encode_ctx *ctx);
 
 /* Encodes a single byte. Returns amount of output (always 1 or 2). */
 size_t
@@ -118,15 +126,21 @@ base64_encode_group(uint8_t *dst, uint32_t group);
 
 struct base64_decode_ctx
 {
-  unsigned word;   /* Leftover bits */
-  unsigned bits;   /* Number buffered bits */
+  const signed char *table; /* Decoding table */
+  unsigned short word;      /* Leftover bits */
+  unsigned char bits;       /* Number buffered bits */
 
   /* Number of padding characters encountered */
-  unsigned padding;
+  unsigned char padding;
 };
 
+/* Initialize decoding context for base-64 */
 void
 base64_decode_init(struct base64_decode_ctx *ctx);
+
+/* Initialize encoding context for URL safe alphabet, RFC 4648. */
+void
+base64url_decode_init(struct base64_decode_ctx *ctx);
 
 /* Decodes a single byte. Returns amount of output (0 or 1), or -1 on
  * errors. */
