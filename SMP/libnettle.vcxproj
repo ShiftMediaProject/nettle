@@ -505,7 +505,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -515,6 +515,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -602,7 +605,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -612,6 +615,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -703,7 +709,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -713,6 +719,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -801,7 +810,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -811,6 +820,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -912,7 +924,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -922,6 +934,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1023,7 +1038,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -1033,6 +1048,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1133,7 +1151,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -1143,6 +1161,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1243,7 +1264,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -1253,6 +1274,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1354,7 +1378,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -1364,6 +1388,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
@@ -1463,7 +1490,7 @@ copy ..\sha3.h $(OutDir)\include\nettle
 copy ..\twofish.h $(OutDir)\include\nettle
 copy ..\umac.h $(OutDir)\include\nettle
 copy ..\yarrow.h $(OutDir)\include\nettle
-copy ..\version.h $(OutDir)\include\nettle
+copy version.h $(OutDir)\include\nettle
 mkdir $(OutDir)\licenses
 copy ..\COPYING.LESSERv3 $(OutDir)\licenses\nettle.txt</Command>
     </PostBuildEvent>
@@ -1473,6 +1500,9 @@ del ..\config.h
 )
 if exist ..\nettle-stdint.h (
 del ..\nettle-stdint.h
+)
+if exist ..\version.h (
+del ..\version.h
 )
 if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
