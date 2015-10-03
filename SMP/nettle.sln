@@ -6,10 +6,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnettle", "libnettle.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhogweed", "libhogweed.vcxproj", "{200F3D3C-8B84-46D8-953A-6C0EBD283B5C}"
 	ProjectSection(ProjectDependencies) = postProject
-		{2016A4DB-B9BA-4521-BDA7-0EB3806E1FC8} = {2016A4DB-B9BA-4521-BDA7-0EB3806E1FC8}
+		{070FEF2B-0C3F-4F33-9D3C-53C7330BF518} = {070FEF2B-0C3F-4F33-9D3C-53C7330BF518}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pre-build", "pre-build", "{CFAECC3C-F247-49FC-8290-78F7D101E08F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pre-build (optional)", "pre-build (optional)", "{CFAECC3C-F247-49FC-8290-78F7D101E08F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "desdata", "desdata.vcxproj", "{90BC19D8-3074-4BB6-BE35-58D46113CBE8}"
 EndProject
