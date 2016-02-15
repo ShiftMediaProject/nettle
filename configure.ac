@@ -2,7 +2,7 @@ dnl -*- mode: shell-script; sh-indentation: 2; -*-
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([nettle], [3.1.1], [nettle-bugs@lists.lysator.liu.se])
+AC_INIT([nettle], [3.2], [nettle-bugs@lists.lysator.liu.se])
 AC_PREREQ(2.61)
 AC_CONFIG_SRCDIR([arcfour.c])
 # Needed to stop autoconf from looking for files in parent directories.
@@ -11,10 +11,10 @@ AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_HEADER([config.h])
 
 LIBNETTLE_MAJOR=6
-LIBNETTLE_MINOR=1
+LIBNETTLE_MINOR=2
 
 LIBHOGWEED_MAJOR=4
-LIBHOGWEED_MINOR=1
+LIBHOGWEED_MINOR=2
 
 dnl Note double square brackets, for extra m4 quoting.
 MAJOR_VERSION=`echo $PACKAGE_VERSION | sed 's/^\([[^.]]*\)\..*/\1/'`
@@ -189,7 +189,12 @@ AC_CHECK_HEADERS([openssl/blowfish.h openssl/des.h openssl/cast.h openssl/aes.h 
 [enable_openssl=no
  break])
 
+# For use by the testsuite
 AC_CHECK_HEADERS([valgrind/memcheck.h])
+AC_CHECK_HEADERS([dlfcn.h])
+AC_CHECK_LIB([dl], [dlopen],
+	     [AC_DEFINE([HAVE_LIBDL], 1,
+			[Define to 1 if you have dlopen (with -ldl).])])
 
 LSH_FUNC_ALLOCA
 LSH_FUNC_STRERROR
@@ -292,6 +297,17 @@ case "$host_cpu" in
       ABI=64
     ])
     ;;
+  *mips*)
+    AC_TRY_COMPILE([
+#if defined(__sgi) && defined(__LP64__)
+#error 64-bit mips
+#endif
+    ], [], [
+      ABI=32
+    ], [
+      ABI=64
+    ])
+    ;;
 esac
 
 if test "x$ABI" != xstandard ; then
@@ -334,6 +350,12 @@ if test "x$ABI" != xstandard ; then
 	;;
       *:freebsd*:64)
 	libdir='${exec_prefix}/lib'
+	;;
+      *:irix*:32)
+	libdir='${exec_prefix}/lib32'
+	;;
+      *:irix*:64)
+	libdir='${exec_prefix}/lib64'
 	;;
       *)
         AC_MSG_WARN([Don't know where to install $ABI-bit libraries on this system.]); dnl '
@@ -801,9 +823,13 @@ else
   IF_STATIC='#'
 fi
 
+IF_DLOPEN_TEST='#'
 if test "x$enable_shared" = xyes ; then
   IF_SHARED=''
   IF_NOT_SHARED='#'
+  if test "x$ac_cv_lib_dl_dlopen" = xyes ; then
+    IF_DLOPEN_TEST=''
+  fi
 else
   IF_SHARED='#'
   IF_NOT_SHARED=''
@@ -841,6 +867,7 @@ AC_SUBST(IF_HOGWEED)
 AC_SUBST(IF_STATIC)
 AC_SUBST(IF_SHARED)
 AC_SUBST(IF_NOT_SHARED)
+AC_SUBST(IF_DLOPEN_TEST)
 AC_SUBST(IF_DOCUMENTATION)
 AC_SUBST(IF_DLL)
 AC_SUBST(IF_MINI_GMP)
