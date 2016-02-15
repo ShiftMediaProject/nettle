@@ -518,6 +518,24 @@
     <ClCompile Include="..\ed25519-sha512-sign.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\rsa-sha256-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-sha512-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\version.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-md5-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-sha1-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libhogweed.def">

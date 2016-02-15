@@ -263,6 +263,7 @@
     <ClCompile Include="..\umac32.c" />
     <ClCompile Include="..\umac64.c" />
     <ClCompile Include="..\umac96.c" />
+    <ClCompile Include="..\version.c" />
     <ClCompile Include="..\write-be32.c" />
     <ClCompile Include="..\write-le32.c" />
     <ClCompile Include="..\write-le64.c" />

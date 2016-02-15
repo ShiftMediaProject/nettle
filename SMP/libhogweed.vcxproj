@@ -202,17 +202,22 @@
     <ClCompile Include="..\rsa-decrypt.c" />
     <ClCompile Include="..\rsa-encrypt.c" />
     <ClCompile Include="..\rsa-keygen.c" />
+    <ClCompile Include="..\rsa-md5-sign-tr.c" />
     <ClCompile Include="..\rsa-md5-sign.c" />
     <ClCompile Include="..\rsa-md5-verify.c" />
     <ClCompile Include="..\rsa-pkcs1-sign-tr.c" />
     <ClCompile Include="..\rsa-pkcs1-sign.c" />
     <ClCompile Include="..\rsa-pkcs1-verify.c" />
+    <ClCompile Include="..\rsa-sha1-sign-tr.c" />
     <ClCompile Include="..\rsa-sha1-sign.c" />
     <ClCompile Include="..\rsa-sha1-verify.c" />
+    <ClCompile Include="..\rsa-sha256-sign-tr.c" />
     <ClCompile Include="..\rsa-sha256-sign.c" />
     <ClCompile Include="..\rsa-sha256-verify.c" />
+    <ClCompile Include="..\rsa-sha512-sign-tr.c" />
     <ClCompile Include="..\rsa-sha512-sign.c" />
     <ClCompile Include="..\rsa-sha512-verify.c" />
+    <ClCompile Include="..\rsa-sign-tr.c" />
     <ClCompile Include="..\rsa-sign.c" />
     <ClCompile Include="..\rsa-verify.c" />
     <ClCompile Include="..\rsa.c" />
@@ -228,6 +233,7 @@
     <ClCompile Include="..\sexp2bignum.c" />
     <ClCompile Include="..\sexp2dsa.c" />
     <ClCompile Include="..\sexp2rsa.c" />
+    <ClCompile Include="..\version.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="libhogweed.def" />

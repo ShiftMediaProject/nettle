@@ -102,6 +102,7 @@ EXPORTS
     nettle_pkcs1_rsa_sha512_encode_digest
     nettle_random_prime
     nettle_rsa_compute_root
+    nettle_rsa_compute_root_tr
     nettle_rsa_decrypt
     nettle_rsa_decrypt_tr
     nettle_rsa_encrypt
@@ -113,6 +114,8 @@ EXPORTS
     nettle_rsa_keypair_to_sexp
     nettle_rsa_md5_sign
     nettle_rsa_md5_sign_digest
+    nettle_rsa_md5_sign_digest_tr
+    nettle_rsa_md5_sign_tr
     nettle_rsa_md5_verify
     nettle_rsa_md5_verify_digest
     nettle_rsa_pkcs1_sign
@@ -128,14 +131,20 @@ EXPORTS
     nettle_rsa_public_key_prepare
     nettle_rsa_sha1_sign
     nettle_rsa_sha1_sign_digest
+    nettle_rsa_sha1_sign_digest_tr
+    nettle_rsa_sha1_sign_tr
     nettle_rsa_sha1_verify
     nettle_rsa_sha1_verify_digest
     nettle_rsa_sha256_sign
     nettle_rsa_sha256_sign_digest
+    nettle_rsa_sha256_sign_digest_tr
+    nettle_rsa_sha256_sign_tr
     nettle_rsa_sha256_verify
     nettle_rsa_sha256_verify_digest
     nettle_rsa_sha512_sign
     nettle_rsa_sha512_sign_digest
+    nettle_rsa_sha512_sign_digest_tr
+    nettle_rsa_sha512_sign_tr
     nettle_rsa_sha512_verify
     nettle_rsa_sha512_verify_digest
     nettle_secp_192r1
