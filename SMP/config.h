@@ -124,7 +124,11 @@
 #define SIZEOF_SHORT 2
 
 /* The size of `size_t', as computed by sizeof. */
+#if defined(__x86_64) || defined(_M_X64)
 #define SIZEOF_SIZE_T 8
+#else
+#define SIZEOF_SIZE_T 4
+#endif
 
 /* The size of `void*', as computed by sizeof. */
 #if defined(__x86_64) || defined(_M_X64)
