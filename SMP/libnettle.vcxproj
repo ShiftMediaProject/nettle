@@ -388,53 +388,63 @@
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libnettled</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libnettled</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>nettled</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>nettled</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libnettle</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|Win32'">
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libnettle</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libnettle</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|x64'">
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libnettle</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>nettle</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>nettle</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc\</OutDir>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -534,6 +544,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -633,6 +655,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
@@ -735,6 +769,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
@@ -835,6 +881,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -947,6 +1005,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|Win32'">
     <ClCompile>
@@ -1059,6 +1129,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -1171,6 +1253,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|x64'">
     <ClCompile>
@@ -1283,6 +1377,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
@@ -1395,6 +1501,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
@@ -1506,6 +1624,18 @@ cd ../
 cd $(ProjectDir)
 )</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>force_clean</Outputs>
+      <Command>if exist $(OutDir)\include\nettle (
+rmdir /s /q $(OutDir)\include\nettle
+)
+if exist $(OutDir)\licenses\nettle.txt (
+del /f /q $(OutDir)\licenses\nettle.txt
+)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
