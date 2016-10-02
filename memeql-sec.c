@@ -1,8 +1,6 @@
-/* rsa-blind.c
+/* memeql-sec.c
 
-   RSA blinding. Used for resistance to timing-attacks.
-
-   Copyright (C) 2001, 2012 Niels Möller, Nikos Mavrogiannopoulos
+   Copyright (C) 2016 Niels Möller
 
    This file is part of GNU Nettle.
 
@@ -35,43 +33,19 @@
 # include "config.h"
 #endif
 
-#include "rsa.h"
+#include "memops.h"
 
-#include "bignum.h"
-
-/* Blinds the c, by computing c *= r^e (mod n), for a random r. Also
-   returns the inverse (ri), for use by rsa_unblind. */
-void
-_rsa_blind (const struct rsa_public_key *pub,
-	    void *random_ctx, nettle_random_func *random,
-	    mpz_t c, mpz_t ri)
+int
+memeql_sec (const void *a, const void *b, size_t n)
 {
-  mpz_t r;
+  volatile const unsigned char *ap = (const unsigned char *) a;
+  volatile const unsigned char *bp = (const unsigned char *) b;
 
-  mpz_init(r);
+  volatile unsigned char diff;
+  size_t i;
 
-  /* c = c*(r^e)
-   * ri = r^(-1)
-   */
-  do 
-    {
-      nettle_mpz_random(r, random_ctx, random, pub->n);
-      /* invert r */
-    }
-  while (!mpz_invert (ri, r, pub->n));
+  for (i = diff = 0; i < n; i++)
+    diff |= (ap[i] ^ bp[i]);
 
-  /* c = c*(r^e) mod n */
-  mpz_powm_sec(r, r, pub->e, pub->n);
-  mpz_mul(c, c, r);
-  mpz_fdiv_r(c, c, pub->n);
-
-  mpz_clear(r);
-}
-
-/* c *= ri mod n */
-void
-_rsa_unblind (const struct rsa_public_key *pub, mpz_t c, const mpz_t ri)
-{
-  mpz_mul(c, c, ri);
-  mpz_fdiv_r(c, c, pub->n);
+  return diff == 0;
 }
