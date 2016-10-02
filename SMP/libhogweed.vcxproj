@@ -94,6 +94,7 @@
     <ClInclude Include="..\md4.h" />
     <ClInclude Include="..\md5-compat.h" />
     <ClInclude Include="..\md5.h" />
+    <ClInclude Include="..\memops.h" />
     <ClInclude Include="..\memxor.h" />
     <ClInclude Include="..\nettle-meta.h" />
     <ClInclude Include="..\nettle-types.h" />
@@ -482,7 +483,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -595,7 +596,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -708,7 +709,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <ExceptionHandling>false</ExceptionHandling>
@@ -824,7 +825,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <ExceptionHandling>false</ExceptionHandling>
@@ -940,7 +941,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1054,7 +1055,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1178,7 +1179,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1304,7 +1305,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1430,7 +1431,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1556,7 +1557,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1682,7 +1683,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1809,7 +1810,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -1936,7 +1937,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -2062,7 +2063,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;inline=__inline;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;$(OutDir)\include;.\x86_64;$(ProjectDir)\..\..\prebuilt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996;4146;4244;4267;4028;%(DisableSpecificWarnings)</DisableSpecificWarnings>

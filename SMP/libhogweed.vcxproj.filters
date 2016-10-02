@@ -186,6 +186,9 @@
     <ClInclude Include="..\curve25519.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\memops.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ecc-hash.c">
