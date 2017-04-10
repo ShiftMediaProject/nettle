@@ -77,9 +77,9 @@ define(<AES_STORE>, <
 dnl AES_ROUND(table,a,b,c,d,out,ptr)
 dnl Computes one word of the AES round. Leaves result in $6.
 define(<AES_ROUND>, <
-	movzb	LREG($2), $7
+	movzbq	LREG($2), $7
 	movl	AES_TABLE0 ($1, $7, 4),$6
-	movzb	HREG($3), XREG($7)
+	movzbl	HREG($3), XREG($7)
 	xorl	AES_TABLE1 ($1, $7, 4),$6
 	movl	$4,XREG($7)
 	shr	<$>16,$7
@@ -94,7 +94,7 @@ dnl Computes one word of the final round. Leaves result in $6. Also
 dnl performs the first substitution step, on the least significant
 dnl byte, and rotates 8 bits.
 define(<AES_FINAL_ROUND>, <
-	movzb	LREG($1),$7
+	movzbq	LREG($1),$7
 	movzbl	($5, $7), $6
 	movl	$2,XREG($7)
 	andl	<$>0x0000ff00,XREG($7)
@@ -113,18 +113,18 @@ dnl each of eax, ebx, ecx and edx, and also rotates
 dnl the words one byte to the left.
 dnl Uses that AES_SBOX == 0
 define(<AES_SUBST_BYTE>, <
-	movzb	LREG($1),$6
+	movzbq	LREG($1),$6
 	movb	($5, $6),LREG($1)
 	roll	<$>8,$1
 
-	movzb  LREG($2),$6
+	movzbq  LREG($2),$6
 	movb	($5, $6),LREG($2)
 	roll	<$>8,$2
 
-	movzb  LREG($3),$6
+	movzbq  LREG($3),$6
 	movb	($5, $6),LREG($3)
 	roll	<$>8,$3
 
-	movzb  LREG($4),$6
+	movzbq  LREG($4),$6
 	movb	($5, $6),LREG($4)
 	roll	<$>8,$4>)dnl
