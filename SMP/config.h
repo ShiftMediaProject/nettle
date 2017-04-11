@@ -46,25 +46,29 @@
 
 /* Define to 1 each of the following for which a native (ie. CPU specific)
     implementation of the corresponding routine exists.  */
-/* #undef HAVE_NATIVE_ecc_192_modp */
-/* #undef HAVE_NATIVE_ecc_192_redc */
-/* #undef HAVE_NATIVE_ecc_224_modp */
-/* #undef HAVE_NATIVE_ecc_224_redc */
-/* #undef HAVE_NATIVE_ecc_25519_modp */
-/* #undef HAVE_NATIVE_ecc_256_modp */
-/* #undef HAVE_NATIVE_ecc_256_redc */
-/* #undef HAVE_NATIVE_ecc_384_modp */
-/* #undef HAVE_NATIVE_ecc_384_redc */
-/* #undef HAVE_NATIVE_ecc_521_modp */
-/* #undef HAVE_NATIVE_ecc_521_redc */
-/* #undef HAVE_NATIVE_gcm_hash8 */
-/* #undef HAVE_NATIVE_salsa20_core */
-/* #undef HAVE_NATIVE_sha1_compress */
-/* #undef HAVE_NATIVE_sha256_compress */
-/* #undef HAVE_NATIVE_sha512_compress */
-/* #undef HAVE_NATIVE_sha3_permute */
-/* #undef HAVE_NATIVE_umac_nh */
-/* #undef HAVE_NATIVE_umac_nh_n */
+#if defined(__x86_64) || defined(_M_X64)
+#define HAVE_NATIVE_ecc_192_modp 1
+#define HAVE_NATIVE_ecc_192_redc 1
+#define HAVE_NATIVE_ecc_224_modp 1
+#define HAVE_NATIVE_ecc_224_redc 1
+#define HAVE_NATIVE_ecc_25519_modp 1
+#define HAVE_NATIVE_ecc_256_modp 1
+#define HAVE_NATIVE_ecc_256_redc 1
+#define HAVE_NATIVE_ecc_384_modp 1
+#define HAVE_NATIVE_ecc_384_redc 1
+#define HAVE_NATIVE_ecc_521_modp 1
+#define HAVE_NATIVE_ecc_521_redc 1
+#define HAVE_NATIVE_gcm_hash8 1
+#define HAVE_NATIVE_salsa20_core 1
+#define HAVE_NATIVE_sha1_compress 1
+#define HAVE_NATIVE_sha256_compress 1
+#define HAVE_NATIVE_sha512_compress 1
+#define HAVE_NATIVE_sha3_permute 1
+#define HAVE_NATIVE_umac_nh 1
+#define HAVE_NATIVE_umac_nh_n 1
+#else
+#define HAVE_NATIVE_sha1_compress 1
+#endif
 
 /* Define to 1 if you have the <openssl/aes.h> header file. */
 /* #undef HAVE_OPENSSL_AES_H */

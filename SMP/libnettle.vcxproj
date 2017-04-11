@@ -103,9 +103,7 @@
     <ClInclude Include="nettle-stdint.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\aes-decrypt-internal.c" />
     <ClCompile Include="..\aes-decrypt.c" />
-    <ClCompile Include="..\aes-encrypt-internal.c" />
     <ClCompile Include="..\aes-encrypt-table.c" />
     <ClCompile Include="..\aes-encrypt.c" />
     <ClCompile Include="..\aes-invert-internal.c" />
@@ -122,7 +120,9 @@
     <ClCompile Include="..\aes256-set-decrypt-key.c" />
     <ClCompile Include="..\aes256-set-encrypt-key.c" />
     <ClCompile Include="..\aesdata.c" />
-    <ClCompile Include="..\arcfour-crypt.c" />
+    <ClCompile Include="..\arcfour-crypt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\arcfour.c" />
     <ClCompile Include="..\arctwo-meta.c" />
     <ClCompile Include="..\arctwo.c" />
@@ -139,7 +139,6 @@
     <ClCompile Include="..\buffer-init.c" />
     <ClCompile Include="..\buffer.c" />
     <ClCompile Include="..\camellia-absorb.c" />
-    <ClCompile Include="..\camellia-crypt-internal.c" />
     <ClCompile Include="..\camellia-invert-key.c" />
     <ClCompile Include="..\camellia-table.c" />
     <ClCompile Include="..\camellia128-crypt.c" />
@@ -158,7 +157,9 @@
     <ClCompile Include="..\ccm-aes192.c" />
     <ClCompile Include="..\ccm-aes256.c" />
     <ClCompile Include="..\ccm.c" />
-    <ClCompile Include="..\chacha-core-internal.c" />
+    <ClCompile Include="..\chacha-core-internal.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\chacha-crypt.c" />
     <ClCompile Include="..\chacha-poly1305-meta.c" />
     <ClCompile Include="..\chacha-poly1305.c" />
@@ -171,6 +172,9 @@
     <ClCompile Include="..\eax-aes128-meta.c" />
     <ClCompile Include="..\eax-aes128.c" />
     <ClCompile Include="..\eax.c" />
+    <ClCompile Include="..\fat-x86_64.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\gcm-aes.c" />
     <ClCompile Include="..\gcm-aes128-meta.c" />
     <ClCompile Include="..\gcm-aes128.c" />
@@ -199,12 +203,15 @@
     <ClCompile Include="..\md4-meta.c" />
     <ClCompile Include="..\md4.c" />
     <ClCompile Include="..\md5-compat.c" />
-    <ClCompile Include="..\md5-compress.c" />
     <ClCompile Include="..\md5-meta.c" />
     <ClCompile Include="..\md5.c" />
     <ClCompile Include="..\memeql-sec.c" />
-    <ClCompile Include="..\memxor.c" />
-    <ClCompile Include="..\memxor3.c" />
+    <ClCompile Include="..\memxor.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\memxor3.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\nettle-meta-aeads.c" />
     <ClCompile Include="..\nettle-meta-armors.c" />
     <ClCompile Include="..\nettle-meta-ciphers.c" />
@@ -213,27 +220,38 @@
     <ClCompile Include="..\pbkdf2-hmac-sha256.c" />
     <ClCompile Include="..\pbkdf2.c" />
     <ClCompile Include="..\poly1305-aes.c" />
-    <ClCompile Include="..\poly1305-internal.c" />
+    <ClCompile Include="..\poly1305-internal.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\realloc.c" />
     <ClCompile Include="..\ripemd160-compress.c" />
     <ClCompile Include="..\ripemd160-meta.c" />
     <ClCompile Include="..\ripemd160.c" />
     <ClCompile Include="..\salsa20-128-set-key.c" />
     <ClCompile Include="..\salsa20-256-set-key.c" />
-    <ClCompile Include="..\salsa20-core-internal.c" />
-    <ClCompile Include="..\salsa20-crypt.c" />
+    <ClCompile Include="..\salsa20-core-internal.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\salsa20-crypt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\salsa20-set-key.c" />
     <ClCompile Include="..\salsa20-set-nonce.c" />
     <ClCompile Include="..\salsa20r12-crypt.c" />
-    <ClCompile Include="..\serpent-decrypt.c" />
-    <ClCompile Include="..\serpent-encrypt.c" />
+    <ClCompile Include="..\serpent-decrypt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\serpent-encrypt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\serpent-meta.c" />
     <ClCompile Include="..\serpent-set-key.c" />
-    <ClCompile Include="..\sha1-compress.c" />
     <ClCompile Include="..\sha1-meta.c" />
     <ClCompile Include="..\sha1.c" />
     <ClCompile Include="..\sha224-meta.c" />
-    <ClCompile Include="..\sha256-compress.c" />
+    <ClCompile Include="..\sha256-compress.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\sha256-meta.c" />
     <ClCompile Include="..\sha256.c" />
     <ClCompile Include="..\sha3-224-meta.c" />
@@ -244,20 +262,28 @@
     <ClCompile Include="..\sha3-384.c" />
     <ClCompile Include="..\sha3-512-meta.c" />
     <ClCompile Include="..\sha3-512.c" />
-    <ClCompile Include="..\sha3-permute.c" />
+    <ClCompile Include="..\sha3-permute.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\sha3.c" />
     <ClCompile Include="..\sha384-meta.c" />
     <ClCompile Include="..\sha512-224-meta.c" />
     <ClCompile Include="..\sha512-256-meta.c" />
-    <ClCompile Include="..\sha512-compress.c" />
+    <ClCompile Include="..\sha512-compress.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\sha512-meta.c" />
     <ClCompile Include="..\sha512.c" />
     <ClCompile Include="..\twofish-meta.c" />
     <ClCompile Include="..\twofish.c" />
     <ClCompile Include="..\umac-l2.c" />
     <ClCompile Include="..\umac-l3.c" />
-    <ClCompile Include="..\umac-nh-n.c" />
-    <ClCompile Include="..\umac-nh.c" />
+    <ClCompile Include="..\umac-nh-n.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\umac-nh.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\umac-poly128.c" />
     <ClCompile Include="..\umac-poly64.c" />
     <ClCompile Include="..\umac-set-key.c" />
@@ -274,6 +300,113 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <YASM Include="x86\aes-decrypt-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86\aes-encrypt-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86\arcfour-crypt.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86\camellia-crypt-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86\md5-compress.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86\sha1-compress.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes-decrypt-internal-2.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes-decrypt-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes-encrypt-internal-2.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes-encrypt-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\camellia-crypt-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\chacha-core-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\cpuid.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-192-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-224-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-25519-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-256-redc.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-384-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-521-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\gcm-hash8.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\md5-compress.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\memxor-2.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\memxor.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\memxor3.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\poly1305-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\salsa20-core-internal.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\salsa20-crypt.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\serpent-decrypt.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\serpent-encrypt.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\sha1-compress.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\sha256-compress.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\sha3-permute.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\sha512-compress.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\umac-nh-n.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\umac-nh.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{070FEF2B-0C3F-4F33-9D3C-53C7330BF518}</ProjectGuid>
@@ -364,6 +497,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\yasm.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -568,6 +702,11 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -679,6 +818,11 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
@@ -794,6 +938,11 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
@@ -907,6 +1056,11 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -1031,6 +1185,10 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|Win32'">
     <ClCompile>
@@ -1155,6 +1313,10 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -1279,6 +1441,10 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|x64'">
     <ClCompile>
@@ -1403,6 +1569,10 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
@@ -1529,6 +1699,10 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
@@ -1654,8 +1828,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\yasm.targets" />
   </ImportGroup>
 </Project>
