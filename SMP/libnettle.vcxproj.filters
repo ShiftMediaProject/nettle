@@ -738,24 +738,6 @@
     <YASM Include="x86_64\cpuid.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\ecc-192-modp.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\ecc-224-modp.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\ecc-256-redc.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\ecc-384-modp.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\ecc-521-modp.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\ecc-25519-modp.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
     <YASM Include="x86_64\gcm-hash8.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>

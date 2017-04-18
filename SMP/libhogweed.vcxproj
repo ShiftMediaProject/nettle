@@ -239,6 +239,26 @@
   <ItemGroup>
     <None Include="libhogweed.def" />
   </ItemGroup>
+  <ItemGroup>
+    <YASM Include="x86_64\ecc-192-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-224-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-25519-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-256-redc.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-384-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ecc-521-modp.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{200F3D3C-8B84-46D8-953A-6C0EBD283B5C}</ProjectGuid>
     <RootNamespace>libhogweed</RootNamespace>
@@ -360,6 +380,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\yasm.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -604,6 +625,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -717,6 +745,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
@@ -834,6 +869,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLLStaticDeps|Win32'">
     <ClCompile>
@@ -952,6 +994,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
@@ -1067,6 +1116,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLLStaticDeps|x64'">
     <ClCompile>
@@ -1183,6 +1239,13 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -1309,6 +1372,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|Win32'">
     <ClCompile>
@@ -1435,6 +1504,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -1561,6 +1636,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTO|x64'">
     <ClCompile>
@@ -1687,6 +1768,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
@@ -1815,6 +1902,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLStaticDeps|Win32'">
     <ClCompile>
@@ -1944,6 +2037,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
@@ -2071,6 +2170,12 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLStaticDeps|x64'">
     <ClCompile>
@@ -2199,8 +2304,15 @@ if exist $(OutDir)\licenses\nettle.txt (
 del /f /q $(OutDir)\licenses\nettle.txt
 )</Command>
     </CustomBuildStep>
+    <YASM>
+      <Preprocessor>1</Preprocessor>
+    </YASM>
+    <YASM>
+      <Parser>1</Parser>
+    </YASM>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\yasm.targets" />
   </ImportGroup>
 </Project>

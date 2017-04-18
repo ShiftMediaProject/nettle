@@ -13,6 +13,9 @@
     <Filter Include="Header Files\nettle">
       <UniqueIdentifier>{3d7f0357-dbd3-4264-8fc0-5d6f369bc887}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\x86_64">
+      <UniqueIdentifier>{7fc10e01-b8f2-465b-a158-dad462d15c87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -544,5 +547,25 @@
     <None Include="libhogweed.def">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <YASM Include="x86_64\ecc-25519-modp.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ecc-192-modp.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ecc-224-modp.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ecc-256-redc.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ecc-384-modp.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ecc-521-modp.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
   </ItemGroup>
 </Project>
