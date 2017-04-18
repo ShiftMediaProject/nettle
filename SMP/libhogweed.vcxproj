@@ -979,8 +979,7 @@ if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
 cd ../
 cd $(ProjectDir)
-)
-MSBuild  $(ProjectFileName) /property:Configuration="Debug",Platform="$(Platform)",SolutionDir="$(SolutionDir)\",SolutionFileName="$(SolutionFileName)",OutDir="$(OutDir)\" /verbosity:m /nologo </Command>
+)</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>Custom Clean Step</Message>
@@ -1224,8 +1223,7 @@ if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
 cd ../
 cd $(ProjectDir)
-)
-MSBuild  $(ProjectFileName) /property:Configuration="Debug",Platform="$(Platform)",SolutionDir="$(SolutionDir)\",SolutionFileName="$(SolutionFileName)",OutDir="$(OutDir)\" /verbosity:m /nologo </Command>
+)</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>Custom Clean Step</Message>
@@ -2022,8 +2020,7 @@ if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
 cd ../
 cd $(ProjectDir)
-)
-MSBuild  $(ProjectFileName) /property:Configuration="Release",Platform="$(Platform)",SolutionDir="$(SolutionDir)\",SolutionFileName="$(SolutionFileName)",OutDir="$(OutDir)\" /verbosity:m /nologo </Command>
+)</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>Custom Clean Step</Message>
@@ -2289,8 +2286,7 @@ if exist $(OutDir)\include\nettle (
 rd /s /q $(OutDir)\include\nettle
 cd ../
 cd $(ProjectDir)
-)
-MSBuild  $(ProjectFileName) /property:Configuration="Release",Platform="$(Platform)",SolutionDir="$(SolutionDir)\",SolutionFileName="$(SolutionFileName)",OutDir="$(OutDir)\" /verbosity:m /nologo </Command>
+)</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>Custom Clean Step</Message>
