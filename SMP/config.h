@@ -70,17 +70,8 @@
 #define HAVE_NATIVE_sha1_compress 1
 #endif
 
-/* Define to 1 if you have the <openssl/aes.h> header file. */
-/* #undef HAVE_OPENSSL_AES_H */
-
-/* Define to 1 if you have the <openssl/blowfish.h> header file. */
-/* #undef HAVE_OPENSSL_BLOWFISH_H */
-
-/* Define to 1 if you have the <openssl/cast.h> header file. */
-/* #undef HAVE_OPENSSL_CAST_H */
-
-/* Define to 1 if you have the <openssl/des.h> header file. */
-/* #undef HAVE_OPENSSL_DES_H */
+/* Define to 1 if you have the <openssl/evp.h> header file. */
+/* #undef HAVE_OPENSSL_EVP_H */
 
 /* Define to 1 if you have the <openssl/ecdsa.h> header file. */
 /* #undef HAVE_OPENSSL_ECDSA_H */

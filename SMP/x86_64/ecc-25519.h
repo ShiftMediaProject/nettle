@@ -34,7 +34,7 @@ static const mp_limb_t ecc_Bmodp_shifted[4] = {
   0x13ULL, 0x0ULL, 0x0ULL, 0x0ULL,
 };
 static const mp_limb_t ecc_Bmodq_shifted[4] = {
-  0xa7ed9ce5a30a2c13ULL, 0xeb2106215d086329ULL, 0xffffffffffffffffULL, 0x6fffffffffffffffULL,
+  0xa7ed9ce5a30a2c13ULL, 0xeb2106215d086329ULL, 0xffffffffffffffffULL, 0xfffffffffffffffULL,
 };
 static const mp_limb_t ecc_pp1h[4] = {
   0xfffffffffffffff7ULL, 0xffffffffffffffffULL, 0xffffffffffffffffULL, 0x3fffffffffffffffULL,

@@ -195,6 +195,18 @@
     <ClInclude Include="..\memops.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\pss-mgf1.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cfb.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\hkdf.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\pss.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\umac96.c">
@@ -687,6 +699,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\fat-x86_64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cfb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hkdf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\nettle-lookup-hash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

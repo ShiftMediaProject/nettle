@@ -192,6 +192,18 @@
     <ClInclude Include="..\memops.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\cfb.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\hkdf.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\pss.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\pss-mgf1.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ecc-hash.c">
@@ -540,6 +552,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\rsa-sha1-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\pss.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\pss-mgf1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-pss-sha256-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-pss-sha256-verify.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-pss-sha512-sign-tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-pss-sha512-verify.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

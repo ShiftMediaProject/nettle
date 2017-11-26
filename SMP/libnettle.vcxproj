@@ -56,6 +56,7 @@
     <ClInclude Include="..\cast128.h" />
     <ClInclude Include="..\cbc.h" />
     <ClInclude Include="..\ccm.h" />
+    <ClInclude Include="..\cfb.h" />
     <ClInclude Include="..\chacha-poly1305.h" />
     <ClInclude Include="..\chacha.h" />
     <ClInclude Include="..\ctr.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="..\eddsa.h" />
     <ClInclude Include="..\gcm.h" />
     <ClInclude Include="..\gosthash94.h" />
+    <ClInclude Include="..\hkdf.h" />
     <ClInclude Include="..\hmac.h" />
     <ClInclude Include="..\knuth-lfib.h" />
     <ClInclude Include="..\macros.h" />
@@ -86,6 +88,8 @@
     <ClInclude Include="..\pgp.h" />
     <ClInclude Include="..\pkcs1.h" />
     <ClInclude Include="..\poly1305.h" />
+    <ClInclude Include="..\pss-mgf1.h" />
+    <ClInclude Include="..\pss.h" />
     <ClInclude Include="..\realloc.h" />
     <ClInclude Include="..\ripemd160.h" />
     <ClInclude Include="..\rsa.h" />
@@ -157,6 +161,7 @@
     <ClCompile Include="..\ccm-aes192.c" />
     <ClCompile Include="..\ccm-aes256.c" />
     <ClCompile Include="..\ccm.c" />
+    <ClCompile Include="..\cfb.c" />
     <ClCompile Include="..\chacha-core-internal.c">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -189,6 +194,7 @@
     <ClCompile Include="..\gcm.c" />
     <ClCompile Include="..\gosthash94-meta.c" />
     <ClCompile Include="..\gosthash94.c" />
+    <ClCompile Include="..\hkdf.c" />
     <ClCompile Include="..\hmac-md5.c" />
     <ClCompile Include="..\hmac-ripemd160.c" />
     <ClCompile Include="..\hmac-sha1.c" />
@@ -212,6 +218,7 @@
     <ClCompile Include="..\memxor3.c">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\nettle-lookup-hash.c" />
     <ClCompile Include="..\nettle-meta-aeads.c" />
     <ClCompile Include="..\nettle-meta-armors.c" />
     <ClCompile Include="..\nettle-meta-ciphers.c" />
@@ -607,6 +614,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -624,11 +632,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -636,6 +646,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -723,6 +735,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -740,11 +753,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -752,6 +767,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -843,6 +860,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -860,11 +878,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -872,6 +892,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -961,6 +983,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -978,11 +1001,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -990,6 +1015,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -1086,6 +1113,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -1103,11 +1131,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -1115,6 +1145,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -1210,6 +1242,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -1227,11 +1260,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -1239,6 +1274,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -1334,6 +1371,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -1351,11 +1389,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -1363,6 +1403,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -1458,6 +1500,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -1475,11 +1518,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -1487,6 +1532,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -1584,6 +1631,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -1601,11 +1649,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -1613,6 +1663,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
@@ -1709,6 +1761,7 @@ copy ..\camellia.h "$(OutDir)"\include\nettle
 copy ..\cast128.h "$(OutDir)"\include\nettle
 copy ..\cbc.h "$(OutDir)"\include\nettle
 copy ..\ccm.h "$(OutDir)"\include\nettle
+copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
@@ -1726,11 +1779,13 @@ copy ..\gcm.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\knuth-lfib.h "$(OutDir)"\include\nettle
+copy ..\kkdf.h "$(OutDir)"\include\nettle
 copy ..\macros.h "$(OutDir)"\include\nettle
 copy ..\md2.h "$(OutDir)"\include\nettle
 copy ..\md4.h "$(OutDir)"\include\nettle
 copy ..\md5.h "$(OutDir)"\include\nettle
 copy ..\md5-compat.h "$(OutDir)"\include\nettle
+copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy .\nettle-stdint.h "$(OutDir)"\include\nettle
@@ -1738,6 +1793,8 @@ copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
+copy ..\pss.h "$(OutDir)"\include\nettle
+copy ..\pss-mgf1.h "$(OutDir)"\include\nettle
 copy ..\poly1305.h "$(OutDir)"\include\nettle
 copy ..\realloc.h "$(OutDir)"\include\nettle
 copy ..\ripemd160.h "$(OutDir)"\include\nettle
