@@ -63,6 +63,11 @@ EXPORTS
     nettle_ed25519_sha512_public_key
     nettle_ed25519_sha512_sign
     nettle_ed25519_sha512_verify
+    nettle_get_secp_192r1
+    nettle_get_secp_224r1
+    nettle_get_secp_256r1
+    nettle_get_secp_384r1
+    nettle_get_secp_521r1
     nettle_mpz_get_str_256
     nettle_mpz_init_set_str_256_s
     nettle_mpz_init_set_str_256_u
