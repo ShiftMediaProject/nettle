@@ -125,8 +125,7 @@ fat_init (void)
   struct x86_features features;
   int verbose;
 
-  /* FIXME: Replace all getenv calls by getenv_secure? */
-  verbose = getenv (ENV_VERBOSE) != NULL;
+  verbose = secure_getenv (ENV_VERBOSE) != NULL;
   if (verbose)
     fprintf (stderr, "libnettle: fat library initialization.\n");
 
