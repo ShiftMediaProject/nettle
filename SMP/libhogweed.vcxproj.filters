@@ -572,6 +572,15 @@
     <ClCompile Include="..\rsa-pss-sha512-verify.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\rsa-sec-decrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\pkcs1-sec-decrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-sec-compute-root.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libhogweed.def">

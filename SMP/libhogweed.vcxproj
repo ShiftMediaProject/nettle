@@ -225,6 +225,7 @@
     <ClCompile Include="..\pkcs1-rsa-sha1.c" />
     <ClCompile Include="..\pkcs1-rsa-sha256.c" />
     <ClCompile Include="..\pkcs1-rsa-sha512.c" />
+    <ClCompile Include="..\pkcs1-sec-decrypt.c" />
     <ClCompile Include="..\pkcs1.c" />
     <ClCompile Include="..\pss-mgf1.c" />
     <ClCompile Include="..\pss.c" />
@@ -243,6 +244,8 @@
     <ClCompile Include="..\rsa-pss-sha256-verify.c" />
     <ClCompile Include="..\rsa-pss-sha512-sign-tr.c" />
     <ClCompile Include="..\rsa-pss-sha512-verify.c" />
+    <ClCompile Include="..\rsa-sec-compute-root.c" />
+    <ClCompile Include="..\rsa-sec-decrypt.c" />
     <ClCompile Include="..\rsa-sha1-sign-tr.c" />
     <ClCompile Include="..\rsa-sha1-sign.c" />
     <ClCompile Include="..\rsa-sha1-verify.c" />
@@ -781,7 +784,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x86\;$(ProjectDir)\..\..\prebuilt\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettled.lib;libgmpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettled.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -905,7 +908,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x86\;$(ProjectDir)\..\..\prebuilt\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettled_winrt.lib;libgmpd_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettled_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -1027,7 +1030,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX64</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;$(ProjectDir)\..\..\prebuilt\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettled.lib;libgmpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettled.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -1151,7 +1154,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX64</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;$(ProjectDir)\..\..\prebuilt\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettled_winrt.lib;libgmpd_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettled_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -1800,7 +1803,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x86\;$(ProjectDir)\..\..\prebuilt\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettle.lib;libgmp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -1930,7 +1933,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x86\;$(ProjectDir)\..\..\prebuilt\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettle_winrt.lib;libgmp_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -2058,7 +2061,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX64</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;$(ProjectDir)\..\..\prebuilt\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettle.lib;libgmp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -2188,7 +2191,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <TargetMachine>MachineX64</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;$(ProjectDir)\..\..\prebuilt\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnettle_winrt.lib;libgmp_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
@@ -2458,7 +2461,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <LargeAddressAware>true</LargeAddressAware>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MinimumRequiredVersion>5.1</MinimumRequiredVersion>
-      <AdditionalDependencies>libnettle.lib;libgmp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
@@ -2735,7 +2738,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MinimumRequiredVersion Condition="'$(ApplicationTypeRevision)' == '10.0'">10.0</MinimumRequiredVersion>
       <MinimumRequiredVersion Condition="'$(ApplicationTypeRevision)' == '8.1'">8.1</MinimumRequiredVersion>
-      <AdditionalDependencies>libnettle_winrt.lib;libgmp_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <WindowsMetadataFile>$(OutDir)\lib\x86\$(RootNamespace).winmd</WindowsMetadataFile>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -3004,7 +3007,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;$(ProjectDir)\..\..\prebuilt\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MinimumRequiredVersion>6.1</MinimumRequiredVersion>
-      <AdditionalDependencies>libnettle.lib;libgmp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
@@ -3279,7 +3282,7 @@ del /f /q $(OutDir)\licenses\nettle.txt
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MinimumRequiredVersion Condition="'$(ApplicationTypeRevision)' == '10.0'">10.0</MinimumRequiredVersion>
       <MinimumRequiredVersion Condition="'$(ApplicationTypeRevision)' == '8.1'">8.1</MinimumRequiredVersion>
-      <AdditionalDependencies>libnettle_winrt.lib;libgmp_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libnettle_winrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <WindowsMetadataFile>$(OutDir)\lib\x64\$(RootNamespace).winmd</WindowsMetadataFile>
       <AdditionalOptions>/IGNORE:4006,4221,4078 %(AdditionalOptions)</AdditionalOptions>
     </Link>

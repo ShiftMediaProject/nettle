@@ -142,6 +142,7 @@ EXPORTS
     nettle_chacha_set_nonce
     nettle_chacha_set_nonce96
     nettle_ciphers
+    nettle_cnd_memcpy
     nettle_ctr_crypt
     nettle_des3_decrypt
     nettle_des3_encrypt

@@ -143,6 +143,7 @@ EXPORTS
     nettle_rsa_public_key_from_der_iterator
     nettle_rsa_public_key_init
     nettle_rsa_public_key_prepare
+    nettle_rsa_sec_decrypt
     nettle_rsa_sha1_sign
     nettle_rsa_sha1_sign_digest
     nettle_rsa_sha1_sign_digest_tr

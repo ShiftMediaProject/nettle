@@ -710,6 +710,9 @@
     <ClCompile Include="..\nettle-lookup-hash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cnd-memcpy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
