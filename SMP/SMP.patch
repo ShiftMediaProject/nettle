@@ -1,0 +1,84 @@
+diff --git a/fat-x86_64.c b/fat-x86_64.c
+index 2e97d1e5..56606ebd 100644
+--- a/fat-x86_64.c
++++ b/fat-x86_64.c
+@@ -125,8 +125,7 @@ fat_init (void)
+   struct x86_features features;
+   int verbose;
+ 
+-  /* FIXME: Replace all getenv calls by getenv_secure? */
+-  verbose = getenv (ENV_VERBOSE) != NULL;
++  verbose = secure_getenv (ENV_VERBOSE) != NULL;
+   if (verbose)
+     fprintf (stderr, "libnettle: fat library initialization.\n");
+ 
+diff --git a/x86_64/aes.m4 b/x86_64/aes.m4
+index 8034f779..040ffb89 100644
+--- a/x86_64/aes.m4
++++ b/x86_64/aes.m4
+@@ -77,9 +77,9 @@ define(<AES_STORE>, <
+ dnl AES_ROUND(table,a,b,c,d,out,ptr)
+ dnl Computes one word of the AES round. Leaves result in $6.
+ define(<AES_ROUND>, <
+-	movzb	LREG($2), $7
++	movzbq	LREG($2), $7
+ 	movl	AES_TABLE0 ($1, $7, 4),$6
+-	movzb	HREG($3), XREG($7)
++	movzbl	HREG($3), XREG($7)
+ 	xorl	AES_TABLE1 ($1, $7, 4),$6
+ 	movl	$4,XREG($7)
+ 	shr	<$>16,$7
+@@ -94,7 +94,7 @@ dnl Computes one word of the final round. Leaves result in $6. Also
+ dnl performs the first substitution step, on the least significant
+ dnl byte, and rotates 8 bits.
+ define(<AES_FINAL_ROUND>, <
+-	movzb	LREG($1),$7
++	movzbq	LREG($1),$7
+ 	movzbl	($5, $7), $6
+ 	movl	$2,XREG($7)
+ 	andl	<$>0x0000ff00,XREG($7)
+@@ -113,18 +113,18 @@ dnl each of eax, ebx, ecx and edx, and also rotates
+ dnl the words one byte to the left.
+ dnl Uses that AES_SBOX == 0
+ define(<AES_SUBST_BYTE>, <
+-	movzb	LREG($1),$6
++	movzbq	LREG($1),$6
+ 	movb	($5, $6),LREG($1)
+ 	roll	<$>8,$1
+ 
+-	movzb  LREG($2),$6
++	movzbq  LREG($2),$6
+ 	movb	($5, $6),LREG($2)
+ 	roll	<$>8,$2
+ 
+-	movzb  LREG($3),$6
++	movzbq  LREG($3),$6
+ 	movb	($5, $6),LREG($3)
+ 	roll	<$>8,$3
+ 
+-	movzb  LREG($4),$6
++	movzbq  LREG($4),$6
+ 	movb	($5, $6),LREG($4)
+ 	roll	<$>8,$4>)dnl
+diff --git a/x86_64/fat/cpuid.asm b/x86_64/fat/cpuid.asm
+index 16a66d57..c678a714 100644
+--- a/x86_64/fat/cpuid.asm
++++ b/x86_64/fat/cpuid.asm
+@@ -41,7 +41,7 @@ C output pointer: %rsi
+ 	.text
+ 	ALIGN(16)
+ PROLOGUE(_nettle_cpuid)
+-	W64_ENTRY(2)
++	W64_ENTRY(2, 0)
+ 	push	%rbx
+ 	
+ 	movl	%edi, %eax
+@@ -52,7 +52,7 @@ PROLOGUE(_nettle_cpuid)
+ 	mov	%edx, 12(%rsi)
+ 
+ 	pop	%rbx
+-	W64_EXIT(2)
++	W64_EXIT(2, 0)
+ 	ret
+ EPILOGUE(_nettle_cpuid)
+ 
