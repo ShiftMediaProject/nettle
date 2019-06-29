@@ -1,4 +1,4 @@
-C arm/v6/aes-decrypt-internal.asm
+C arm/aes-decrypt-internal.asm
 
 ifelse(<
    Copyright (C) 2013 Niels Möller
@@ -30,16 +30,14 @@ ifelse(<
    not, see http://www.gnu.org/licenses/.
 >) 
 
-	.arch armv6
-
 include_src(<arm/aes.m4>)
 
 define(<PARAM_ROUNDS>, <r0>)
 define(<PARAM_KEYS>, <r1>)
 define(<TABLE>, <r2>)
-define(<LENGTH>, <r3>)
+define(<PARAM_LENGTH>, <r3>)
 C On stack: DST, SRC
-
+	
 define(<W0>, <r4>)
 define(<W1>, <r5>)
 define(<W2>, <r6>)
@@ -48,71 +46,70 @@ define(<T0>, <r8>)
 define(<COUNT>, <r10>)
 define(<KEY>, <r11>)
 
-define(<X0>, <r0>)	C Overlaps PARAM_ROUNDS and PARAM_KEYS
-define(<X1>, <r1>)
+define(<MASK>, <r0>)	C Overlaps inputs, except TABLE
+define(<X0>, <r1>)
+define(<X1>, <r3>)
 define(<X2>, <r12>)
 define(<X3>, <r14>)	C lr
 
-define(<FRAME_ROUNDS>>,  <[sp]>)
+define(<FRAME_ROUNDS>,  <[sp]>)
 define(<FRAME_KEYS>,  <[sp, #+4]>)
+define(<FRAME_LENGTH>,  <[sp, #+8]>)
 C 8 saved registers
-define(<FRAME_DST>,  <[sp, #+40]>)
-define(<FRAME_SRC>,  <[sp, #+44]>)
+define(<FRAME_DST>,  <[sp, #+44]>)
+define(<FRAME_SRC>,  <[sp, #+48]>)
 
-define(<SRC>, <r12>)	C Overlap registers used in inner loop.
-define(<DST>, <COUNT>)
 
-C AES_DECRYPT_ROUND(x0,x1,x2,x3,w0,w1,w2,w3,key)
 define(<AES_DECRYPT_ROUND>, <
-	uxtb	T0, $1
-	ldr	$5, [TABLE, T0, lsl #2]
-	uxtb	T0, $2
-	ldr	$6, [TABLE, T0, lsl #2]
-	uxtb	T0, $3
-	ldr	$7, [TABLE, T0, lsl #2]
-	uxtb	T0, $4
-	ldr	$8, [TABLE, T0, lsl #2]
+	and	T0, MASK, $1, lsl #2
+	ldr	$5, [TABLE, T0]
+	and	T0, MASK, $2, lsl #2
+	ldr	$6, [TABLE, T0]
+	and	T0, MASK, $3, lsl #2
+	ldr	$7, [TABLE, T0]
+	and	T0, MASK, $4, lsl #2
+	ldr	$8, [TABLE, T0]
 
-	uxtb	T0, $4, ror #8
+	and	T0, MASK, $4, ror #6
 	add	TABLE, TABLE, #1024
-	ldr	T0, [TABLE, T0, lsl #2]
+	ldr	T0, [TABLE, T0]
 	eor	$5, $5, T0
-	uxtb	T0, $1, ror #8
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $1, ror #6
+	ldr	T0, [TABLE, T0]
 	eor	$6, $6, T0
-	uxtb	T0, $2, ror #8
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $2, ror #6
+	ldr	T0, [TABLE, T0]
 	eor	$7, $7, T0
-	uxtb	T0, $3, ror #8
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $3, ror #6
+	ldr	T0, [TABLE, T0]
 	eor	$8, $8, T0
 
-	uxtb	T0, $3, ror #16
+	and	T0, MASK, $3, ror #14
 	add	TABLE, TABLE, #1024
-	ldr	T0, [TABLE, T0, lsl #2]
+	ldr	T0, [TABLE, T0]
 	eor	$5, $5, T0
-	uxtb	T0, $4, ror #16
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $4, ror #14
+	ldr	T0, [TABLE, T0]
 	eor	$6, $6, T0
-	uxtb	T0, $1, ror #16
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $1, ror #14
+	ldr	T0, [TABLE, T0]
 	eor	$7, $7, T0
-	uxtb	T0, $2, ror #16
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $2, ror #14
+	ldr	T0, [TABLE, T0]
 	eor	$8, $8, T0
 
-	uxtb	T0, $2, ror #24
+	and	T0, MASK, $2, ror #22
 	add	TABLE, TABLE, #1024
-	ldr	T0, [TABLE, T0, lsl #2]
+	ldr	T0, [TABLE, T0]
 	eor	$5, $5, T0
-	uxtb	T0, $3, ror #24
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $3, ror #22
+	ldr	T0, [TABLE, T0]
 	eor	$6, $6, T0
-	uxtb	T0, $4, ror #24
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $4, ror #22
+	ldr	T0, [TABLE, T0]
 	eor	$7, $7, T0
-	uxtb	T0, $1, ror #24
-	ldr	T0, [TABLE, T0, lsl #2]
+	and	T0, MASK, $1, ror #22
+	ldr	T0, [TABLE, T0]
 
 	ldm	$9!, {$1,$2,$3,$4}
 	eor	$8, $8, T0
@@ -132,25 +129,24 @@ define(<AES_DECRYPT_ROUND>, <
 	.text
 	ALIGN(4)
 PROLOGUE(_nettle_aes_decrypt)
-	teq	LENGTH, #0
+	teq	PARAM_LENGTH, #0
 	beq	.Lend
 
-	ldr	SRC, [sp, #+4]
-
-	push	{r0,r1, r4,r5,r6,r7,r8,r10,r11,lr}
-
+	push	{r0,r1,r3, r4,r5,r6,r7,r8,r10,r11,lr}
+	mov	MASK, #0x3fc
 	ALIGN(16)
 .Lblock_loop:
+	ldr	X0, FRAME_SRC		C Use X0 as SRC pointer
 	ldm	sp, {COUNT, KEY}
 
+	AES_LOAD(X0,KEY,W0)
+	AES_LOAD(X0,KEY,W1)
+	AES_LOAD(X0,KEY,W2)
+	AES_LOAD(X0,KEY,W3)
+
+	str	X0, FRAME_SRC
+
 	add	TABLE, TABLE, #AES_TABLE0
-
-	AES_LOAD(SRC,KEY,W0)
-	AES_LOAD(SRC,KEY,W1)
-	AES_LOAD(SRC,KEY,W2)
-	AES_LOAD(SRC,KEY,W3)
-
-	str	SRC, FRAME_SRC
 
 	b	.Lentry
 	ALIGN(16)
@@ -165,28 +161,29 @@ PROLOGUE(_nettle_aes_decrypt)
 
 	bne	.Lround_loop
 
+	lsr	COUNT, MASK, #2	C Put the needed mask in the unused COUNT register
 	sub	TABLE, TABLE, #AES_TABLE0
-
 	C	Final round
-	ldr	DST, FRAME_DST
+	AES_FINAL_ROUND_V5(X0, X3, X2, X1, KEY, W0, COUNT)
+	AES_FINAL_ROUND_V5(X1, X0, X3, X2, KEY, W1, COUNT)
+	AES_FINAL_ROUND_V5(X2, X1, X0, X3, KEY, W2, COUNT)
+	AES_FINAL_ROUND_V5(X3, X2, X1, X0, KEY, W3, COUNT)
 
-	AES_FINAL_ROUND_V6(X0, X3, X2, X1, KEY, W0)
-	AES_FINAL_ROUND_V6(X1, X0, X3, X2, KEY, W1)
-	AES_FINAL_ROUND_V6(X2, X1, X0, X3, KEY, W2)
-	AES_FINAL_ROUND_V6(X3, X2, X1, X0, KEY, W3)
+	ldr	X0, FRAME_DST
+	ldr	X1, FRAME_LENGTH
 
-	ldr	SRC, FRAME_SRC
-	
-	AES_STORE(DST,W0)
-	AES_STORE(DST,W1)
-	AES_STORE(DST,W2)
-	AES_STORE(DST,W3)
+	AES_STORE(X0,W0)
+	AES_STORE(X0,W1)
+	AES_STORE(X0,W2)
+	AES_STORE(X0,W3)
 
-	str	DST, FRAME_DST
-	subs	LENGTH, LENGTH, #16
+	subs	X1, X1, #16
+	str	X0, FRAME_DST
+	str	X1, FRAME_LENGTH
+
 	bhi	.Lblock_loop
 
-	add	sp, sp, #8	C Drop saved r0, r1
+	add	sp, sp, #12	C Drop saved r0, r1, r3
 	pop	{r4,r5,r6,r7,r8,r10,r11,pc}
 	
 .Lend:
