@@ -2,7 +2,6 @@ EXPORTS
     nettle_MD5Final
     nettle_MD5Init
     nettle_MD5Update
-    nettle_aeads
     nettle_aes128
     nettle_aes128_decrypt
     nettle_aes128_encrypt
@@ -42,7 +41,6 @@ EXPORTS
     nettle_arctwo_set_key
     nettle_arctwo_set_key_ekb
     nettle_arctwo_set_key_gutmann
-    nettle_armors
     nettle_base16
     nettle_base16_decode_final
     nettle_base16_decode_init
@@ -130,6 +128,8 @@ EXPORTS
     nettle_ccm_update
     nettle_cfb_encrypt
     nettle_cfb_decrypt
+    nettle_cfb8_encrypt
+    nettle_cfb8_decrypt
     nettle_chacha_crypt
     nettle_chacha_poly1305
     nettle_chacha_poly1305_decrypt
@@ -141,7 +141,16 @@ EXPORTS
     nettle_chacha_set_key
     nettle_chacha_set_nonce
     nettle_chacha_set_nonce96
-    nettle_ciphers
+    nettle_cmac128_set_key
+    nettle_cmac128_init
+    nettle_cmac128_update
+    nettle_cmac128_digest
+    nettle_cmac_aes128_set_key
+    nettle_cmac_aes128_update
+    nettle_cmac_aes128_digest
+    nettle_cmac_aes256_set_key
+    nettle_cmac_aes256_update
+    nettle_cmac_aes256_digest
     nettle_cnd_memcpy
     nettle_ctr_crypt
     nettle_des3_decrypt
@@ -212,11 +221,14 @@ EXPORTS
     nettle_gcm_set_iv
     nettle_gcm_set_key
     nettle_gcm_update
+    nettle_get_aeads
+    nettle_get_armors
+    nettle_get_ciphers
+    nettle_get_hashes
     nettle_gosthash94
     nettle_gosthash94_digest
     nettle_gosthash94_init
     nettle_gosthash94_update
-    nettle_hashes
     nettle_hkdf_extract
     nettle_hkdf_expand
     nettle_hmac_digest
@@ -245,6 +257,7 @@ EXPORTS
     nettle_knuth_lfib_get_array
     nettle_knuth_lfib_init
     nettle_knuth_lfib_random
+    nettle_lookup_hash
     nettle_md2
     nettle_md2_digest
     nettle_md2_init
@@ -260,16 +273,6 @@ EXPORTS
     nettle_memeql_sec
     nettle_memxor
     nettle_memxor3
-    nettle_openssl_des_cbc_cksum
-    nettle_openssl_des_cbc_encrypt
-    nettle_openssl_des_check_key
-    nettle_openssl_des_ecb3_encrypt
-    nettle_openssl_des_ecb_encrypt
-    nettle_openssl_des_ede3_cbc_encrypt
-    nettle_openssl_des_is_weak_key
-    nettle_openssl_des_key_sched
-    nettle_openssl_des_ncbc_encrypt
-    nettle_openssl_des_set_odd_parity
     nettle_pbkdf2
     nettle_pbkdf2_hmac_sha1
     nettle_pbkdf2_hmac_sha256
@@ -366,6 +369,16 @@ EXPORTS
     nettle_umac96_set_nonce
     nettle_umac96_update
     nettle_xrealloc
+    nettle_xts_encrypt_message
+    nettle_xts_decrypt_message
+    nettle_xts_aes128_set_encrypt_key
+    nettle_xts_aes128_set_decrypt_key
+    nettle_xts_aes128_encrypt_message
+    nettle_xts_aes128_decrypt_message
+    nettle_xts_aes256_set_encrypt_key
+    nettle_xts_aes256_set_decrypt_key
+    nettle_xts_aes256_encrypt_message
+    nettle_xts_aes256_decrypt_message
     nettle_yarrow256_fast_reseed
     nettle_yarrow256_init
     nettle_yarrow256_is_seeded

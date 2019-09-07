@@ -97,23 +97,28 @@
     <ClInclude Include="..\cbc.h" />
     <ClInclude Include="..\ccm.h" />
     <ClInclude Include="..\cfb.h" />
+    <ClInclude Include="..\chacha-internal.h" />
     <ClInclude Include="..\chacha-poly1305.h" />
     <ClInclude Include="..\chacha.h" />
+    <ClInclude Include="..\cmac.h" />
+    <ClInclude Include="..\ctr-internal.h" />
     <ClInclude Include="..\ctr.h" />
     <ClInclude Include="..\curve25519.h" />
-    <ClInclude Include="..\des-compat.h" />
     <ClInclude Include="..\des.h" />
     <ClInclude Include="..\dsa-compat.h" />
+    <ClInclude Include="..\dsa-internal.h" />
     <ClInclude Include="..\dsa.h" />
     <ClInclude Include="..\eax.h" />
     <ClInclude Include="..\ecc-curve.h" />
     <ClInclude Include="..\ecc.h" />
     <ClInclude Include="..\ecdsa.h" />
+    <ClInclude Include="..\eddsa-internal.h" />
     <ClInclude Include="..\eddsa.h" />
     <ClInclude Include="..\gcm.h" />
     <ClInclude Include="..\gosthash94.h" />
     <ClInclude Include="..\hkdf.h" />
     <ClInclude Include="..\hmac.h" />
+    <ClInclude Include="..\hogweed-internal.h" />
     <ClInclude Include="..\knuth-lfib.h" />
     <ClInclude Include="..\macros.h" />
     <ClInclude Include="..\md2.h" />
@@ -126,25 +131,31 @@
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
+    <ClInclude Include="..\pkcs1-internal.h" />
     <ClInclude Include="..\pkcs1.h" />
     <ClInclude Include="..\poly1305.h" />
     <ClInclude Include="..\pss-mgf1.h" />
     <ClInclude Include="..\pss.h" />
     <ClInclude Include="..\realloc.h" />
+    <ClInclude Include="..\ripemd160-internal.h" />
     <ClInclude Include="..\ripemd160.h" />
     <ClInclude Include="..\rsa.h" />
+    <ClInclude Include="..\salsa20-internal.h" />
     <ClInclude Include="..\salsa20.h" />
     <ClInclude Include="..\serpent.h" />
     <ClInclude Include="..\sexp.h" />
     <ClInclude Include="..\sha.h" />
     <ClInclude Include="..\sha1.h" />
+    <ClInclude Include="..\sha2-internal.h" />
     <ClInclude Include="..\sha2.h" />
+    <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
     <ClInclude Include="..\twofish.h" />
+    <ClInclude Include="..\umac-internal.h" />
     <ClInclude Include="..\umac.h" />
+    <ClInclude Include="..\xts.h" />
     <ClInclude Include="..\yarrow.h" />
     <ClInclude Include="config.h" />
-    <ClInclude Include="nettle-stdint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\bignum-random-prime.c" />
@@ -837,10 +848,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -861,7 +872,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -881,6 +891,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -961,10 +972,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -985,7 +996,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1005,6 +1015,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1083,10 +1094,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1107,7 +1118,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1127,6 +1137,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1207,10 +1218,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1231,7 +1242,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1251,6 +1261,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1336,10 +1347,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1360,7 +1371,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1380,6 +1390,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1469,10 +1480,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1493,7 +1504,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1513,6 +1523,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1596,10 +1607,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1620,7 +1631,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1640,6 +1650,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1727,10 +1738,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1751,7 +1762,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1771,6 +1781,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1856,10 +1867,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1880,7 +1891,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -1900,6 +1910,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -1986,10 +1997,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2010,7 +2021,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2030,6 +2040,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2114,10 +2125,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2138,7 +2149,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2158,6 +2168,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2244,10 +2255,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2268,7 +2279,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2288,6 +2298,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2379,10 +2390,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2403,7 +2414,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2423,6 +2433,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2514,10 +2525,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2538,7 +2549,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2558,6 +2568,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2653,10 +2664,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2677,7 +2688,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2697,6 +2707,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2792,10 +2803,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2816,7 +2827,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2836,6 +2846,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -2926,10 +2937,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -2950,7 +2961,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -2970,6 +2980,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -3060,10 +3071,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -3084,7 +3095,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -3104,6 +3114,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -3198,10 +3209,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -3222,7 +3233,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -3242,6 +3252,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses
@@ -3336,10 +3347,10 @@ copy ..\ccm.h "$(OutDir)"\include\nettle
 copy ..\cfb.h "$(OutDir)"\include\nettle
 copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
+copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
-copy ..\des-compat.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -3360,7 +3371,6 @@ copy ..\md5-compat.h "$(OutDir)"\include\nettle
 copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
-copy .\nettle-stdint.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
@@ -3380,6 +3390,7 @@ copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
+copy ..\xts.h "$(OutDir)"\include\nettle
 copy ..\yarrow.h "$(OutDir)"\include\nettle
 copy version.h "$(OutDir)"\include\nettle
 mkdir $(OutDir)\licenses

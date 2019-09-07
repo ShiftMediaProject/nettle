@@ -1,8 +1,8 @@
 diff --git a/fat-x86_64.c b/fat-x86_64.c
-index 2e97d1e5..56606ebd 100644
+index a95a592c..810f592f 100644
 --- a/fat-x86_64.c
 +++ b/fat-x86_64.c
-@@ -125,8 +125,7 @@ fat_init (void)
+@@ -141,8 +141,7 @@ fat_init (void)
    struct x86_features features;
    int verbose;
  
@@ -61,7 +61,7 @@ index 8034f779..040ffb89 100644
  	movb	($5, $6),LREG($4)
  	roll	<$>8,$4>)dnl
 diff --git a/x86_64/fat/cpuid.asm b/x86_64/fat/cpuid.asm
-index 16a66d57..c678a714 100644
+index f317d56e..bc6e5dfb 100644
 --- a/x86_64/fat/cpuid.asm
 +++ b/x86_64/fat/cpuid.asm
 @@ -41,7 +41,7 @@ C output pointer: %rsi
@@ -71,9 +71,9 @@ index 16a66d57..c678a714 100644
 -	W64_ENTRY(2)
 +	W64_ENTRY(2, 0)
  	push	%rbx
- 	
+ 
  	movl	%edi, %eax
-@@ -52,7 +52,7 @@ PROLOGUE(_nettle_cpuid)
+@@ -53,7 +53,7 @@ PROLOGUE(_nettle_cpuid)
  	mov	%edx, 12(%rsi)
  
  	pop	%rbx

@@ -162,11 +162,6 @@ EXPORTS
     nettle_rsa_sha512_sign_tr
     nettle_rsa_sha512_verify
     nettle_rsa_sha512_verify_digest
-    nettle_secp_192r1
-    nettle_secp_224r1
-    nettle_secp_256r1
-    nettle_secp_384r1
-    nettle_secp_521r1
     nettle_sexp_format
     nettle_sexp_iterator_assoc
     nettle_sexp_iterator_check_type

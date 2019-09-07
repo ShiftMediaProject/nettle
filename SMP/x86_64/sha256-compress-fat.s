@@ -1,12 +1,12 @@
 	.file "sha256-compress.asm"
 	.text
 	.align 16
-.globl _nettle_sha256_compress
-.def _nettle_sha256_compress
+.globl _nettle_sha256_compress_x86_64
+.def _nettle_sha256_compress_x86_64
 .scl 2
 .type 32
 .endef
-_nettle_sha256_compress:
+_nettle_sha256_compress_x86_64:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

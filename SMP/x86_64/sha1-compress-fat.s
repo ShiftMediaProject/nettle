@@ -1,12 +1,12 @@
 	.file "sha1-compress.asm"
 	.text
 	.align 16
-.globl _nettle_sha1_compress
-.def _nettle_sha1_compress
+.globl _nettle_sha1_compress_x86_64
+.def _nettle_sha1_compress_x86_64
 .scl 2
 .type 32
 .endef
-_nettle_sha1_compress:
+_nettle_sha1_compress_x86_64:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

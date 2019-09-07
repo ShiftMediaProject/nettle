@@ -114,9 +114,6 @@
     <ClInclude Include="..\des.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
-    <ClInclude Include="..\des-compat.h">
-      <Filter>Header Files\nettle</Filter>
-    </ClInclude>
     <ClInclude Include="..\dsa.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
@@ -162,9 +159,6 @@
     <ClInclude Include="..\nettle-meta.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
-    <ClInclude Include="nettle-stdint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\poly1305.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
@@ -205,6 +199,9 @@
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
     <ClInclude Include="..\pss.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xts.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
   </ItemGroup>
@@ -327,9 +324,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\des3.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\des-compat.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gcm.c">
@@ -713,6 +707,27 @@
     <ClCompile Include="..\cnd-memcpy.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cmac.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cmac-aes128.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cmac-aes256.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ctr16.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xts-aes128.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xts-aes256.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
@@ -738,19 +753,16 @@
     <YASM Include="x86\sha1-compress.s">
       <Filter>Source Files\x86</Filter>
     </YASM>
-    <YASM Include="x86_64\umac-nh-n.s">
+    <YASM Include="x86_64\aes-decrypt-internal-2-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\aes-decrypt-internal.s">
+    <YASM Include="x86_64\aes-decrypt-internal-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\aes-decrypt-internal-2.s">
+    <YASM Include="x86_64\aes-encrypt-internal-2-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\aes-encrypt-internal.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\aes-encrypt-internal-2.s">
+    <YASM Include="x86_64\aes-encrypt-internal-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\camellia-crypt-internal.s">
@@ -759,7 +771,7 @@
     <YASM Include="x86_64\chacha-core-internal.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\cpuid.s">
+    <YASM Include="x86_64\cpuid-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\gcm-hash8.s">
@@ -768,13 +780,13 @@
     <YASM Include="x86_64\md5-compress.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\memxor.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\memxor-2.s">
+    <YASM Include="x86_64\memxor-2-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\memxor3.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\memxor-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\poly1305-internal.s">
@@ -792,19 +804,28 @@
     <YASM Include="x86_64\serpent-encrypt.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\sha1-compress.s">
+    <YASM Include="x86_64\sha1-compress-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\sha1-compress-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\sha3-permute.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\sha256-compress.s">
+    <YASM Include="x86_64\sha256-compress-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\sha256-compress-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\sha512-compress.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\umac-nh.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\umac-nh-n.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
   </ItemGroup>

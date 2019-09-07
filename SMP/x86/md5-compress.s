@@ -1,12 +1,12 @@
 	.file "md5-compress.asm"
 	.text
 	.align 16
-.globl __nettle_md5_compress
-.def __nettle_md5_compress
+.globl _nettle_md5_compress
+.def _nettle_md5_compress
 .scl 2
 .type 32
 .endef
-__nettle_md5_compress:
+_nettle_md5_compress:
 	pushl	%ebx
 	pushl	%ebp
 	pushl	%esi

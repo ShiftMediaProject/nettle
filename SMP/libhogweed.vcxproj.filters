@@ -114,9 +114,6 @@
     <ClInclude Include="..\des.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
-    <ClInclude Include="..\des-compat.h">
-      <Filter>Header Files\nettle</Filter>
-    </ClInclude>
     <ClInclude Include="..\dsa.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
@@ -159,9 +156,6 @@
     <ClInclude Include="..\memxor.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
-    <ClInclude Include="nettle-stdint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\eax.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
@@ -202,6 +196,45 @@
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
     <ClInclude Include="..\pss-mgf1.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\umac-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sha3-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sha2-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\salsa20-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ripemd160-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\pkcs1-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\hogweed-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\eddsa-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dsa-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ctr-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\chacha-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cmac.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xts.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
   </ItemGroup>

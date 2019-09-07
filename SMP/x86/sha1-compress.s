@@ -1,11 +1,11 @@
 	.file "sha1-compress.asm"
 	.text
-.globl __nettle_sha1_compress
-.def __nettle_sha1_compress
+.globl _nettle_sha1_compress
+.def _nettle_sha1_compress
 .scl 2
 .type 32
 .endef
-__nettle_sha1_compress:
+_nettle_sha1_compress:
 	pushl	%ebx
 	pushl	%ebp
 	pushl	%esi

@@ -13,6 +13,7 @@ _nettle_cpuid:
       mov	%rdx, %rsi
 	push	%rbx
 	movl	%edi, %eax
+	xorl	%ecx, %ecx
 	cpuid
 	mov	%eax, (%rsi)
 	mov	%ebx, 4(%rsi)
