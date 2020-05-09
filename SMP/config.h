@@ -47,17 +47,18 @@
 /* Define to 1 each of the following for which a native (ie. CPU specific)
     implementation of the corresponding routine exists.  */
 #if defined(__x86_64) || defined(_M_X64)
-#define HAVE_NATIVE_ecc_192_modp 1
-#define HAVE_NATIVE_ecc_192_redc 1
-#define HAVE_NATIVE_ecc_224_modp 1
-#define HAVE_NATIVE_ecc_224_redc 1
-#define HAVE_NATIVE_ecc_25519_modp 1
-#define HAVE_NATIVE_ecc_256_modp 1
-#define HAVE_NATIVE_ecc_256_redc 1
-#define HAVE_NATIVE_ecc_384_modp 1
-#define HAVE_NATIVE_ecc_384_redc 1
-#define HAVE_NATIVE_ecc_521_modp 1
-#define HAVE_NATIVE_ecc_521_redc 1
+#define HAVE_NATIVE_ecc_curve25519_modp 1
+#define HAVE_NATIVE_ecc_curve448_modp 1
+#define HAVE_NATIVE_ecc_secp192r1_modp 1
+#define HAVE_NATIVE_ecc_secp192r1_redc 1
+#define HAVE_NATIVE_ecc_secp224r1_modp 1
+#define HAVE_NATIVE_ecc_secp224r1_redc 1
+#define HAVE_NATIVE_ecc_secp256r1_modp 1
+#define HAVE_NATIVE_ecc_secp256r1_redc 1
+#define HAVE_NATIVE_ecc_secp384r1_modp 1
+#define HAVE_NATIVE_ecc_secp384r1_redc 1
+#define HAVE_NATIVE_ecc_secp521r1_modp 1
+#define HAVE_NATIVE_ecc_secp521r1_redc 1
 #define HAVE_NATIVE_gcm_hash8 1
 #define HAVE_NATIVE_salsa20_core 1
 #define HAVE_NATIVE_sha1_compress 1

@@ -1,10 +1,10 @@
-	.file "ecc-256-redc.asm"
-.globl nettle_ecc_256_redc
-.def nettle_ecc_256_redc
+	.file "ecc-secp256r1-redc.asm"
+.globl _nettle_ecc_secp256r1_redc
+.def _nettle_ecc_secp256r1_redc
 .scl 2
 .type 32
 .endef
-nettle_ecc_256_redc:
+_nettle_ecc_secp256r1_redc:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

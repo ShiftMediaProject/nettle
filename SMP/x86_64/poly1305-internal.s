@@ -1,12 +1,12 @@
 	.file "poly1305-internal.asm"
 	.text
 	.align 16
-.globl nettle_poly1305_set_key
-.def nettle_poly1305_set_key
+.globl _nettle_poly1305_set_key
+.def _nettle_poly1305_set_key
 .scl 2
 .type 32
 .endef
-nettle_poly1305_set_key:
+_nettle_poly1305_set_key:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi
@@ -78,12 +78,12 @@ _nettle_poly1305_block:
       pop	%rsi
     pop	%rdi
 	ret
-.globl nettle_poly1305_digest
-.def nettle_poly1305_digest
+.globl _nettle_poly1305_digest
+.def _nettle_poly1305_digest
 .scl 2
 .type 32
 .endef
-nettle_poly1305_digest:
+_nettle_poly1305_digest:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

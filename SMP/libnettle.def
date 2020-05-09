@@ -126,11 +126,12 @@ EXPORTS
     nettle_ccm_encrypt_message
     nettle_ccm_set_nonce
     nettle_ccm_update
-    nettle_cfb_encrypt
-    nettle_cfb_decrypt
-    nettle_cfb8_encrypt
     nettle_cfb8_decrypt
+    nettle_cfb8_encrypt
+    nettle_cfb_decrypt
+    nettle_cfb_encrypt
     nettle_chacha_crypt
+    nettle_chacha_crypt32
     nettle_chacha_poly1305
     nettle_chacha_poly1305_decrypt
     nettle_chacha_poly1305_digest
@@ -138,19 +139,31 @@ EXPORTS
     nettle_chacha_poly1305_set_key
     nettle_chacha_poly1305_set_nonce
     nettle_chacha_poly1305_update
+    nettle_chacha_set_counter
+    nettle_chacha_set_counter32
     nettle_chacha_set_key
     nettle_chacha_set_nonce
     nettle_chacha_set_nonce96
-    nettle_cmac128_set_key
-    nettle_cmac128_init
-    nettle_cmac128_update
     nettle_cmac128_digest
+    nettle_cmac128_init
+    nettle_cmac128_set_key
+    nettle_cmac128_update
+    nettle_cmac64_digest
+    nettle_cmac64_init
+    nettle_cmac64_set_key
+    nettle_cmac64_update
+    nettle_cmac_aes128
+    nettle_cmac_aes128_digest
     nettle_cmac_aes128_set_key
     nettle_cmac_aes128_update
-    nettle_cmac_aes128_digest
+    nettle_cmac_aes256
+    nettle_cmac_aes256_digest
     nettle_cmac_aes256_set_key
     nettle_cmac_aes256_update
-    nettle_cmac_aes256_digest
+    nettle_cmac_des3
+    nettle_cmac_des3_digest
+    nettle_cmac_des3_set_key
+    nettle_cmac_des3_update
     nettle_cnd_memcpy
     nettle_ctr_crypt
     nettle_des3_decrypt
@@ -225,30 +238,47 @@ EXPORTS
     nettle_get_armors
     nettle_get_ciphers
     nettle_get_hashes
+    nettle_get_macs
     nettle_gosthash94
     nettle_gosthash94_digest
     nettle_gosthash94_init
     nettle_gosthash94_update
-    nettle_hkdf_extract
+    nettle_gosthash94cp
+    nettle_gosthash94cp_digest
+    nettle_gosthash94cp_update
     nettle_hkdf_expand
+    nettle_hkdf_extract
     nettle_hmac_digest
+    nettle_hmac_gosthash94_digest
+    nettle_hmac_gosthash94_set_key
+    nettle_hmac_gosthash94_update
+    nettle_hmac_gosthash94cp_digest
+    nettle_hmac_gosthash94cp_set_key
+    nettle_hmac_gosthash94cp_update
+    nettle_hmac_md5
     nettle_hmac_md5_digest
     nettle_hmac_md5_set_key
     nettle_hmac_md5_update
+    nettle_hmac_ripemd160
     nettle_hmac_ripemd160_digest
     nettle_hmac_ripemd160_set_key
     nettle_hmac_ripemd160_update
     nettle_hmac_set_key
+    nettle_hmac_sha1
     nettle_hmac_sha1_digest
     nettle_hmac_sha1_set_key
     nettle_hmac_sha1_update
+    nettle_hmac_sha224
     nettle_hmac_sha224_digest
     nettle_hmac_sha224_set_key
+    nettle_hmac_sha256
     nettle_hmac_sha256_digest
     nettle_hmac_sha256_set_key
     nettle_hmac_sha256_update
+    nettle_hmac_sha384
     nettle_hmac_sha384_digest
     nettle_hmac_sha384_set_key
+    nettle_hmac_sha512
     nettle_hmac_sha512_digest
     nettle_hmac_sha512_set_key
     nettle_hmac_sha512_update
@@ -267,6 +297,7 @@ EXPORTS
     nettle_md4_init
     nettle_md4_update
     nettle_md5
+    nettle_md5_compress
     nettle_md5_digest
     nettle_md5_init
     nettle_md5_update
@@ -274,14 +305,13 @@ EXPORTS
     nettle_memxor
     nettle_memxor3
     nettle_pbkdf2
+    nettle_pbkdf2_hmac_gosthash94cp
     nettle_pbkdf2_hmac_sha1
     nettle_pbkdf2_hmac_sha256
     nettle_poly1305_aes_digest
     nettle_poly1305_aes_set_key
     nettle_poly1305_aes_set_nonce
     nettle_poly1305_aes_update
-    nettle_poly1305_digest
-    nettle_poly1305_set_key
     nettle_realloc
     nettle_ripemd160
     nettle_ripemd160_digest
@@ -303,6 +333,7 @@ EXPORTS
     nettle_serpent_encrypt
     nettle_serpent_set_key
     nettle_sha1
+    nettle_sha1_compress
     nettle_sha1_digest
     nettle_sha1_init
     nettle_sha1_update
@@ -323,6 +354,7 @@ EXPORTS
     nettle_sha3_256
     nettle_sha3_256_digest
     nettle_sha3_256_init
+    nettle_sha3_256_shake
     nettle_sha3_256_update
     nettle_sha3_384
     nettle_sha3_384_digest
@@ -343,6 +375,15 @@ EXPORTS
     nettle_sha512_digest
     nettle_sha512_init
     nettle_sha512_update
+    nettle_siv_cmac_aes128_decrypt_message
+    nettle_siv_cmac_aes128_encrypt_message
+    nettle_siv_cmac_aes128_set_key
+    nettle_siv_cmac_aes256_decrypt_message
+    nettle_siv_cmac_aes256_encrypt_message
+    nettle_siv_cmac_aes256_set_key
+    nettle_siv_cmac_decrypt_message
+    nettle_siv_cmac_encrypt_message
+    nettle_siv_cmac_set_key
     nettle_twofish128
     nettle_twofish128_set_key
     nettle_twofish192
@@ -369,16 +410,16 @@ EXPORTS
     nettle_umac96_set_nonce
     nettle_umac96_update
     nettle_xrealloc
-    nettle_xts_encrypt_message
-    nettle_xts_decrypt_message
-    nettle_xts_aes128_set_encrypt_key
-    nettle_xts_aes128_set_decrypt_key
-    nettle_xts_aes128_encrypt_message
     nettle_xts_aes128_decrypt_message
-    nettle_xts_aes256_set_encrypt_key
-    nettle_xts_aes256_set_decrypt_key
-    nettle_xts_aes256_encrypt_message
+    nettle_xts_aes128_encrypt_message
+    nettle_xts_aes128_set_decrypt_key
+    nettle_xts_aes128_set_encrypt_key
     nettle_xts_aes256_decrypt_message
+    nettle_xts_aes256_encrypt_message
+    nettle_xts_aes256_set_decrypt_key
+    nettle_xts_aes256_set_encrypt_key
+    nettle_xts_decrypt_message
+    nettle_xts_encrypt_message
     nettle_yarrow256_fast_reseed
     nettle_yarrow256_init
     nettle_yarrow256_is_seeded

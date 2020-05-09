@@ -1,10 +1,10 @@
-	.file "ecc-224-modp.asm"
-.globl nettle_ecc_224_modp
-.def nettle_ecc_224_modp
+	.file "ecc-secp224r1-modp.asm"
+.globl _nettle_ecc_secp224r1_modp
+.def _nettle_ecc_secp224r1_modp
 .scl 2
 .type 32
 .endef
-nettle_ecc_224_modp:
+_nettle_ecc_secp224r1_modp:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

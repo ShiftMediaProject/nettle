@@ -9,6 +9,8 @@ EXPORTS
     nettle_asn1_der_iterator_next
     nettle_curve25519_mul
     nettle_curve25519_mul_g
+    nettle_curve448_mul
+    nettle_curve448_mul_g
     nettle_dsa_compat_generate_keypair
     nettle_dsa_generate_keypair
     nettle_dsa_generate_params
@@ -43,6 +45,10 @@ EXPORTS
     nettle_ecc_ecdsa_sign_itch
     nettle_ecc_ecdsa_verify
     nettle_ecc_ecdsa_verify_itch
+    nettle_ecc_gostdsa_sign
+    nettle_ecc_gostdsa_sign_itch
+    nettle_ecc_gostdsa_verify
+    nettle_ecc_gostdsa_verify_itch
     nettle_ecc_point_clear
     nettle_ecc_point_get
     nettle_ecc_point_init
@@ -63,11 +69,19 @@ EXPORTS
     nettle_ed25519_sha512_public_key
     nettle_ed25519_sha512_sign
     nettle_ed25519_sha512_verify
+    nettle_ed448_shake256_public_key
+    nettle_ed448_shake256_sign
+    nettle_ed448_shake256_verify
+    nettle_get_gost_gc256b
+    nettle_get_gost_gc512a
     nettle_get_secp_192r1
     nettle_get_secp_224r1
     nettle_get_secp_256r1
     nettle_get_secp_384r1
     nettle_get_secp_521r1
+    nettle_gostdsa_sign
+    nettle_gostdsa_verify
+    nettle_gostdsa_vko
     nettle_mpz_get_str_256
     nettle_mpz_init_set_str_256_s
     nettle_mpz_init_set_str_256_u
@@ -129,16 +143,16 @@ EXPORTS
     nettle_rsa_pkcs1_sign
     nettle_rsa_pkcs1_sign_tr
     nettle_rsa_pkcs1_verify
+    nettle_rsa_private_key_clear
+    nettle_rsa_private_key_from_der_iterator
+    nettle_rsa_private_key_init
+    nettle_rsa_private_key_prepare
     nettle_rsa_pss_sha256_sign_digest_tr
     nettle_rsa_pss_sha256_verify_digest
     nettle_rsa_pss_sha384_sign_digest_tr
     nettle_rsa_pss_sha384_verify_digest
     nettle_rsa_pss_sha512_sign_digest_tr
     nettle_rsa_pss_sha512_verify_digest
-    nettle_rsa_private_key_clear
-    nettle_rsa_private_key_from_der_iterator
-    nettle_rsa_private_key_init
-    nettle_rsa_private_key_prepare
     nettle_rsa_public_key_clear
     nettle_rsa_public_key_from_der_iterator
     nettle_rsa_public_key_init

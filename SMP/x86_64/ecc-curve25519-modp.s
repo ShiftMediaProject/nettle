@@ -1,10 +1,10 @@
 	.file "ecc-25519-modp.asm"
-.globl nettle_ecc_25519_modp
-.def nettle_ecc_25519_modp
+.globl _nettle_ecc_curve25519_modp
+.def _nettle_ecc_curve25519_modp
 .scl 2
 .type 32
 .endef
-nettle_ecc_25519_modp:
+_nettle_ecc_curve25519_modp:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

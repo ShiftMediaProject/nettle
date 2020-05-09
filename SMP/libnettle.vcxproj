@@ -83,6 +83,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\aes-internal.h" />
     <ClInclude Include="..\aes.h" />
     <ClInclude Include="..\arcfour.h" />
     <ClInclude Include="..\arctwo.h" />
@@ -90,29 +91,48 @@
     <ClInclude Include="..\base16.h" />
     <ClInclude Include="..\base64.h" />
     <ClInclude Include="..\bignum.h" />
+    <ClInclude Include="..\block-internal.h" />
     <ClInclude Include="..\blowfish.h" />
     <ClInclude Include="..\buffer.h" />
+    <ClInclude Include="..\camellia-internal.h" />
     <ClInclude Include="..\camellia.h" />
     <ClInclude Include="..\cast128.h" />
+    <ClInclude Include="..\cast128_sboxes.h" />
     <ClInclude Include="..\cbc.h" />
     <ClInclude Include="..\ccm.h" />
     <ClInclude Include="..\cfb.h" />
+    <ClInclude Include="..\chacha-internal.h" />
     <ClInclude Include="..\chacha-poly1305.h" />
     <ClInclude Include="..\chacha.h" />
+    <ClInclude Include="..\cmac.h" />
+    <ClInclude Include="..\ctr-internal.h" />
     <ClInclude Include="..\ctr.h" />
     <ClInclude Include="..\curve25519.h" />
+    <ClInclude Include="..\curve448.h" />
     <ClInclude Include="..\des.h" />
+    <ClInclude Include="..\desCode.h" />
+    <ClInclude Include="..\desinfo.h" />
     <ClInclude Include="..\dsa-compat.h" />
+    <ClInclude Include="..\dsa-internal.h" />
     <ClInclude Include="..\dsa.h" />
     <ClInclude Include="..\eax.h" />
     <ClInclude Include="..\ecc-curve.h" />
+    <ClInclude Include="..\ecc-internal.h" />
     <ClInclude Include="..\ecc.h" />
     <ClInclude Include="..\ecdsa.h" />
+    <ClInclude Include="..\eddsa-internal.h" />
     <ClInclude Include="..\eddsa.h" />
+    <ClInclude Include="..\fat-setup.h" />
     <ClInclude Include="..\gcm.h" />
+    <ClInclude Include="..\getopt.h" />
+    <ClInclude Include="..\getopt_int.h" />
+    <ClInclude Include="..\gmp-glue.h" />
+    <ClInclude Include="..\gost28147-internal.h" />
+    <ClInclude Include="..\gostdsa.h" />
     <ClInclude Include="..\gosthash94.h" />
     <ClInclude Include="..\hkdf.h" />
     <ClInclude Include="..\hmac.h" />
+    <ClInclude Include="..\hogweed-internal.h" />
     <ClInclude Include="..\knuth-lfib.h" />
     <ClInclude Include="..\macros.h" />
     <ClInclude Include="..\md2.h" />
@@ -120,26 +140,40 @@
     <ClInclude Include="..\md5-compat.h" />
     <ClInclude Include="..\md5.h" />
     <ClInclude Include="..\memops.h" />
+    <ClInclude Include="..\memxor-internal.h" />
     <ClInclude Include="..\memxor.h" />
+    <ClInclude Include="..\mini-gmp.h" />
+    <ClInclude Include="..\nettle-internal.h" />
     <ClInclude Include="..\nettle-meta.h" />
     <ClInclude Include="..\nettle-types.h" />
+    <ClInclude Include="..\nettle-write.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
+    <ClInclude Include="..\pkcs1-internal.h" />
     <ClInclude Include="..\pkcs1.h" />
+    <ClInclude Include="..\poly1305-internal.h" />
     <ClInclude Include="..\poly1305.h" />
     <ClInclude Include="..\pss-mgf1.h" />
     <ClInclude Include="..\pss.h" />
     <ClInclude Include="..\realloc.h" />
+    <ClInclude Include="..\ripemd160-internal.h" />
     <ClInclude Include="..\ripemd160.h" />
+    <ClInclude Include="..\rsa-internal.h" />
     <ClInclude Include="..\rsa.h" />
+    <ClInclude Include="..\salsa20-internal.h" />
     <ClInclude Include="..\salsa20.h" />
+    <ClInclude Include="..\serpent-internal.h" />
     <ClInclude Include="..\serpent.h" />
     <ClInclude Include="..\sexp.h" />
     <ClInclude Include="..\sha.h" />
     <ClInclude Include="..\sha1.h" />
+    <ClInclude Include="..\sha2-internal.h" />
     <ClInclude Include="..\sha2.h" />
+    <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
+    <ClInclude Include="..\siv-cmac.h" />
     <ClInclude Include="..\twofish.h" />
+    <ClInclude Include="..\umac-internal.h" />
     <ClInclude Include="..\umac.h" />
     <ClInclude Include="..\xts.h" />
     <ClInclude Include="..\yarrow.h" />
@@ -209,9 +243,14 @@
     <ClCompile Include="..\chacha-poly1305.c" />
     <ClCompile Include="..\chacha-set-key.c" />
     <ClCompile Include="..\chacha-set-nonce.c" />
+    <ClCompile Include="..\cmac-aes128-meta.c" />
     <ClCompile Include="..\cmac-aes128.c" />
+    <ClCompile Include="..\cmac-aes256-meta.c" />
     <ClCompile Include="..\cmac-aes256.c" />
+    <ClCompile Include="..\cmac-des3-meta.c" />
+    <ClCompile Include="..\cmac-des3.c" />
     <ClCompile Include="..\cmac.c" />
+    <ClCompile Include="..\cmac64.c" />
     <ClCompile Include="..\cnd-memcpy.c" />
     <ClCompile Include="..\ctr.c" />
     <ClCompile Include="..\ctr16.c" />
@@ -235,15 +274,24 @@
     <ClCompile Include="..\gcm-camellia256-meta.c" />
     <ClCompile Include="..\gcm-camellia256.c" />
     <ClCompile Include="..\gcm.c" />
+    <ClCompile Include="..\gost28147.c" />
     <ClCompile Include="..\gosthash94-meta.c" />
     <ClCompile Include="..\gosthash94.c" />
     <ClCompile Include="..\hkdf.c" />
+    <ClCompile Include="..\hmac-gosthash94.c" />
+    <ClCompile Include="..\hmac-md5-meta.c" />
     <ClCompile Include="..\hmac-md5.c" />
+    <ClCompile Include="..\hmac-ripemd160-meta.c" />
     <ClCompile Include="..\hmac-ripemd160.c" />
+    <ClCompile Include="..\hmac-sha1-meta.c" />
     <ClCompile Include="..\hmac-sha1.c" />
+    <ClCompile Include="..\hmac-sha224-meta.c" />
     <ClCompile Include="..\hmac-sha224.c" />
+    <ClCompile Include="..\hmac-sha256-meta.c" />
     <ClCompile Include="..\hmac-sha256.c" />
+    <ClCompile Include="..\hmac-sha384-meta.c" />
     <ClCompile Include="..\hmac-sha384.c" />
+    <ClCompile Include="..\hmac-sha512-meta.c" />
     <ClCompile Include="..\hmac-sha512.c" />
     <ClCompile Include="..\hmac.c" />
     <ClCompile Include="..\knuth-lfib.c" />
@@ -266,6 +314,8 @@
     <ClCompile Include="..\nettle-meta-armors.c" />
     <ClCompile Include="..\nettle-meta-ciphers.c" />
     <ClCompile Include="..\nettle-meta-hashes.c" />
+    <ClCompile Include="..\nettle-meta-macs.c" />
+    <ClCompile Include="..\pbkdf2-hmac-gosthash94.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha1.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha256.c" />
     <ClCompile Include="..\pbkdf2.c" />
@@ -324,6 +374,10 @@
     </ClCompile>
     <ClCompile Include="..\sha512-meta.c" />
     <ClCompile Include="..\sha512.c" />
+    <ClCompile Include="..\shake256.c" />
+    <ClCompile Include="..\siv-cmac-aes128.c" />
+    <ClCompile Include="..\siv-cmac-aes256.c" />
+    <ClCompile Include="..\siv-cmac.c" />
     <ClCompile Include="..\twofish-meta.c" />
     <ClCompile Include="..\twofish.c" />
     <ClCompile Include="..\umac-l2.c" />
@@ -991,6 +1045,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1001,6 +1056,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1030,6 +1086,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1114,6 +1171,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1124,6 +1182,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1153,6 +1212,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1235,6 +1295,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1245,6 +1306,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1274,6 +1336,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1358,6 +1421,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1368,6 +1432,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1397,6 +1462,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1486,6 +1552,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1496,6 +1563,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1525,6 +1593,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1618,6 +1687,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1628,6 +1698,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1657,6 +1728,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1744,6 +1816,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1754,6 +1827,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1783,6 +1857,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1874,6 +1949,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -1884,6 +1960,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -1913,6 +1990,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2002,6 +2080,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2012,6 +2091,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2041,6 +2121,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2131,6 +2212,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2141,6 +2223,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2170,6 +2253,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2258,6 +2342,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2268,6 +2353,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2297,6 +2383,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2387,6 +2474,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2397,6 +2485,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2426,6 +2515,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2521,6 +2611,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2531,6 +2622,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2560,6 +2652,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2655,6 +2748,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2665,6 +2759,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2694,6 +2789,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2793,6 +2889,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2803,6 +2900,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2832,6 +2930,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -2931,6 +3030,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -2941,6 +3041,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -2970,6 +3071,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -3064,6 +3166,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -3074,6 +3177,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -3103,6 +3207,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -3197,6 +3302,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -3207,6 +3313,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -3236,6 +3343,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -3334,6 +3442,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -3344,6 +3453,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -3373,6 +3483,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -3471,6 +3582,7 @@ copy ..\chacha.h "$(OutDir)"\include\nettle
 copy ..\chacha-poly1305.h "$(OutDir)"\include\nettle
 copy ..\cmac.h "$(OutDir)"\include\nettle
 copy ..\curve25519.h "$(OutDir)"\include\nettle
+copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
@@ -3481,6 +3593,7 @@ copy ..\ecc-curve.h "$(OutDir)"\include\nettle
 copy ..\ecdsa.h "$(OutDir)"\include\nettle
 copy ..\eddsa.h "$(OutDir)"\include\nettle
 copy ..\gcm.h "$(OutDir)"\include\nettle
+copy ..\gostdsa.h "$(OutDir)"\include\nettle
 copy ..\gosthash94.h "$(OutDir)"\include\nettle
 copy ..\hmac.h "$(OutDir)"\include\nettle
 copy ..\hkdf.h "$(OutDir)"\include\nettle
@@ -3510,6 +3623,7 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle

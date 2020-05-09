@@ -12,10 +12,6 @@ static const mp_limb_t ecc_b[6] = {
 static const mp_limb_t ecc_q[6] = {
   0xecec196accc52973ULL, 0x581a0db248b0a77aULL, 0xc7634d81f4372ddfULL, 0xffffffffffffffffULL, 0xffffffffffffffffULL, 0xffffffffffffffffULL,
 };
-static const mp_limb_t ecc_g[12] = {
-  0x3a545e3872760ab7ULL, 0x5502f25dbf55296cULL, 0x59f741e082542a38ULL, 0x6e1d3b628ba79b98ULL, 0x8eb1c71ef320ad74ULL, 0xaa87ca22be8b0537ULL,
-  0x7a431d7c90ea0e5fULL, 0xa60b1ce1d7e819dULL, 0xe9da3113b5f0b8c0ULL, 0xf8f41dbd289a147cULL, 0x5d9e98bf9292dc29ULL, 0x3617de4a96262c6fULL,
-};
 static const mp_limb_t ecc_Bmodp[6] = {
   0xffffffff00000001ULL, 0xffffffffULL, 0x1ULL, 0x0ULL, 0x0ULL, 0x0ULL,
 };

@@ -7,17 +7,10 @@ static const mp_limb_t ecc_p[4] = {
   0xffffffffffffffedULL, 0xffffffffffffffffULL, 0xffffffffffffffffULL, 0x7fffffffffffffffULL,
 };
 static const mp_limb_t ecc_b[4] = {
-  0x76d06ULL, 0x0ULL, 0x0ULL, 0x0ULL,
-};
-static const mp_limb_t ecc_d[4] = {
   0x8a14b235eca6874aULL, 0xff8ff5b2bebe2754ULL, 0x7338bf8688861767ULL, 0x2dfc9311d490018cULL,
 };
 static const mp_limb_t ecc_q[4] = {
   0x5812631a5cf5d3edULL, 0x14def9dea2f79cd6ULL, 0x0ULL, 0x1000000000000000ULL,
-};
-static const mp_limb_t ecc_g[8] = {
-  0xc9562d608f25d51aULL, 0x692cc7609525a7b2ULL, 0xc0a4e231fdd6dc5cULL, 0x216936d3cd6e53feULL,
-  0x6666666666666658ULL, 0x6666666666666666ULL, 0x6666666666666666ULL, 0x6666666666666666ULL,
 };
 static const mp_limb_t ecc_Bmodp[4] = {
   0x26ULL, 0x0ULL, 0x0ULL, 0x0ULL,
@@ -41,9 +34,6 @@ static const mp_limb_t ecc_pp1h[4] = {
 };
 static const mp_limb_t ecc_qp1h[4] = {
   0x2c09318d2e7ae9f7ULL, 0xa6f7cef517bce6bULL, 0x0ULL, 0x800000000000000ULL,
-};
-static const mp_limb_t ecc_edwards[4] = {
-  0x3391fb5500ba81e7ULL, 0x3a5e2c2eb482e57dULL, 0x2d84f723fc03b081ULL, 0x70d9120b9f5ff944ULL,
 };
 #define ecc_redc_ppm1 NULL
 #define ECC_REDC_SIZE 0

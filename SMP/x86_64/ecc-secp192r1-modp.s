@@ -1,12 +1,12 @@
-	.file "ecc-192-modp.asm"
+	.file "ecc-secp192r1-modp.asm"
 	.text
 	.align 16
-.globl nettle_ecc_192_modp
-.def nettle_ecc_192_modp
+.globl _nettle_ecc_secp192r1_modp
+.def _nettle_ecc_secp192r1_modp
 .scl 2
 .type 32
 .endef
-nettle_ecc_192_modp:
+_nettle_ecc_secp192r1_modp:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi
