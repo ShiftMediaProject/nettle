@@ -18,6 +18,7 @@
 /cnd-memcpy-test
 /ctr-test
 /curve25519-dh-test
+/curve448-dh-test
 /cxx-test
 /des-test
 /des3-test
@@ -42,6 +43,10 @@
 /eddsa-sign-test
 /eddsa-verify-test
 /gcm-test
+/gostdsa-keygen-test
+/gostdsa-sign-test
+/gostdsa-verify-test
+/gostdsa-vko-test
 /gosthash94-test
 /hkdf-test
 /hmac-test
@@ -56,6 +61,7 @@
 /meta-armor-test
 /meta-cipher-test
 /meta-hash-test
+/meta-mac-test
 /pbkdf2-test
 /pkcs1-test
 /pkcs1-sec-decrypt-test
@@ -95,6 +101,8 @@
 /version-test
 /yarrow-test
 /xts-test
+/cmac-test
+/siv-test
 
 /test.in
 /test1.out
