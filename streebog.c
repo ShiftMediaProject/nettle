@@ -1233,7 +1233,7 @@ streebog512_compress (struct streebog512_ctx *ctx, const uint8_t *input, uint64_
 static void
 streebog_final (struct streebog512_ctx *ctx)
 {
-  uint64_t Z[8] = {};
+  uint64_t Z[8] = {0};
   unsigned int i;
 
   /* PAD. It does not count towards message length */
