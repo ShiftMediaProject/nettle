@@ -87,23 +87,32 @@ Reference
 Hash functions
 
 * Recommended hash functions::
+* Miscellaneous hash functions::
 * Legacy hash functions::
 * nettle_hash abstraction::
 
 Cipher modes
 
-* CBC::                         
-* CTR::                         
+* CBC::
+* CTR::
 * CFB and CFB8::
+* XTS::
+
+Authenticated encryption with associated data
+
+* EAX::
 * GCM::                         
 * CCM::                         
+* ChaCha-Poly1305::
 * SIV-CMAC::
+* nettle_aead abstraction::
 
 Keyed Hash Functions
 
 * HMAC::
 * UMAC::
 * CMAC::
+* Poly1305::
 
 Public-key algorithms
 
@@ -494,11 +503,12 @@ reasonable alternatives.
 
 @menu
 * Recommended hash functions::
+* Miscellaneous hash functions::
 * Legacy hash functions::
 * nettle_hash abstraction::
 @end menu
 
-@node Recommended hash functions, Legacy hash functions,, Hash functions
+@node Recommended hash functions, Miscellaneous hash functions,, Hash functions
 @comment  node-name,  next,  previous,  up
 @subsection Recommended hash functions
 
@@ -857,7 +867,84 @@ to @var{digest}. @var{length} can be of arbitrary size.
 This function also resets the context.
 @end deftypefun
 
-@node Legacy hash functions, nettle_hash abstraction, Recommended hash functions, Hash functions
+@node Miscellaneous hash functions, Legacy hash functions, Recommended hash functions, Hash functions
+@comment  node-name,  next,  previous,  up
+@subsection Miscellaneous hash functions
+
+@subsubsection @acronym{STREEBOG512}
+
+STREEBOG512 is a member of the Streebog (GOST R 34.11-2012) family.  It outputs
+hash values of 512 bits, or 64 octets. Nettle defines STREEBOG512 in
+@file{<nettle/streebog.h>}.
+
+@deftp {Context struct} {struct streebog512_ctx}
+@end deftp
+
+@defvr Constant STREEBOG512_DIGEST_SIZE
+The size of a STREEBOG512 digest, i.e. 64.
+@end defvr
+
+@defvr Constant STREEBOG512_BLOCK_SIZE
+The internal block size of STREEBOG512. Useful for some special constructions,
+in particular HMAC-STREEBOG512.
+@end defvr
+
+@deftypefun void streebog512_init (struct streebog512_ctx *@var{ctx})
+Initialize the STREEBOG512 state.
+@end deftypefun
+
+@deftypefun void streebog512_update (struct streebog512_ctx *@var{ctx}, size_t @var{length}, const uint8_t *@var{data})
+Hash some more data.
+@end deftypefun
+
+@deftypefun void streebog512_digest (struct streebog512_ctx *@var{ctx}, size_t @var{length}, uint8_t *@var{digest})
+Performs final processing and extracts the message digest, writing it
+to @var{digest}. @var{length} may be smaller than
+@code{STREEBOG512_DIGEST_SIZE}, in which case only the first @var{length}
+octets of the digest are written.
+
+This function also resets the context in the same way as
+@code{streebog512_init}.
+@end deftypefun
+
+@subsubsection @acronym{STREEBOG256}
+
+STREEBOG256 is a variant of STREEBOG512, with a different initial state, and with
+the output truncated to 256 bits, or 32 octets. Nettle defines STREEBOG256 in
+@file{<nettle/streebog.h>}.
+
+@deftp {Context struct} {struct streebog256_ctx}
+@end deftp
+
+@defvr Constant STREEBOG256_DIGEST_SIZE
+The size of a STREEBOG256 digest, i.e. 32.
+@end defvr
+
+@defvr Constant STREEBOG256_BLOCK_SIZE
+The internal block size of STREEBOG256. Useful for some special constructions,
+in particular HMAC-STREEBOG256.
+@end defvr
+
+@deftypefun void streebog256_init (struct streebog256_ctx *@var{ctx})
+Initialize the STREEBOG256 state.
+@end deftypefun
+
+@deftypefun void streebog256_update (struct streebog256_ctx *@var{ctx}, size_t @var{length}, const uint8_t *@var{data})
+Hash some more data.
+@end deftypefun
+
+@deftypefun void streebog256_digest (struct streebog256_ctx *@var{ctx}, size_t @var{length}, uint8_t *@var{digest})
+Performs final processing and extracts the message digest, writing it
+to @var{digest}. @var{length} may be smaller than
+@code{STREEBOG256_DIGEST_SIZE}, in which case only the first @var{length}
+octets of the digest are written.
+
+This function also resets the context in the same way as
+@code{streebog256_init}.
+@end deftypefun
+
+
+@node Legacy hash functions, nettle_hash abstraction, Miscellaneous hash functions, Hash functions
 @comment  node-name,  next,  previous,  up
 @subsection Legacy hash functions
 
@@ -1511,6 +1598,76 @@ in any other way.
 
 @deftypefun void blowfish_decrypt (struct blowfish_ctx *@var{ctx}, size_t @var{length}, uint8_t *@var{dst}, const uint8_t *@var{src})
 Analogous to @code{blowfish_encrypt}
+@end deftypefun
+
+@deftypefun int blowfish_bcrypt_hash (char *@var{dst}, size_t @var{lenkey}, const char *@var{key}, size_t @var{lenscheme}, const char *@var{scheme}, int @var{log2rounds}, const uint8_t *@var{salt})
+Compute the bcrypt password hash.
+The function will return @code{0} if the hash cannot be computed
+due to invalid input.
+The function will return @code{1} and store the computed hash
+in the array pointed to by @var{dst}.  The hash is computed based
+on the chosen @var{scheme}, number of rounds @var{log2rounds} and
+specified @var{salt}.
+
+@var{dst} must point to a character array of at least
+ @code{BLOWFISH_BCRYPT_HASH_SIZE} bytes.
+
+@var{key} contains the plaintext password string of size @var{lenkey}.
+
+@var{scheme} is of size @var{lenscheme} and contains either just the
+chosen scheme (valid schemes
+are: @code{2a}, @code{2b}, @code{2x} or @code{2y}), or
+(the prefix of) an existing hashed password (typically @code{$2b$10$...}).
+
+@var{log2rounds} contains the log2 of the number of encryption rounds
+that must be used to compute the hash.  If it is @code{-1} the value
+will be extracted from @var{scheme}.
+
+@var{salt} should point to an array of @code{BLOWFISH_BCRYPT_BINSALT_SIZE}
+random bytes to be used to perturb the hash computation.  If it is @code{NULL}
+the salt will be extracted from @var{scheme}.
+
+Sample code to generate a bcrypt hash:
+@example
+char cleartxtpassword[] = "ExamplePassword";
+char scheme[] = "2b";
+uint8_t salt[BLOWFISH_BCRYPT_BINSALT_SIZE];
+@dots{}
+/* Make sure that salt is filled with random bytes */
+@dots{}
+char hashedresult[BLOWFISH_BCRYPT_HASH_SIZE];
+int result = blowfish_bcrypt(hashedresult,
+                             sizeof(cleartxtpassword) - 1, cleartxtpassword,
+                             sizeof(scheme) - 1, scheme, 10, salt);
+if (result)
+  printf("%s\n", hashedresult);
+@end example
+@end deftypefun
+
+@deftypefun int blowfish_bcrypt_verify (size_t @var{lenkey}, const char *@var{key}, size_t @var{lenhashed}, const char *@var{hashed})
+Verifies the bcrypt password hash against the supplied plaintext password.
+The function will return @code{0} if the password does not match.
+The function will return @code{1} if the password matches.
+
+@var{key} contains the plaintext password string of size @var{lenkey}.
+
+@var{hashed} contains the hashed string of size @var{lenhashed} to compare with.
+
+Sample code to verify a bcrypt hash:
+@example
+char cleartxtpassword[] = "ExamplePassword";
+char existinghashed[] =
+           "$2y$"  /* Hash algorithm version */
+           "10"   /* 2^10 hash rounds (strength) */
+           "$"   /* separator */
+           "1b2lPgo4XumibnJGN3r3sO" /* base64 encoded 16-byte salt */
+           "u7wE7xNfYDKlAxZffJDCJdVfFTAyevu"; /* Hashedpart */
+if (blowfish_bcrypt_verify(sizeof(cleartxtpassword) - 1, cleartxtpassword,
+                           sizeof(existinghashed) - 1, existinghashed))
+  printf("Password is correct.");
+else
+  printf("Password is incorrect.");
+@end example
 @end deftypefun
 
 @subsection Camellia

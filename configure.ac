@@ -2,7 +2,7 @@ dnl -*- mode: shell-script; sh-indentation: 2; -*-
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([nettle], [3.6], [nettle-bugs@lists.lysator.liu.se])
+AC_INIT([nettle], [3.7], [nettle-bugs@lists.lysator.liu.se])
 AC_PREREQ(2.61)
 AC_CONFIG_SRCDIR([arcfour.c])
 # Needed to stop autoconf from looking for files in parent directories.
@@ -11,10 +11,10 @@ AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_HEADER([config.h])
 
 LIBNETTLE_MAJOR=8
-LIBNETTLE_MINOR=0
+LIBNETTLE_MINOR=1
 
 LIBHOGWEED_MAJOR=6
-LIBHOGWEED_MINOR=0
+LIBHOGWEED_MINOR=1
 
 dnl Note double square brackets, for extra m4 quoting.
 MAJOR_VERSION=`echo $PACKAGE_VERSION | sed 's/^\([[^.]]*\)\..*/\1/'`
@@ -74,8 +74,8 @@ AC_ARG_ENABLE(documentation,
   AC_HELP_STRING([--disable-documentation], [Omit building and installing the documentation. (default=auto)]),,
   [enable_documentation=auto])
 
-AC_ARG_ENABLE(fat, AC_HELP_STRING([--enable-fat], [Enable fat library build (default=no)]),,
-  [enable_fat=no])
+AC_ARG_ENABLE(fat, AC_HELP_STRING([--disable-fat], [Disable fat library build]),,
+  [enable_fat=yes])
 
 AC_ARG_ENABLE(arm-neon,
   AC_HELP_STRING([--enable-arm-neon], [Enable ARM Neon assembly. (default=auto)]),,
@@ -88,6 +88,14 @@ AC_ARG_ENABLE(x86-aesni,
 AC_ARG_ENABLE(x86-sha-ni,
   AC_HELP_STRING([--enable-x86-sha-ni], [Enable x86_64 sha_ni instructions. (default=no)]),,
   [enable_x86_sha_ni=no])
+
+AC_ARG_ENABLE(power-crypto-ext,
+  AC_HELP_STRING([--enable-power-crypto-ext], [Enable POWER crypto extensions. (default=no)]),,
+  [enable_power_crypto_ext=no])
+
+AC_ARG_ENABLE(power-altivec,
+  AC_HELP_STRING([--enable-power-altivec], [Enable POWER altivec and vsx extensions. (default=no)]),,
+  [enable_altivec=no])
 
 AC_ARG_ENABLE(mini-gmp,
   AC_HELP_STRING([--enable-mini-gmp], [Enable mini-gmp, used instead of libgmp.]),,
@@ -325,6 +333,17 @@ case "$host_cpu" in
       ABI=64
     ])
     ;;
+  *powerpc64*)
+    AC_TRY_COMPILE([
+#if defined(__PPC64__)
+#error 64-bit powerpc
+#endif
+    ], [], [
+      ABI=32
+    ], [
+      ABI=64
+    ])
+    ;;
 esac
 
 if test "x$ABI" != xstandard ; then
@@ -383,6 +402,8 @@ if test "x$ABI" != xstandard ; then
 fi
 
 OPT_NETTLE_SOURCES=""
+FAT_TEST_LIST=""
+ASM_PPC_WANT_R_REGISTERS="n/a"
 
 # Select assembler code
 asm_path=
@@ -397,6 +418,9 @@ if test "x$enable_assembler" = xyes ; then
 	if test "x$enable_fat" = xyes ; then
 	  asm_path="x86_64/fat $asm_path"
 	  OPT_NETTLE_SOURCES="fat-x86_64.c $OPT_NETTLE_SOURCES"
+	  # For now, not enabling aesni or sha_ni, since at least 
+	  # the latter appears unavailable on te gitlab test machines.
+	  FAT_TEST_LIST="vendor:intel vendor:amd"
 	else
 	  if test "x$enable_x86_aesni" = xyes ; then
 	    asm_path="x86_64/aesni $asm_path"
@@ -421,20 +445,39 @@ if test "x$enable_assembler" = xyes ; then
       if test "x$enable_fat" = xyes ; then
 	asm_path="arm/fat $asm_path"
 	OPT_NETTLE_SOURCES="fat-arm.c $OPT_NETTLE_SOURCES"
+	FAT_TEST_LIST="arch:5 arch:6,neon"
       else
 	case "$host_cpu" in
 	  armv6* | armv7*)
 	    NETTLE_CHECK_ARM_NEON
 
 	    asm_path="arm/v6 arm"
-      
-	    if test "x$enable_arm_neon" = xyes ; then
-	      asm_path="arm/neon $asm_path"
-	    fi
 	    ;;
 	esac
+	if test "x$enable_arm_neon" = xyes ; then
+	  asm_path="arm/neon $asm_path"
+	fi
       fi
       ;;
+    *powerpc64*)
+      if test "$ABI" = 64 ; then
+	GMP_ASM_POWERPC_R_REGISTERS
+	asm_path="powerpc64"
+	if test "x$enable_fat" = xyes ; then
+	  asm_path="powerpc64/fat $asm_path"
+	  OPT_NETTLE_SOURCES="fat-ppc.c $OPT_NETTLE_SOURCES"
+	  FAT_TEST_LIST="none crypto_ext altivec"
+	else
+	  if test "$enable_power_crypto_ext" = yes ; then
+            asm_path="powerpc64/p8 $asm_path"
+	  fi
+	  if test "$enable_power_altivec" = yes ; then
+	    asm_path="powerpc64/p7 $asm_path"
+	  fi
+	fi
+      fi
+      ;;
+
     *)
       enable_assembler=no
       ;;
@@ -454,10 +497,11 @@ asm_replace_list="aes-encrypt-internal.asm aes-decrypt-internal.asm \
 		sha3-permute.asm umac-nh.asm umac-nh-n.asm machine.m4"
 
 # Assembler files which generate additional object files if they are used.
-asm_nettle_optional_list="gcm-hash8.asm cpuid.asm \
+asm_nettle_optional_list="gcm-hash.asm gcm-hash8.asm cpuid.asm \
   aes-encrypt-internal-2.asm aes-decrypt-internal-2.asm memxor-2.asm \
-  chacha-core-internal-2.asm \
-  salsa20-core-internal-2.asm sha1-compress-2.asm sha256-compress-2.asm \
+  chacha-2core.asm chacha-3core.asm chacha-4core.asm chacha-core-internal-2.asm \
+  salsa20-2core.asm salsa20-core-internal-2.asm \
+  sha1-compress-2.asm sha256-compress-2.asm \
   sha3-permute-2.asm sha512-compress-2.asm \
   umac-nh-n-2.asm umac-nh-2.asm"
 
@@ -548,6 +592,7 @@ fi
 AC_SUBST([OPT_NETTLE_OBJS])
 AC_SUBST([OPT_HOGWEED_OBJS])
 AC_SUBST([OPT_NETTLE_SOURCES])
+AC_SUBST([FAT_TEST_LIST])
 AC_SUBST([ASM_RODATA])
 if test "x$enable_assembler" = xyes ; then
   IF_ASM=''
@@ -555,11 +600,20 @@ else
   IF_ASM='#'
 fi
 AC_SUBST([IF_ASM])
+AC_SUBST([ASM_PPC_WANT_R_REGISTERS])
 
 AH_VERBATIM([HAVE_NATIVE],
 [/* Define to 1 each of the following for which a native (ie. CPU specific)
     implementation of the corresponding routine exists.  */
+#undef HAVE_NATIVE_aes_decrypt
+#undef HAVE_NATIVE_aes_encrypt
 #undef HAVE_NATIVE_chacha_core
+#undef HAVE_NATIVE_chacha_2core
+#undef HAVE_NATIVE_chacha_3core
+#undef HAVE_NATIVE_chacha_4core
+#undef HAVE_NATIVE_fat_chacha_2core
+#undef HAVE_NATIVE_fat_chacha_3core
+#undef HAVE_NATIVE_fat_chacha_4core
 #undef HAVE_NATIVE_ecc_curve25519_modp
 #undef HAVE_NATIVE_ecc_curve448_modp
 #undef HAVE_NATIVE_ecc_secp192r1_modp
@@ -572,8 +626,14 @@ AH_VERBATIM([HAVE_NATIVE],
 #undef HAVE_NATIVE_ecc_secp384r1_redc
 #undef HAVE_NATIVE_ecc_secp521r1_modp
 #undef HAVE_NATIVE_ecc_secp521r1_redc
+#undef HAVE_NATIVE_gcm_init_key
+#undef HAVE_NATIVE_fat_gcm_init_key
+#undef HAVE_NATIVE_gcm_hash
+#undef HAVE_NATIVE_fat_gcm_hash
 #undef HAVE_NATIVE_gcm_hash8
 #undef HAVE_NATIVE_salsa20_core
+#undef HAVE_NATIVE_salsa20_2core
+#undef HAVE_NATIVE_fat_salsa20_2core
 #undef HAVE_NATIVE_sha1_compress
 #undef HAVE_NATIVE_sha256_compress
 #undef HAVE_NATIVE_sha512_compress

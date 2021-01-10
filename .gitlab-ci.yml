@@ -14,8 +14,9 @@ build/x86-64:
   image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
   script:
   - ./.bootstrap &&
-    ./configure --disable-static --enable-fat --disable-documentation && make -j4 &&
-    make check -j4
+    ./configure --disable-static --disable-documentation && make -j4 &&
+    make check -j4 &&
+    make check-fat
   tags:
   - shared
   - linux
@@ -25,7 +26,7 @@ build/mini-gmp:
   image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
   script:
   - ./.bootstrap &&
-    ./configure --disable-documentation --enable-mini-gmp && make -j4 &&
+    ./configure --disable-documentation --disable-fat --enable-mini-gmp && make -j4 &&
     make check -j4
   tags:
   - shared
@@ -58,7 +59,7 @@ build/ubsan:
   image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
   script:
   - ./.bootstrap && 
-    CXXFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" CFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" ./configure 
+    CXXFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" CFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" ./configure --disable-assembler 
     --disable-documentation && make -j4 && make check -j4
   tags:
   - shared
@@ -69,7 +70,7 @@ build/asan:
   image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
   script:
   - ./.bootstrap && 
-  - CXXFLAGS="-fsanitize=address -g -O2" CFLAGS="-fsanitize=address -g -O2" ./configure --disable-documentation &&
+  - CXXFLAGS="-fsanitize=address -g -O2" CFLAGS="-fsanitize=address -g -O2" ./configure --disable-documentation --disable-assembler &&
     make -j4 && make check -j4
   tags:
   - shared
@@ -80,7 +81,7 @@ build/static-analyzers:
   image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
   script:
   - ./.bootstrap
-  - scan-build ./configure --disable-documentation
+  - scan-build ./configure --disable-documentation --disable-assembler
   - scan-build --status-bugs -o scan-build-lib make -j$(nproc)
   tags:
   - shared
@@ -101,7 +102,7 @@ build/gnutls:
   - git clone --depth 1 --branch master https://gitlab.com/gnutls/gnutls.git gnutls-git
   - cd gnutls-git && git submodule update --init && ./bootstrap &&
     ./configure PKG_CONFIG_PATH="$(pwd)/../local/lib/pkgconfig" CPPFLAGS="-I$(pwd)/../local/include"
-      LDFLAGS="-L$(pwd)/../local/lib -Wl,-rpath,$(pwd)/../local/lib" --disable-gost --disable-cxx --disable-guile --disable-doc &&
+      LDFLAGS="-L$(pwd)/../local/lib -Wl,-rpath,$(pwd)/../local/lib" --disable-cxx --disable-guile --disable-doc &&
     make -j$(nproc) && make -j $(nproc) check
   tags:
   - shared
@@ -127,7 +128,7 @@ Debian.cross.x86:
   - export CC_FOR_BUILD="gcc"
   - export CC="$host-gcc"
   - ./.bootstrap &&
-    CFLAGS="-O2 -g" ./configure --build=$build --host=$host --enable-fat --disable-documentation && make -j4 &&
+    CFLAGS="-O2 -g" ./configure --build=$build --host=$host --disable-documentation && make -j4 &&
     make check -j4
   tags:
   - shared
@@ -137,8 +138,13 @@ Debian.cross.x86:
 .Debian.cross.template: &Debian_cross_template
   image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$DEBIAN_CROSS_BUILD
   before_script:
+  - host="${CI_JOB_NAME#*.cross.}"
+  - dpkg --add-architecture ppc64el
+  - apt-get update -q
   # remove any previously installed nettle headers to avoid conflicts
-  - for arch in armhf mips arm64;do apt-get remove -y nettle-dev:$arch;done
+  - for arch in armhf mips arm64 ppc64el;do apt-get remove -y nettle-dev:$arch;done
+  - if [ "$host" == "powerpc64-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host && export QEMU_LD_PREFIX=/usr/$host;fi
+  - if [ "$host" == "powerpc64le-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host && export QEMU_LD_PREFIX=/usr/$host;fi
   script:
   - build=$(dpkg-architecture -qDEB_HOST_GNU_TYPE)
   - host="${CI_JOB_NAME#*.cross.}"
@@ -148,9 +154,10 @@ Debian.cross.x86:
   - export CC_FOR_BUILD="gcc"
   - export CC="$host-gcc"
   - ./.bootstrap
-  - ./configure --disable-static --enable-fat --disable-documentation --build=$build --host=$host
+  - ./configure --disable-static --disable-documentation --build=$build --host=$host
   - make -j$(nproc)
   - make -j$(nproc) check
+  - make -j$(nproc) check-fat
   tags:
   - shared
   - linux
@@ -161,4 +168,8 @@ Debian.cross.arm-linux-gnueabihf:
 Debian.cross.mips-linux-gnu:
   <<: *Debian_cross_template
 Debian.cross.aarch64-linux-gnu:
+  <<: *Debian_cross_template
+Debian.cross.powerpc64-linux-gnu:
+  <<: *Debian_cross_template
+Debian.cross.powerpc64le-linux-gnu:
   <<: *Debian_cross_template

@@ -49,6 +49,8 @@
 #define ecc_mod_submul_1 _nettle_ecc_mod_submul_1
 #define ecc_mod_mul _nettle_ecc_mod_mul
 #define ecc_mod_sqr _nettle_ecc_mod_sqr
+#define ecc_mod_pow_2k _nettle_ecc_mod_pow_2k
+#define ecc_mod_pow_2k_mul _nettle_ecc_mod_pow_2k_mul
 #define ecc_mod_random _nettle_ecc_mod_random
 #define ecc_mod _nettle_ecc_mod
 #define ecc_mod_inv _nettle_ecc_mod_inv
@@ -111,8 +113,10 @@ struct ecc_modulo;
 
 /* Reduces from 2*ecc->size to ecc->size. */
 /* Required to return a result < 2q. This property is inherited by
-   mod_mul and mod_sqr. */
-typedef void ecc_mod_func (const struct ecc_modulo *m, mp_limb_t *rp);
+   mod_mul and mod_sqr. May clobber input xp. rp may point to the
+   start or the middle of the xp area, but no other overlap is
+   allowed. */
+typedef void ecc_mod_func (const struct ecc_modulo *m, mp_limb_t *rp, mp_limb_t *xp);
 
 typedef void ecc_mod_inv_func (const struct ecc_modulo *m,
 			       mp_limb_t *vp, const mp_limb_t *ap,
@@ -124,6 +128,7 @@ typedef int ecc_mod_sqrt_func (const struct ecc_modulo *m,
 			       const mp_limb_t *up, const mp_limb_t *vp,
 			       mp_limb_t *scratch);
 
+/* Allows in-place operation with r == p, but not r == q */
 typedef void ecc_add_func (const struct ecc_curve *ecc,
 			   mp_limb_t *r,
 			   const mp_limb_t *p, const mp_limb_t *q,
@@ -168,6 +173,8 @@ struct ecc_modulo
 
   ecc_mod_func *mod;
   ecc_mod_func *reduce;
+  /* For moduli where we use redc, the invert and sqrt functions work
+     with inputs and outputs in redc form. */
   ecc_mod_inv_func *invert;
   ecc_mod_sqrt_func *sqrt;
 };
@@ -222,7 +229,6 @@ struct ecc_curve
   const mp_limb_t *pippenger_table;
 };
 
-/* In-place reduction. */
 ecc_mod_func ecc_mod;
 ecc_mod_func ecc_pp1_redc;
 ecc_mod_func ecc_pm1_redc;
@@ -247,14 +253,35 @@ void
 ecc_mod_submul_1 (const struct ecc_modulo *m, mp_limb_t *rp,
 		  const mp_limb_t *ap, mp_limb_t b);
 
-/* The mul and sqr functions need 2*m->size limbs at rp */
+/* The mul and sqr function need 2*m->size limbs at tp. rp may overlap
+   ap or bp, and may equal tp or tp + m->size, but no other overlap
+   with tp is allowed. */
 void
 ecc_mod_mul (const struct ecc_modulo *m, mp_limb_t *rp,
-	     const mp_limb_t *ap, const mp_limb_t *bp);
+	     const mp_limb_t *ap, const mp_limb_t *bp, mp_limb_t *tp);
 
 void
 ecc_mod_sqr (const struct ecc_modulo *m, mp_limb_t *rp,
-	     const mp_limb_t *ap);
+	     const mp_limb_t *ap, mp_limb_t *tp);
+
+/* R <-- X^{2^k} mod M. Needs 2*ecc->size limbs of scratch space, same
+   overlap requirements as mul and sqr above. */
+void
+ecc_mod_pow_2k (const struct ecc_modulo *m,
+		mp_limb_t *rp, const mp_limb_t *xp,
+		unsigned k, mp_limb_t *tp);
+
+/* R <-- X^{2^k} Y mod M. Similar requirements as ecc_mod_pow_2k, but
+   rp and yp can't overlap. */
+void
+ecc_mod_pow_2k_mul (const struct ecc_modulo *m,
+		    mp_limb_t *rp, const mp_limb_t *xp,
+		    unsigned k, const mp_limb_t *yp,
+		    mp_limb_t *tp);
+
+/* R <-- X^{2^k + 1}. Here, rp and xp must not overlap. */
+#define ecc_mod_pow_2kp1(m, rp, xp, k, tp) \
+  ecc_mod_pow_2k_mul (m, rp, xp, k, xp, tp)
 
 /* mod q operations. */
 void
@@ -411,35 +438,35 @@ curve448_eh_to_x (mp_limb_t *xp, const mp_limb_t *p,
 		  mp_limb_t *scratch);
 
 /* Current scratch needs: */
-#define ECC_MOD_INV_ITCH(size) (2*(size))
-#define ECC_J_TO_A_ITCH(size) (5*(size))
-#define ECC_EH_TO_A_ITCH(size, inv) (2*(size)+(inv))
-#define ECC_DUP_JJ_ITCH(size) (5*(size))
-#define ECC_DUP_EH_ITCH(size) (5*(size))
-#define ECC_DUP_TH_ITCH(size) (5*(size))
-#define ECC_ADD_JJA_ITCH(size) (6*(size))
-#define ECC_ADD_JJJ_ITCH(size) (8*(size))
-#define ECC_ADD_EH_ITCH(size) (6*(size))
-#define ECC_ADD_EHH_ITCH(size) (7*(size))
-#define ECC_ADD_TH_ITCH(size) (6*(size))
-#define ECC_ADD_THH_ITCH(size) (7*(size))
-#define ECC_MUL_G_ITCH(size) (9*(size))
-#define ECC_MUL_G_EH_ITCH(size) (9*(size))
+#define ECC_MOD_INV_ITCH(size) (3*(size))
+#define ECC_J_TO_A_ITCH(size, inv) ((size)+(inv))
+#define ECC_EH_TO_A_ITCH(size, inv) ((size)+(inv))
+#define ECC_DUP_JJ_ITCH(size) (4*(size))
+#define ECC_DUP_EH_ITCH(size) (3*(size))
+#define ECC_DUP_TH_ITCH(size) (3*(size))
+#define ECC_ADD_JJA_ITCH(size) (5*(size))
+#define ECC_ADD_JJJ_ITCH(size) (5*(size))
+#define ECC_ADD_EH_ITCH(size) (4*(size))
+#define ECC_ADD_EHH_ITCH(size) (4*(size))
+#define ECC_ADD_TH_ITCH(size) (4*(size))
+#define ECC_ADD_THH_ITCH(size) (4*(size))
+#define ECC_MUL_G_ITCH(size) (8*(size))
+#define ECC_MUL_G_EH_ITCH(size) (7*(size))
 #if ECC_MUL_A_WBITS == 0
-#define ECC_MUL_A_ITCH(size) (12*(size))
+#define ECC_MUL_A_ITCH(size) (11*(size))
 #else
 #define ECC_MUL_A_ITCH(size) \
-  (((3 << ECC_MUL_A_WBITS) + 11) * (size))
+  (((3 << ECC_MUL_A_WBITS) + 8) * (size))
 #endif
 #if ECC_MUL_A_EH_WBITS == 0
-#define ECC_MUL_A_EH_ITCH(size) (12*(size))
+#define ECC_MUL_A_EH_ITCH(size) (10*(size))
 #else
 #define ECC_MUL_A_EH_ITCH(size) \
-  (((3 << ECC_MUL_A_EH_WBITS) + 10) * (size))
+  (((3 << ECC_MUL_A_EH_WBITS) + 7) * (size))
 #endif
-#define ECC_MUL_M_ITCH(size) (11*(size))
-#define ECC_ECDSA_SIGN_ITCH(size) (12*(size))
-#define ECC_GOSTDSA_SIGN_ITCH(size) (12*(size))
+#define ECC_MUL_M_ITCH(size) (8*(size))
+#define ECC_ECDSA_SIGN_ITCH(size) (11*(size))
+#define ECC_GOSTDSA_SIGN_ITCH(size) (11*(size))
 #define ECC_MOD_RANDOM_ITCH(size) (size)
 #define ECC_HASH_ITCH(size) (1+(size))
 

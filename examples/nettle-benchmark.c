@@ -152,12 +152,6 @@ time_function(void (*f)(void *arg), void *arg)
   return elapsed / ncalls - overhead;
 }
 
-static void
-bench_nothing(void *arg UNUSED)
-{
-  return;
-}
-
 struct bench_memxor_info
 {
   void *dst;
@@ -332,17 +326,6 @@ xalloc(size_t size)
 
   return p;
 }
-
-static void
-time_overhead(void)
-{
-  overhead = time_function(bench_nothing, NULL);
-  printf("benchmark call overhead: %7f us", overhead * 1e6);
-  if (frequency > 0.0)
-    printf("%7.2f cycles\n", overhead * frequency);
-  printf("\n");  
-}
-
 
 
 static void
@@ -918,7 +901,8 @@ main(int argc, char **argv)
       &nettle_sha3_224, &nettle_sha3_256,
       &nettle_sha3_384, &nettle_sha3_512,
       &nettle_ripemd160, &nettle_gosthash94,
-      &nettle_gosthash94cp,
+      &nettle_gosthash94cp, &nettle_streebog256,
+      &nettle_streebog512,
       NULL
     };
 
@@ -991,7 +975,6 @@ main(int argc, char **argv)
   bench_salsa20_core();
   bench_sha3_permute();
   printf("\n");
-  time_overhead();
 
   header();
 

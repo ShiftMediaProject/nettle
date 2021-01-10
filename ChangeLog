@@ -1,3 +1,496 @@
+2021-01-04  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released Nettle-3.7.
+
+2020-12-27  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac: Enable fat build by default.
+
+2020-12-26  Niels Möller  <nisse@lysator.liu.se>
+
+	* NEWS: News entries for Nettle-3.7.
+
+	* Makefile.in (distdir): Distribute the README files in assembly
+	directories.
+
+	* configure.ac: Bump package version, to 3.7.
+	(LIBNETTLE_MINOR): Bump minor number, to 8.1.
+	(LIBHOGWEED_MINOR): Bump minor number, to 6.1.
+
+2020-12-21  Niels Möller  <nisse@lysator.liu.se>
+
+	From Mamone Tarsha:
+	* fat-ppc.c: Check glibc version, and use getauxval only when available.
+
+2020-12-12  Niels Möller  <nisse@lysator.liu.se>
+
+	* powerpc64/p7/chacha-4core.asm: More interleaving of independent
+	instructions, gives slight speedup on Power9.
+
+2020-12-01  Niels Möller  <nisse@lysator.liu.se>
+
+	* powerpc64/p7/chacha-4core.asm: Use protected zone below stack
+	pointer to save registers, without modifying the stack pointer.
+	(QR): Instruction level interleaving in the main loop, written by
+	Torbjörn Granlund.
+
+2020-11-30  Niels Möller  <nisse@lysator.liu.se>
+
+	* m4-utils.m4 (m4_unquote): New macro, copied from GMP's
+	mpn/asm-defs.m4.
+
+	* chacha-crypt.c: (_nettle_chacha_crypt_4core)
+	(_nettle_chacha_crypt32_4core): New functions.
+	(_nettle_chacha_crypt_2core, _nettle_chacha_crypt32_2core):
+	Deleted, no longer needed.
+	* chacha-internal.h: Add prototypes for _nettle_chacha_4core and
+	related functions.
+	* configure.ac (asm_nettle_optional_list): Add chacha-4core.asm.
+	* powerpc64/fat/chacha-4core.asm: New file.
+	* powerpc64/p7/chacha-4core.asm: New file.
+	* fat-ppc.c (fat_init): When altivec is available, use
+	_nettle_chacha_crypt_4core and _nettle_chacha_crypt32_4core
+	instead of _2core variants.
+
+	* chacha-crypt.c (_nettle_chacha_crypt32_3core): Fix bug in
+	handling of counter; this function should not propagate any carry.
+
+	* aes-internal.h: Delete name mangling of internal symbols. Update
+	all internal references to use _nettle prefix.
+	* camellia-internal.h: Likewise.
+	* chacha-internal.h: Likewise.
+	* ctr-internal.h: Likewise.
+	* dsa-internal.h: Likewise.
+	* gost28147-internal.h: Likewise.
+	* poly1305-internal.h: Likewise.
+	* salsa20-internal.h: Likewise.
+	* sha3-internal.h: Likewise.
+	* umac-internal.h: Likewise.
+
+2020-11-26  Niels Möller  <nisse@lysator.liu.se>
+
+	Enable powerpc64 gcm code in fat builds. Based on patch
+	contributed by Mamone Tarsha:
+	* powerpc64/fat/gcm-hash.asm: New file.
+	* configure.ac: Add HAVE_NATIVE_fat_gcm_init_key and
+	HAVE_NATIVE_fat_gcm_hash.
+	* gcm.c (gcm_init_key): Renamed, to ...
+	(_nettle_gcm_init_key_c): ... new name. Add fat setup conditionals.
+	(gcm_hash): Renamed, to...
+	(_nettle_gcm_hash_c): ... new name. Add fat setup conditionals.
+	* fat-setup.h (gcm_init_key_func, gcm_hash_func): New typedefs.
+	* fat-ppc.c: Select implementations of _nettle_gcm_init_key and _nettle_gcm_hash.
+	* gcm-internal.h: New file.
+	* Makefile.in (DISTFILES): Add gcm-internal.h.
+
+	* powerpc64/p8/gcm-hash.asm: New file, contributed by Mamone
+	Tarsha. Implements _nettle_gcm_init_key and _nettle_gcm_hash.
+
+2020-11-28  Niels Möller  <nisse@lysator.liu.se>
+
+	* powerpc64/p7/chacha-2core.asm: Simplify counter carry handling
+	using the vaddcuw instruction.
+
+	Merge changes by Marco Bodrato and Torbjorn Granlund, from the
+	gmp/mini-gmp copy of this file.
+	* run-tests: Delete special handling of zero arguments. Update
+	WINEPATH, instead of overwriting it.
+
+2020-11-27  Niels Möller  <nisse@lysator.liu.se>
+
+	* aclocal.m4: Replace some calls to exit with return, since exit
+	requires stdlib.h. Including patch contributed by Adrien Béraud.
+
+	* testsuite/version-test.c: Include version.h. Patch contributed
+	by Brian Smith.
+
+2020-11-25  Niels Möller  <nisse@lysator.liu.se>
+
+	* powerpc64/p7/chacha-2core.asm: Add byte swapping of output, for
+	big-endian builds.
+
+2020-11-24  Niels Möller  <nisse@lysator.liu.se>
+
+	Enable ppc chacha_2core in fat builds.
+	* configure.ac: Add HAVE_NATIVE_fat_chacha_2core.
+	* chacha-crypt.c: Check HAVE_NATIVE_fat_chacha_2core.
+	* chacha-internal.h (_chacha_crypt_2core, _chacha_crypt32_2core):
+	Add declarations.
+	* fat-ppc.c (fat_init): Use _nettle_chacha_crypt_2core and
+	_nettle_chacha_crypt32_2core when altivec is available.
+	* powerpc64/fat/chacha-2core.asm: New file, including p7 version.
+
+2020-11-23  Niels Möller  <nisse@lysator.liu.se>
+
+	* powerpc64/p7/chacha-2core.asm: New file.
+
+	* chacha-crypt.c (_chacha_crypt_2core, _chacha_crypt32_2core): New
+	variants of chacha_crypt, using _chacha_2core to do two blocks at
+	a time.
+	* chacha-internal.h (_chacha_2core, _chacha_2core32): Add declarations.
+	* configure.ac (asm_nettle_optional_list): Add chacha-2core.asm.
+
+2020-11-14  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod-inv.c (ecc_mod_inv): Use passed in scratch for all
+	scratch needs, don't use memory after the result area.
+	* ecc-ecdsa-sign.c (ecc_ecdsa_sign): Update invert call.
+	* ecc-ecdsa-verify.c (ecc_ecdsa_verify): Likewise.
+	* ecc-eh-to-a.c (ecc_eh_to_a): Likewise.
+	* ecc-j-to-a.c (ecc_j_to_a): Likewise.
+	* ecc-gostdsa-verify.c (ecc_gostdsa_verify): Likewise.
+	* curve25519-eh-to-x.c (curve25519_eh_to_x): Likewise.
+	* curve448-eh-to-x.c (curve448_eh_to_x): Update invert call, and
+	reduce scratch need from 9*size to 5*size.
+	* ecc-internal.h (ECC_MOD_INV_ITCH, ECC_J_TO_A_ITCH)
+	(ECC_EH_TO_A_ITCH): Update accordingly, but no change in total
+	scratch need.
+
+2020-11-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-internal.h (ECC_J_TO_A_ITCH): Generalize, and take invert
+	itch as an argument, similarly to ECC_EH_TO_A_ITCH. Updated all
+	secp and gost curve definitions to use it.
+
+2020-10-21  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-secp384r1.c (ecc_secp384r1_inv): New function, modular
+	inverse using powering.
+	(_nettle_secp_384r1): Analogous updates. Increases signing
+	performance roughly 15% on x86_64.
+
+2020-10-20  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod-inv.c (ecc_mod_inv_redc): Deleted, no longer needed.
+	(ecc_mod_inv_destructive): Deleted, merged with ecc_mod_inv.
+
+	* ecc-secp256r1.c (ecc_secp256r1_inv): New function, modular
+	inverse using powering.
+	(_nettle_secp_256r1): Analogous updates. Increases signing
+	performance roughly 6% on x86_64.
+
+	* ecc-secp224r1.c (ecc_secp224r1_inv): New function, modular
+	inverse using powering.
+	(_nettle_secp_224r1): Analogous updates. Increases signing
+	performance roughly 17% on x86_64.
+
+2020-10-19  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-secp521r1.c (ecc_secp521r1_inv): New function, modular
+	inverse using powering.
+	(_nettle_secp_521r1): Analogous updates. Increases signing
+	performance roughly 15% on x86_64.
+
+2020-10-15  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-secp192r1.c (ecc_secp192r1_inv): New function, modular
+	inverse using powering.
+	(_nettle_secp_192r1): Use it for p.invert, and also update
+	h_to_a_itch. Increases signing performance roughly 25% on x86_64.
+
+	* testsuite/ecc-modinv-test.c (test_modulo): Allow invert function
+	to return a non-canonical representation.
+
+2020-11-08  Niels Möller  <nisse@lysator.liu.se>
+
+	Merge refactoring of ecc modulo and reduce functions.
+	* eddsa-sign.c (_eddsa_sign_itch): Update, since now point
+	multiplication needs less scratch than point compression.
+	* eddsa-pubkey.c (_eddsa_public_key_itch): Likewise.
+
+	* ecc-internal.h: Update *_ITCH macros for point multiplication
+	and signatures. They need slightly less scratch after optimization
+	of the point addition functions.
+
+	* ecc-mul-m.c (ecc_mul_m): Reduce scratch need.
+	(ecc_mul_m): Optimize swapping, with only a single mpn_cnd_swap
+	per iteration.
+
+	* ecc-add-jja.c (ecc_add_jja): Reduce scratch need.
+	* ecc-add-jjj.c (ecc_add_jjj): Reduce scratch need.
+	* ecc-internal.h (ECC_ADD_JJA_ITCH, ECC_ADD_JJJ_ITCH): Now 5*size.
+	(ECC_MUL_M_ITCH): New 8*size.
+
+2020-11-06  Niels Möller  <nisse@lysator.liu.se>
+
+	After these changes, both curve25519 and curve448 need 4*size for
+	invert and 6*size for sqrt.
+	* ecc-curve448.c (ecc_mod_pow_446m224m1): Reduce scratch need.
+	(ecc_curve448_inv): Likewise.
+	(ecc_curve448_sqrt): Likewise.
+	* ecc-curve25519.c (ecc_curve25519_sqrt): Reduce scratch need.
+
+	* ecc-add-jja.c (ecc_add_jja): Delete an unneeded copy.
+
+2020-11-05  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-dup-jj.c (ecc_dup_jj): Reduce scratch need.
+	* ecc-internal.h (ECC_DUP_JJ_ITCH): Now 4*size.
+
+2020-11-03  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-dup-eh.c (ecc_dup_eh): Reduce scratch need.
+	* ecc-dup-th.c (ecc_dup_th): Analogous changes.
+	* ecc-internal.h (ECC_DUP_EH_ITCH, ECC_DUP_TH_ITCH): Now 3*size.
+
+	* ecc-internal.h (ecc_add_func): Document in-place operation.
+	* ecc-mul-a-eh.c (ecc_mul_a_eh): Fix call to ecc->add_hhh accordingly.
+	* testsuite/ecc-add-test.c (test_main): Likewise.
+
+	* ecc-add-eh.c (ecc_add_eh): Reduce scratch need.
+	* ecc-add-th.c (ecc_add_th): Analogous changes.
+	* ecc-add-ehh.c (ecc_add_ehh): Reduce scratch need.
+	* ecc-add-thh.c (ecc_add_thh): Analogous changes.
+	* ecc-internal.h (ECC_ADD_EH_ITCH, ECC_ADD_EHH_ITCH)
+	(ECC_ADD_TH_ITCH, ECC_ADD_THH_ITCH): Now 4*size.
+
+2020-11-02  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-curve25519.c (ecc_mod_pow_252m3): Reduce scratch need.
+	(ecc_curve25519_inv): Likewise.
+	(ecc_curve25519_sqrt): Likewise.
+
+2020-11-01  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod-arith.c (ecc_mod_mul, ecc_mod_sqr): Separate argument
+	for scratch area, reducing required size of result area. Update
+	all callers to naïvely keep using result in scratch area.
+	(ecc_mod_pow_2k, ecc_mod_pow_2k_mul): Simplified, also reducing
+	required size of result area.
+
+	* testsuite/testutils.c (test_ecc_point): Show curve bits on failure.
+
+2020-10-31  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-internal.h (typedef ecc_mod_func): Updated all assembly
+	implementations.
+
+	* testsuite/ecc-mod-test.c (test_one): Extend tests, to also test
+	with different destination area.
+	* testsuite/ecc-redc-test.c (test_main): Likewise.
+
+2020-10-30  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-internal.h (typedef ecc_mod_func): Add separate result
+	argument. Updated all C implementations and callers.
+
+2020-10-29  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod.c (ecc_mod): More unified handling of final carry
+	folding. Also eliminates a goto statement.
+
+2020-11-07  Niels Möller  <nisse@lysator.liu.se>
+
+	Merged initial powerpc64 implementation of chacha.
+	* configure.ac: New command line option --enable-power-altivec.
+	Update asm_path logic, and add altivec to FAT_TEST_LIST.
+	* fat-ppc.c (get_ppc_features): Add logic to check for altivec and
+	vsx support, and select aither C or altivec implementation of
+	chacha_core.
+	* powerpc64/p7/chacha-core-internal.asm: New file.
+
+2020-09-25  Niels Möller  <nisse@lysator.liu.se>
+
+	* powerpc64/p7/chacha-core-internal.asm: New file.
+	* Makefile.in (distdir): Add powerpc64/p7.
+
+2020-10-29  Niels Möller  <nisse@lysator.liu.se>
+
+	* blowfish.c (blowfish_set_key): Add casts to uint32_t. Avoids
+	undefined behavior, since shifting an 8-bit value left by 24 bits
+	overflows the range of signed int. Reported by Guido Vranken.
+
+2020-10-28  Niels Möller  <nisse@lysator.liu.se>
+
+	* gmp-glue.h (cnd_add_n, cnd_sub_n, cnd_swap): Deleted, use
+	corresponding functions mpn_cnd_add_n, mpn_cnd_sub_n,
+	mpn_cnd_swap, available from GMP version 6.1.0. Update all
+	callers, in particular, mpn_cnd_add_n and mpn_cnd_sub_n has one
+	more argument than the old functions.
+
+	* gmp-glue.c (mpn_cnd_add_n, mpn_cnd_sub_n, mpn_cnd_swap)
+	[NETTLE_USE_MINI_GMP]: Fallback definitions or mini-gmp builds.
+
+2020-10-14  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod-arith.c (ecc_mod_pow_2k, ecc_mod_pow_2k_mul): Moved
+	functions here.
+	* ecc-internal.h (ecc_mod_pow_2kp1): New macro, calling the more
+	general ecc_mod_pow_2k_mul.
+	* ecc-curve25519.c (ecc_mod_pow_2kp1): Deleted static function.
+	* ecc-curve448.c (ecc_mod_pow_2k, ecc_mod_pow_2kp1): Deleted
+	static functions.
+
+2020-10-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod-inv.c (ecc_mod_inv_destructive): New helper function,
+	not preserving input argument. Extracted from old ecc_mod_inv.
+	(ecc_mod_inv): Call ecc_mod_inv_destructive.
+	(ecc_mod_inv_redc): New inversion function, with input and output
+	in redc form.
+
+	* ecc-secp224r1.c: Select between ecc_mod_inv and ecc_mod_inv_redc.
+	* ecc-secp256r1.c: Likewise.
+
+	* ecc-j-to-a.c (ecc_j_to_a): Simplify redc-related logic, taking
+	advantage of ecc->p.invert handling redc, when appropriate. Reduce
+	scratch need from 5n to 4n in the process (assuming inversion
+	needs 2n).
+
+	* testsuite/ecc-modinv-test.c (ref_modinv): Updated to do redc, if
+	appropriate.
+
+2020-09-25  Niels Möller  <nisse@lysator.liu.se>
+
+	* gcm.c (gcm_fill): Added separate implementations for big- and
+	little-endian, to use uint64_t stores and less overhead.
+
+2020-09-24  Niels Möller  <nisse@lysator.liu.se>
+
+	* aclocal.m4 (GMP_ASM_POWERPC_R_REGISTERS): Prefer to use register
+	names. Can be tested by configuring with CC='gcc -Wa,-mregnames'.
+
+2020-09-21  Niels Möller  <nisse@lysator.liu.se>
+
+	* m4-utils.m4: New file with m4 utilities, copied from GMP's
+	mpn/asm-defs.m4.
+	* Makefile.in (DISTFILES): Add m4-utils.m4.
+	(%.asm): Include m4-utils.m4 for preprocessing of .asm files, and
+	include config.m4 before machine.m4.
+
+	* aclocal.m4 (GMP_ASM_POWERPC_R_REGISTERS): New configure test,
+	adapted from corresponding test in GMP's acinlude.m4.
+	* configure.ac (ASM_PPC_WANT_R_REGISTERS): New substituted
+	variable. Set using GMP_ASM_POWERPC_R_REGISTERS, when powerpc64
+	assembly code is enabled.
+	* config.m4.in: Substituted here.
+	* powerpc64/machine.m4: Check ASM_PPC_WANT_R_REGISTERS, and
+	if needed, replace register names like r0, r1, ... with integers.
+
+2020-09-15  Niels Möller  <nisse@lysator.liu.se>
+
+	* Makefile.in (DISTFILES): Add missing file blowfish-internal.h.
+
+2020-09-14  Niels Möller  <nisse@lysator.liu.se>
+
+	* asm.m4: Delete use of changequote, stick to the m4 default
+	quoting characters `'. Updated all assembly and m4 files.
+	* x86_64/machine.m4 (W64_ENTRY, W64_EXIT): Delete quoting workaround.
+
+2020-09-12  Niels Möller  <nisse@lysator.liu.se>
+
+	* x86_64/salsa20-2core.asm: Fix incorrect W64_EXIT.
+
+2020-08-29  Niels Möller  <nisse@lysator.liu.se>
+
+	Initial powerpc64 assembly support, contributed by Mamone Tarsha:
+	* configure.ac: New configure option --enable-power-crypto-ext.
+	(asm_path): Setup this and related variables for powerpc64.
+	* powerpc64/machine.m4: New file.
+	* powerpc64/README: New file.
+	* powerpc64/p8/aes-encrypt-internal.asm: New file.
+	* powerpc64/p8/aes-decrypt-internal.asm: New file.
+	* powerpc64/fat/aes-encrypt-internal-2.asm: New file.
+	* powerpc64/fat/aes-decrypt-internal-2.asm: New file.
+	* fat-ppc.c: New file.
+	* Makefile.in (OPT_SOURCES): Add fat-ppc.c.
+	(distdir): Add powerpc64 directories.
+	* aes-decrypt-internal.c (_nettle_aes_decrypt_c): Alternative
+	name, for fat builds.
+	* aes-encrypt-internal.c (_nettle_aes_encrypt_c): Likewise.
+
+2020-07-28  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac (FAT_TEST_LIST): New substituted variable. Set for
+	fat builds, otherwise empty.
+	* Makefile.in (check-fat): New target, using $(FAT_TEST_LIST).
+
+2020-07-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* chacha-crypt.c (chacha_crypt) [HAVE_NATIVE_chacha_3core]: Use
+	_chacha_3core.
+
+	* arm/neon/chacha-3core.asm: New file, 3-way interleaving of
+	chacha.
+
+2020-07-11  Niels Möller  <nisse@lysator.liu.se>
+
+	* testsuite/chacha-test.c (test_main): Delete obsolete tests for
+	chacha with 128-bit keys. #if:ed out since 2014-03-04, see below.
+	(test_chacha_core): New function, test chacha with simple input
+	structure.
+
+2020-07-10  Niels Möller  <nisse@lysator.liu.se>
+
+	* x86_64/salsa20-2core.asm: New file.
+	* x86_64/salsa20-crypt.asm: Deleted, since the 2core assembly is
+	faster.
+
+2020-07-08  Niels Möller  <nisse@lysator.liu.se>
+
+	Rearrange salsa20, enabling ARM fat builds to use sala20_2core.
+	* salsa20-crypt-internal.c (_salsa20_crypt_2core)
+	(_salsa20_crypt_1core): New file, new functions. One or the other
+	is used for implementing salsa20_crypt and salsa20r12_crypt,
+	depending on availability of salsa20_2core.
+	* salsa20-crypt.c (salsa20_crypt): Call _salsa20_crypt.
+	* salsa20r12-crypt.c (salsa20r12_crypt): Likewise.
+	* salsa20-internal.h: Declare new internal functions.
+	* Makefile.in (nettle_SOURCES): Add salsa20-crypt-internal.c.
+	* fat-setup.h (salsa20_crypt_func): New typedef.
+	* fat-arm.c (_salsa20_crypt): Select _salsa20_crypt
+	implementation, use 2core version when Neon instructions are
+	available.
+	* arm/fat/salsa20-2core.asm: New file, including Neon
+	implementation. Trigger configure's HAVE_NATIVE_fat_salsa20_2core,
+	* configure.ac: Add HAVE_NATIVE_fat_salsa20_2core, to identify the
+	case that salsa20_2core is defined, but runtime checks are needed
+	to determine if it is usable.
+
+2020-07-06  Niels Möller  <nisse@lysator.liu.se>
+
+	* testsuite/salsa20-test.c (test_salsa20_core): New function, test
+	salsa20 with simple input structure.
+
+	* configure.ac: Obey --enable-arm-neon=yes, even if not explicitly
+	targetting ARM v6 or later.
+
+2020-07-01  Niels Möller  <nisse@lysator.liu.se>
+
+	* testsuite/bcrypt-test.c: New file. Moved bcrypt tests here.
+
+	Support for bcrypt, contributed by Stephen R. van den Berg.
+	* blowfish-bcrypt.c (blowfish_bcrypt_hash)
+	(blowfish_bcrypt_verify): New file, new functions.
+	* blowfish-internal.h: New header file, declaring internals needed
+	for bcrypt.
+	* testsuite/blowfish-test.c: Add bcrypt tests.
+	* nettle.texinfo (Cipher functions): Document bcrypt.
+
+2020-06-30  Niels Möller  <nisse@lysator.liu.se>
+
+	* nettle.texinfo (Miscellaneous hash functions): New section, with
+	Streebog documentation, contributed by Dmitry Baryshkov.
+	(Top): Added some missing entries to the detailed node listing
+
+2020-06-29  Niels Möller  <nisse@lysator.liu.se>
+
+	* .gitlab-ci.yml: Add cross tests for powerpc64le, based on patch
+	by Maamoun TK.
+
+2020-06-25  Niels Möller  <nisse@lysator.liu.se>
+
+	* x86_64/chacha-core-internal.asm (QROUND): Fix use of macro
+	arguments. Spotted by Torbjörn Granlund.
+
+2020-06-02  Niels Möller  <nisse@lysator.liu.se>
+
+	* examples/nettle-benchmark.c (main): Delete call to
+	time_overhead. The attempt to measure function call overhead is
+	not very useful or accurate. The benchmarking loop is optimized
+	away by gcc-10, making the benchmark program hang.
+	(bench_nothing, time_overhead): Deleted.
+
 2020-04-29  Niels Möller  <nisse@lysator.liu.se>
 
 	* Released Nettle-3.6.
