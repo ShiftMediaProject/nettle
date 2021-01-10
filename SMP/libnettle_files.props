@@ -90,6 +90,7 @@
     <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
     <ClInclude Include="..\siv-cmac.h" />
+    <ClInclude Include="..\streebog.h" />
     <ClInclude Include="..\twofish.h" />
     <ClInclude Include="..\umac-internal.h" />
     <ClInclude Include="..\umac.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="..\base64url-encode.c" />
     <ClCompile Include="..\base64url-meta.c" />
     <ClCompile Include="..\blowfish.c" />
+    <ClCompile Include="..\blowfish-bcrypt.c" />
     <ClCompile Include="..\buffer-init.c" />
     <ClCompile Include="..\buffer.c" />
     <ClCompile Include="..\camellia-absorb.c" />
@@ -211,6 +213,8 @@
     <ClCompile Include="..\hmac-sha384.c" />
     <ClCompile Include="..\hmac-sha512-meta.c" />
     <ClCompile Include="..\hmac-sha512.c" />
+    <ClCompile Include="..\hmac-streebog.c" />
+    <ClCompile Include="..\hmac-streebog-meta.c" />
     <ClCompile Include="..\hmac.c" />
     <ClCompile Include="..\knuth-lfib.c" />
     <ClCompile Include="..\md2-meta.c" />
@@ -250,9 +254,8 @@
     <ClCompile Include="..\salsa20-core-internal.c">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\salsa20-crypt.c">
-      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\salsa20-crypt.c" />
+    <ClCompile Include="..\salsa20-crypt-internal.c" />
     <ClCompile Include="..\salsa20-set-key.c" />
     <ClCompile Include="..\salsa20-set-nonce.c" />
     <ClCompile Include="..\salsa20r12-crypt.c" />
@@ -296,6 +299,8 @@
     <ClCompile Include="..\siv-cmac-aes128.c" />
     <ClCompile Include="..\siv-cmac-aes256.c" />
     <ClCompile Include="..\siv-cmac.c" />
+    <ClCompile Include="..\streebog.c" />
+    <ClCompile Include="..\streebog-meta.c" />
     <ClCompile Include="..\twofish-meta.c" />
     <ClCompile Include="..\twofish.c" />
     <ClCompile Include="..\umac-l2.c" />
@@ -387,7 +392,7 @@
     <YASM Include="x86_64\salsa20-core-internal.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\salsa20-crypt.s">
+    <YASM Include="x86_64\salsa20-2core.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86_64\serpent-decrypt.s">

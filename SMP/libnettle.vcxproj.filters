@@ -306,6 +306,9 @@
     <ClInclude Include="..\umac-internal.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\streebog.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\umac96.c">
@@ -890,6 +893,24 @@
     <ClCompile Include="..\shake256.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\blowfish-bcrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\streebog-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\streebog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\salsa20-crypt-internal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hmac-streebog-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hmac-streebog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
@@ -957,9 +978,6 @@
     <YASM Include="x86_64\salsa20-core-internal.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
-    <YASM Include="x86_64\salsa20-crypt.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
     <YASM Include="x86_64\serpent-decrypt.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
@@ -988,6 +1006,9 @@
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\umac-nh-n.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\salsa20-2core.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
   </ItemGroup>

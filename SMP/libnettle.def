@@ -63,6 +63,8 @@ EXPORTS
     nettle_base64url_decode_init
     nettle_base64url_encode_init
     nettle_blowfish128_set_key
+    nettle_blowfish_bcrypt_hash
+    nettle_blowfish_bcrypt_verify
     nettle_blowfish_decrypt
     nettle_blowfish_encrypt
     nettle_blowfish_set_key
@@ -282,6 +284,11 @@ EXPORTS
     nettle_hmac_sha512_digest
     nettle_hmac_sha512_set_key
     nettle_hmac_sha512_update
+    nettle_hmac_streebog256_set_key
+    nettle_hmac_streebog256_digest
+    nettle_hmac_streebog512_set_key
+    nettle_hmac_streebog512_update
+    nettle_hmac_streebog512_digest
     nettle_hmac_update
     nettle_knuth_lfib_get
     nettle_knuth_lfib_get_array
@@ -384,6 +391,13 @@ EXPORTS
     nettle_siv_cmac_decrypt_message
     nettle_siv_cmac_encrypt_message
     nettle_siv_cmac_set_key
+    nettle_streebog256
+    nettle_streebog256_init
+    nettle_streebog256_digest
+    nettle_streebog512
+    nettle_streebog512_init
+    nettle_streebog512_update
+    nettle_streebog512_digest
     nettle_twofish128
     nettle_twofish128_set_key
     nettle_twofish192

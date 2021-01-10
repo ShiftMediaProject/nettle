@@ -9,14 +9,16 @@ _nettle_ecc_secp384r1_modp:
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
+      mov	%r8, %rdx
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
-	mov	80(%rsi), %r13
-	mov	88(%rsi), %r14
+	push	%rsi
+	mov	80(%rdx), %r13
+	mov	88(%rdx), %r14
 	mov	%r13, %r9
 	mov	%r14, %r10
 	mov	%r14, %rax
@@ -32,60 +34,59 @@ _nettle_ecc_secp384r1_modp:
 	add	%r13, %r9
 	adc	%r14, %r10
 	adc	$0, %r15
-	add	48(%rsi), %r9
-	adc	56(%rsi), %r10
+	add	48(%rdx), %r9
+	adc	56(%rdx), %r10
 	adc	$0, %r15
-	mov	(%rsi), %rbx
+	mov	(%rdx), %rbx
 	add	%r9, %rbx
-	mov	8(%rsi), %rcx
+	mov	8(%rdx), %rcx
 	adc	%r10, %rcx
-	mov	16(%rsi), %rdx
-	mov	64(%rsi), %r11
-	adc	%r11, %rdx
-	mov	24(%rsi), %rbp
-	mov	72(%rsi), %r12
+	mov	16(%rdx), %rdi
+	mov	64(%rdx), %r11
+	adc	%r11, %rdi
+	mov	24(%rdx), %rbp
+	mov	72(%rdx), %r12
 	adc	%r12, %rbp
-	mov	32(%rsi), %rdi
-	adc	%r13, %rdi
-	mov	40(%rsi), %r8
+	mov	32(%rdx), %rsi
+	adc	%r13, %rsi
+	mov	40(%rdx), %r8
 	adc	%r14, %r8
 	sbb	%r14, %r14
 	neg	%r14
-	push	%rsi
-	add	%r9, %rdx
+	add	%r9, %rdi
 	adc	%r10, %rbp
-	adc	%r11, %rdi
+	adc	%r11, %rsi
 	adc	%r12, %r8
 	adc	$0, %r14
-	mov	%r12, %rsi
+	mov	%r12, %rdx
 	shl	$32, %r13
-	shr	$32, %rsi
-	or	%rsi, %r13
-	mov	%r11, %rsi
+	shr	$32, %rdx
+	or	%rdx, %r13
+	mov	%r11, %rdx
 	shl	$32, %r12
-	shr	$32, %rsi
-	or	%rsi, %r12
-	mov	%r10, %rsi
+	shr	$32, %rdx
+	or	%rdx, %r12
+	mov	%r10, %rdx
 	shl	$32, %r11
-	shr	$32, %rsi
-	or	%rsi, %r11
-	mov	%r9, %rsi
+	shr	$32, %rdx
+	or	%rdx, %r11
+	mov	%r9, %rdx
 	shl	$32, %r10
-	shr	$32, %rsi
-	or	%rsi, %r10
+	shr	$32, %rdx
+	or	%rdx, %r10
 	shl	$32, %r9
-	mov	%r9, %rsi
-	neg	%rsi
+	mov	%r9, %rdx
+	neg	%rdx
 	sbb	%r10, %r9
 	sbb	%r11, %r10
 	sbb	%r12, %r11
 	sbb	%r13, %r12
 	sbb	$0, %r13
-	add	%rsi, %rbx
+	add	%rdx, %rbx
 	adc	%r9, %rcx
-	adc	%r10, %rdx
+	adc	%r10, %rdi
 	adc	%r11, %rbp
-	adc	%r12, %rdi
+	adc	%r12, %rsi
 	adc	%r13, %r8
 	adc	$0, %r14
 	mov	%r14, %r9
@@ -102,9 +103,9 @@ _nettle_ecc_secp384r1_modp:
 	xor	%r14, %r14
 	add	%r9, %rbx
 	adc	%r10, %rcx
-	adc	%r11, %rdx
+	adc	%r11, %rdi
 	adc	%r12, %rbp
-	adc	%r15, %rdi
+	adc	%r15, %rsi
 	adc	%rax, %r8
 	adc	$0, %r14
 	mov	%r14, %r9
@@ -112,19 +113,19 @@ _nettle_ecc_secp384r1_modp:
 	shl	$32, %r10
 	sub	%r10, %r9
 	sbb	$0, %r10
-	pop	%rsi
+	pop	%rdx
 	add	%r9, %rbx
-	mov	%rbx, (%rsi)
+	mov	%rbx, (%rdx)
 	adc	%r10, %rcx
-	mov	%rcx, 8(%rsi)
-	adc	%r14, %rdx
-	mov	%rdx, 16(%rsi)
+	mov	%rcx, 8(%rdx)
+	adc	%r14, %rdi
+	mov	%rdi, 16(%rdx)
 	adc	$0, %rbp
-	mov	%rbp, 24(%rsi)
-	adc	$0, %rdi
-	mov	%rdi, 32(%rsi)
+	mov	%rbp, 24(%rdx)
+	adc	$0, %rsi
+	mov	%rsi, 32(%rdx)
 	adc	$0, %r8
-	mov	%r8, 40(%rsi)
+	mov	%r8, 40(%rdx)
 	pop	%r15
 	pop	%r14
 	pop	%r13

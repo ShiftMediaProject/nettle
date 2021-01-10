@@ -9,7 +9,10 @@ _nettle_ecc_curve25519_modp:
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
+      mov	%r8, %rdx
 	push	%rbx
+	push	%rsi
+	mov	%rdx, %rsi
 	mov	56(%rsi), %rax
 	mov	$38, %rbx
 	mul	%rbx
@@ -36,6 +39,7 @@ _nettle_ecc_curve25519_modp:
 	mov	48(%rsi), %rax
 	mov	%rdx, %r11
 	mul	%rbx
+	pop	%rsi
 	add	%r10, %rdi
 	mov	%rdi, (%rsi)
 	adc	%r11, %rcx

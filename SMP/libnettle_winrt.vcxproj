@@ -83,6 +83,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -196,6 +197,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -310,6 +312,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -424,6 +427,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -537,6 +541,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -650,6 +655,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -764,6 +770,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -878,6 +885,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -992,6 +1000,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle
@@ -1106,6 +1115,7 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
 copy ..\xts.h "$(OutDir)"\include\nettle

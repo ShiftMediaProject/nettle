@@ -11,32 +11,33 @@ _nettle_ecc_secp192r1_modp:
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
-	mov	16(%rsi), %rdx
-	mov	24(%rsi), %r8
-	mov	40(%rsi), %r9
+      mov	%r8, %rdx
+	mov	16(%rdx), %rax
+	mov	24(%rdx), %r8
+	mov	40(%rdx), %r9
 	xor	%r10, %r10
 	xor	%r11, %r11
-	add	%r9, %rdx
+	add	%r9, %rax
 	adc	%r9, %r8
 	setc	%r11b
-	mov	8(%rsi), %rcx
-	mov	32(%rsi), %r9
+	mov	8(%rdx), %rcx
+	mov	32(%rdx), %r9
 	adc	%r9, %rcx
-	adc	%r9, %rdx
+	adc	%r9, %rax
 	setc	%r10b
-	mov	(%rsi), %rdi
+	mov	(%rdx), %rdi
 	adc	%r8, %rdi
 	adc	%r8, %rcx
 	adc	$0, %r11
 	add	%r10, %rcx
-	adc	%r11, %rdx
+	adc	%r11, %rax
 	setc	%r10b
 	adc	$0, %rdi
 	adc	%r10, %rcx
-	adc	$0, %rdx
+	adc	$0, %rax
 	mov	%rdi, (%rsi)
 	mov	%rcx, 8(%rsi)
-	mov	%rdx, 16(%rsi)
+	mov	%rax, 16(%rsi)
       pop	%rsi
     pop	%rdi
 	ret

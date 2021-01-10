@@ -12,14 +12,27 @@ index a95a592c..810f592f 100644
    if (verbose)
      fprintf (stderr, "libnettle: fat library initialization.\n");
  
+diff --git a/streebog.c b/streebog.c
+index 7ad619d5..256d369f 100644
+--- a/streebog.c
++++ b/streebog.c
+@@ -1233,7 +1233,7 @@ streebog512_compress (struct streebog512_ctx *ctx, const uint8_t *input, uint64_
+ static void
+ streebog_final (struct streebog512_ctx *ctx)
+ {
+-  uint64_t Z[8] = {};
++  uint64_t Z[8] = {0};
+   unsigned int i;
+ 
+   /* PAD. It does not count towards message length */
 diff --git a/x86_64/aes.m4 b/x86_64/aes.m4
-index 8034f779..040ffb89 100644
+index 3bec9eae..9e728a9e 100644
 --- a/x86_64/aes.m4
 +++ b/x86_64/aes.m4
-@@ -77,9 +77,9 @@ define(<AES_STORE>, <
+@@ -77,9 +77,9 @@ define(`AES_STORE', `
  dnl AES_ROUND(table,a,b,c,d,out,ptr)
  dnl Computes one word of the AES round. Leaves result in $6.
- define(<AES_ROUND>, <
+ define(`AES_ROUND', `
 -	movzb	LREG($2), $7
 +	movzbq	LREG($2), $7
  	movl	AES_TABLE0 ($1, $7, 4),$6
@@ -27,41 +40,41 @@ index 8034f779..040ffb89 100644
 +	movzbl	HREG($3), XREG($7)
  	xorl	AES_TABLE1 ($1, $7, 4),$6
  	movl	$4,XREG($7)
- 	shr	<$>16,$7
+ 	shr	`$'16,$7
 @@ -94,7 +94,7 @@ dnl Computes one word of the final round. Leaves result in $6. Also
  dnl performs the first substitution step, on the least significant
  dnl byte, and rotates 8 bits.
- define(<AES_FINAL_ROUND>, <
+ define(`AES_FINAL_ROUND', `
 -	movzb	LREG($1),$7
 +	movzbq	LREG($1),$7
  	movzbl	($5, $7), $6
  	movl	$2,XREG($7)
- 	andl	<$>0x0000ff00,XREG($7)
+ 	andl	`$'0x0000ff00,XREG($7)
 @@ -113,18 +113,18 @@ dnl each of eax, ebx, ecx and edx, and also rotates
  dnl the words one byte to the left.
  dnl Uses that AES_SBOX == 0
- define(<AES_SUBST_BYTE>, <
+ define(`AES_SUBST_BYTE', `
 -	movzb	LREG($1),$6
 +	movzbq	LREG($1),$6
  	movb	($5, $6),LREG($1)
- 	roll	<$>8,$1
+ 	roll	`$'8,$1
  
 -	movzb  LREG($2),$6
 +	movzbq  LREG($2),$6
  	movb	($5, $6),LREG($2)
- 	roll	<$>8,$2
+ 	roll	`$'8,$2
  
 -	movzb  LREG($3),$6
 +	movzbq  LREG($3),$6
  	movb	($5, $6),LREG($3)
- 	roll	<$>8,$3
+ 	roll	`$'8,$3
  
 -	movzb  LREG($4),$6
 +	movzbq  LREG($4),$6
  	movb	($5, $6),LREG($4)
- 	roll	<$>8,$4>)dnl
+ 	roll	`$'8,$4')dnl
 diff --git a/x86_64/fat/cpuid.asm b/x86_64/fat/cpuid.asm
-index f317d56e..bc6e5dfb 100644
+index 3987cc7c..8b976fbe 100644
 --- a/x86_64/fat/cpuid.asm
 +++ b/x86_64/fat/cpuid.asm
 @@ -41,7 +41,7 @@ C output pointer: %rsi

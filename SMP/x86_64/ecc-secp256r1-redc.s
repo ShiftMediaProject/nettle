@@ -9,91 +9,94 @@ _nettle_ecc_secp256r1_redc:
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
+      mov	%r8, %rdx
 	push	%rbx
 	push	%rbp
 	push	%r12
-	mov	(%rsi), %rdi
+	push	%r13
+	mov	(%rdx), %rdi
 	mov	%rdi, %rbx
 	mov	%rdi, %rbp
 	shl	$32, %rbx
 	shr	$32, %rbp
-	xor	%r11,%r11
 	xor	%r12,%r12
-	sub	%rbx, %r11
-	sbb	%rbp, %r12
+	xor	%r13,%r13
+	sub	%rbx, %r12
+	sbb	%rbp, %r13
 	sbb	%rdi, %rbx
 	sbb	$0, %rbp
-	mov	8(%rsi), %rcx
-	mov	16(%rsi), %rax
-	mov	24(%rsi), %rdx
-	sub	%r11, %rcx
-	sbb	%r12, %rax
-	sbb	%rbx, %rdx
+	mov	8(%rdx), %rcx
+	mov	16(%rdx), %rax
+	mov	24(%rdx), %r8
+	sub	%r12, %rcx
+	sbb	%r13, %rax
+	sbb	%rbx, %r8
 	sbb	%rbp, %rdi
 	mov	%rcx, %rbx
 	mov	%rcx, %rbp
 	shl	$32, %rbx
 	shr	$32, %rbp
-	xor	%r11,%r11
 	xor	%r12,%r12
-	sub	%rbx, %r11
-	sbb	%rbp, %r12
+	xor	%r13,%r13
+	sub	%rbx, %r12
+	sbb	%rbp, %r13
 	sbb	%rcx, %rbx
 	sbb	$0, %rbp
-	mov	32(%rsi), %r8
-	sub	%r11, %rax
-	sbb	%r12, %rdx
-	sbb	%rbx, %r8
+	mov	32(%rdx), %r9
+	sub	%r12, %rax
+	sbb	%r13, %r8
+	sbb	%rbx, %r9
 	sbb	%rbp, %rcx
 	mov	%rax, %rbx
 	mov	%rax, %rbp
 	shl	$32, %rbx
 	shr	$32, %rbp
-	xor	%r11,%r11
 	xor	%r12,%r12
-	sub	%rbx, %r11
-	sbb	%rbp, %r12
+	xor	%r13,%r13
+	sub	%rbx, %r12
+	sbb	%rbp, %r13
 	sbb	%rax, %rbx
 	sbb	$0, %rbp
-	mov	40(%rsi), %r9
-	sub	%r11, %rdx
-	sbb	%r12, %r8
-	sbb	%rbx, %r9
+	mov	40(%rdx), %r10
+	sub	%r12, %r8
+	sbb	%r13, %r9
+	sbb	%rbx, %r10
 	sbb	%rbp, %rax
-	mov	%rdx, %rbx
-	mov	%rdx, %rbp
+	mov	%r8, %rbx
+	mov	%r8, %rbp
 	shl	$32, %rbx
 	shr	$32, %rbp
-	xor	%r11,%r11
 	xor	%r12,%r12
-	sub	%rbx, %r11
-	sbb	%rbp, %r12
-	sbb	%rdx, %rbx
+	xor	%r13,%r13
+	sub	%rbx, %r12
+	sbb	%rbp, %r13
+	sbb	%r8, %rbx
 	sbb	$0, %rbp
-	mov	48(%rsi), %r10
-	sub	%r11, %r8
-	sbb	%r12, %r9
-	sbb	%rbx, %r10
-	sbb	%rbp, %rdx
-	add	%r8, %rdi
-	adc	%r9, %rcx
-	adc	%r10, %rax
-	adc	56(%rsi), %rdx
+	mov	48(%rdx), %r11
+	sub	%r12, %r9
+	sbb	%r13, %r10
+	sbb	%rbx, %r11
+	sbb	%rbp, %r8
+	add	%r9, %rdi
+	adc	%r10, %rcx
+	adc	%r11, %rax
+	adc	56(%rdx), %r8
 	sbb	%rbx, %rbx
-	mov	%rbx, %r11
 	mov	%rbx, %r12
+	mov	%rbx, %r13
 	mov	%ebx, %ebp
-	neg	%r11
-	shl	$32, %r12
+	neg	%r12
+	shl	$32, %r13
 	and	$-2, %ebp
-	add	%r11, %rdi
+	add	%r12, %rdi
 	mov	%rdi, (%rsi)
-	adc	%r12, %rcx
+	adc	%r13, %rcx
 	mov	%rcx, 8(%rsi)
 	adc	%rbx, %rax
 	mov	%rax, 16(%rsi)
-	adc	%rbp, %rdx
-	mov	%rdx, 24(%rsi)
+	adc	%rbp, %r8
+	mov	%r8, 24(%rsi)
+	pop	%r13
 	pop	%r12
 	pop	%rbp
 	pop	%rbx

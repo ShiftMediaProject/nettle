@@ -47,6 +47,9 @@
 /* Define to 1 each of the following for which a native (ie. CPU specific)
     implementation of the corresponding routine exists.  */
 #if defined(__x86_64) || defined(_M_X64)
+#define HAVE_NATIVE_aes_decrypt 1
+#define HAVE_NATIVE_aes_encrypt 1
+#define HAVE_NATIVE_chacha_core 1
 #define HAVE_NATIVE_ecc_curve25519_modp 1
 #define HAVE_NATIVE_ecc_curve448_modp 1
 #define HAVE_NATIVE_ecc_secp192r1_modp 1
@@ -61,6 +64,7 @@
 #define HAVE_NATIVE_ecc_secp521r1_redc 1
 #define HAVE_NATIVE_gcm_hash8 1
 #define HAVE_NATIVE_salsa20_core 1
+#define HAVE_NATIVE_salsa20_2core 1
 #define HAVE_NATIVE_sha1_compress 1
 #define HAVE_NATIVE_sha256_compress 1
 #define HAVE_NATIVE_sha512_compress 1
@@ -68,6 +72,8 @@
 #define HAVE_NATIVE_umac_nh 1
 #define HAVE_NATIVE_umac_nh_n 1
 #else
+#define HAVE_NATIVE_aes_decrypt 1
+#define HAVE_NATIVE_aes_encrypt 1
 #define HAVE_NATIVE_sha1_compress 1
 #endif
 
