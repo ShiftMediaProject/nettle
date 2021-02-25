@@ -1,3 +1,73 @@
+2021-02-17  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released Nettle-3.7.1.
+
+2021-02-15  Niels Möller  <nisse@lysator.liu.se>
+
+	* examples/nettle-openssl.c (nettle_openssl_arcfour128): Deleted
+	glue to openssl arcfour.
+	(openssl_arcfour128_set_encrypt_key)
+	(openssl_arcfour128_set_decrypt_key): Deleted.
+	* nettle-internal.h: Deleted declaration.
+	* examples/nettle-benchmark.c (aeads): Delete benchmarking.
+
+2021-02-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac: Bump package version, to 3.7.1.
+	(LIBNETTLE_MINOR): Bump minor number, to 8.2.
+	(LIBHOGWEED_MINOR): Bump minor number, to 6.2.
+
+2021-02-10  Niels Möller  <nisse@lysator.liu.se>
+
+	* chacha-crypt.c (_nettle_chacha_crypt_4core): Fix for the case
+	that counter increment should be 3 (129 <= message length <= 192).
+	(_nettle_chacha_crypt32_4core): Likewise.
+
+	* testsuite/chacha-test.c (test_chacha_rounds): New function, for
+	tests with non-standard round count. Extracted from _test_chacha.
+	(_test_chacha): Deleted rounds argument. Reorganized crypt/crypt32
+	handling. When testing message prefixes of varying length, also
+	encrypt the remainder of the message, to catch errors in counter
+	value update.
+	(test_main): Add a few tests with large messages (16 blocks, 1024
+	octets), to improve test coverage for _nettle_chacha_crypt_4core
+	and _nettle_chacha_crypt32_4core.
+
+2021-01-25  Niels Möller  <nisse@lysator.liu.se>
+
+	* arm/neon/salsa20-core-internal.asm: Deleted file. This ARM Neon
+	implementation reportedly gave a speedup of 45% on Cortex A9,
+	compared to the C implementation, when it was added back in 2013.
+	That appears to no longer be the case with more recent processors
+	and compilers. And it's even significantly slower than the C
+	implementation on some platforms, including the Raspberry Pi 4.
+	With the introduction of salsa20-2core.asm, performance of this
+	function is also less important.
+	* arm/neon/chacha-core-internal.asm: Deleted file, for analogous reasons.
+	* arm/fat/salsa20-core-internal-2.asm: Deleted file.
+	* arm/fat/chacha-core-internal-2.asm: Deleted file.
+	* fat-arm.c (_nettle_salsa20_core, _nettle_chacha_core): Delete fat setup.
+
+2021-01-31  Niels Möller  <nisse@lysator.liu.se>
+
+	New variants, contributed by Nicolas Mora.
+	* pbkdf2-hmac-sha384.c (pbkdf2_hmac_sha384): New file and function.
+	* pbkdf2-hmac-sha512.c (pbkdf2_hmac_sha512): New file and function.
+	* testsuite/pbkdf2-test.c (test_main): Corresponding tests.
+
+2021-01-20  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-ecdsa-verify.c (ecc_ecdsa_verify): Fix corner case with
+	all-zero hash. Reported by Guido Vranken.
+	* testsuite/ecdsa-verify-test.c: Add corresponding test case.
+
+2021-01-10  Niels Möller  <nisse@lysator.liu.se>
+
+	* fat-ppc.c: Don't use __GLIBC_PREREQ in the same preprocessor
+	conditional as defined(__GLIBC_PREREQ), but move to a nested #if
+	conditional. Fixes compile error on OpenBSD/powerpc64, reported by
+	Jasper Lievisse Adriaanse.
+
 2021-01-04  Niels Möller  <nisse@lysator.liu.se>
 
 	* Released Nettle-3.7.

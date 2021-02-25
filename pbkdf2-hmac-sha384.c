@@ -1,8 +1,7 @@
-C arm/fat/salsa20-core-internal-2.asm
+/* pbkdf2-hmac-sha384.c
 
-
-ifelse(`
-   Copyright (C) 2015 Niels Möller
+   Copyright (C) 2012 Simon Josefsson
+   Copyright (C) 2021 Nicolas Mora
 
    This file is part of GNU Nettle.
 
@@ -29,9 +28,25 @@ ifelse(`
    You should have received copies of the GNU General Public License and
    the GNU Lesser General Public License along with this program.  If
    not, see http://www.gnu.org/licenses/.
-')
+*/
 
-dnl PROLOGUE(_nettle_salsa20_core) picked up by configure
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
 
-define(`fat_transform', `$1_neon')
-include_src(`arm/neon/salsa20-core-internal.asm')
+#include "pbkdf2.h"
+
+#include "hmac.h"
+
+void
+pbkdf2_hmac_sha384 (size_t key_length, const uint8_t *key,
+		    unsigned iterations,
+		    size_t salt_length, const uint8_t *salt,
+		    size_t length, uint8_t *dst)
+{
+  struct hmac_sha384_ctx sha384ctx;
+
+  hmac_sha384_set_key (&sha384ctx, key_length, key);
+  PBKDF2 (&sha384ctx, hmac_sha384_update, hmac_sha384_digest,
+	  SHA384_DIGEST_SIZE, iterations, salt_length, salt, length, dst);
+}
