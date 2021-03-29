@@ -1,3 +1,49 @@
+2021-03-21  Niels Möller  <nisse@lysator.liu.se>
+
+	* NEWS: NEWS entries for 3.7.2.
+
+2021-03-17  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac: Bump package version, to 3.7.2.
+	(LIBNETTLE_MINOR): Bump minor number, to 8.3.
+	(LIBHOGWEED_MINOR): Bump minor number, to 6.3.
+
+2021-03-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* gostdsa-vko.c (gostdsa_vko): Use ecc_mod_mul_canonical to
+	compute the scalar used for ecc multiplication.
+
+	* eddsa-hash.c (_eddsa_hash): Ensure result is canonically
+	reduced. Two of the three call sites need that.
+
+	* ecc-gostdsa-verify.c (ecc_gostdsa_verify): Use ecc_mod_mul_canonical
+	to compute the scalars used for ecc multiplication.
+
+	* ecc-ecdsa-sign.c (ecc_ecdsa_sign): Ensure s output is reduced to
+	canonical range.
+
+	* ecc-ecdsa-verify.c (ecc_ecdsa_verify): Use ecc_mod_mul_canonical
+	to compute the scalars used for ecc multiplication.
+	* testsuite/ecdsa-verify-test.c (test_main): Add test case that
+	triggers an assert on 64-bit platforms, without above fix.
+	* testsuite/ecdsa-sign-test.c (test_main): Test case generating
+	the same signature.
+
+2021-03-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* eddsa-verify.c (equal_h): Use ecc_mod_mul_canonical.
+
+2021-03-11  Niels Möller  <nisse@lysator.liu.se>
+
+	* ecc-mod-arith.c (ecc_mod_mul_canonical, ecc_mod_sqr_canonical):
+	New functions.
+	* ecc-internal.h: Declare and document new functions.
+	* curve448-eh-to-x.c (curve448_eh_to_x): Use ecc_mod_sqr_canonical.
+	* curve25519-eh-to-x.c (curve25519_eh_to_x): Use ecc_mod_mul_canonical.
+	* ecc-eh-to-a.c (ecc_eh_to_a): Likewise.
+	* ecc-j-to-a.c (ecc_j_to_a): Likewise.
+	* ecc-mul-m.c (ecc_mul_m): Likewise.
+
 2021-02-17  Niels Möller  <nisse@lysator.liu.se>
 
 	* Released Nettle-3.7.1.
