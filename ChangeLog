@@ -1,3 +1,39 @@
+2021-05-22  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac: Bump package version, to 3.7.3.
+	(LIBNETTLE_MINOR): Bump minor number, to 8.4.
+	(LIBHOGWEED_MINOR): Bump minor number, to 6.4.
+
+2021-05-17  Niels Möller  <nisse@lysator.liu.se>
+
+	* rsa-decrypt-tr.c (rsa_decrypt_tr): Check up-front that input is
+	in range.
+	* rsa-sec-decrypt.c (rsa_sec_decrypt): Likewise.
+	* rsa-decrypt.c (rsa_decrypt): Likewise.
+	* testsuite/rsa-encrypt-test.c (test_main): Add tests with input > n.
+
+2021-05-14  Niels Möller  <nisse@lysator.liu.se>
+
+	* rsa-sign-tr.c (rsa_sec_blind): Delete mn argument.
+	(_rsa_sec_compute_root_tr): Delete mn argument, instead require
+	that input size matches key size. Rearrange use of temporary
+	storage, to support in-place operation, x == m. Update all
+	callers.
+
+	* rsa-decrypt-tr.c (rsa_decrypt_tr): Make zero-padded copy of
+	input, for calling _rsa_sec_compute_root_tr.
+	* rsa-sec-decrypt.c (rsa_sec_decrypt): Likewise.
+
+	* testsuite/rsa-encrypt-test.c (test_main): Test calling all of
+	rsa_decrypt, rsa_decrypt_tr, and rsa_sec_decrypt with zero input.
+
+2021-05-06  Niels Möller  <nisse@lysator.liu.se>
+
+	* pkcs1-sec-decrypt.c (_pkcs1_sec_decrypt): Check that message
+	length is valid, for given key size.
+	* testsuite/rsa-sec-decrypt-test.c (test_main): Add test cases for
+	calls to rsa_sec_decrypt specifying a too large message length.
+
 2021-03-21  Niels Möller  <nisse@lysator.liu.se>
 
 	* NEWS: NEWS entries for 3.7.2.
