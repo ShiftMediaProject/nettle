@@ -37,16 +37,12 @@ static const mp_limb_t ecc_qp1h[4] = {
 };
 #define ecc_redc_ppm1 NULL
 #define ECC_REDC_SIZE 0
-static const mp_limb_t ecc_sqrt_z[4] = {
-  0xc4ee1b274a0ea0b0ULL, 0x2f431806ad2fe478ULL, 0x2b4d00993dfbd7a7ULL, 0x2b8324804fc1df0bULL,
-};
 #define ECC_SQRT_E 2
-#define ECC_SQRT_T_BITS 252
-static const mp_limb_t ecc_sqrt_t[4] = {
-  0xfffffffffffffffdULL, 0xffffffffffffffffULL, 0xffffffffffffffffULL, 0xfffffffffffffffULL,
-};
 #if USE_REDC
 #define ecc_unit ecc_Bmodp
+static const mp_limb_t ecc_sqrt_z[4] = {
+  0x3b5807d4fe2bdb04ULL, 0x3f590fdb51be9edULL, 0x6d6e16bf336202d1ULL, 0x75776b0bd6c71ba8ULL,
+};
 static const mp_limb_t ecc_table[2048] = {
   0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL,
   0x26ULL, 0x0ULL, 0x0ULL, 0x0ULL,
@@ -564,6 +560,9 @@ static const mp_limb_t ecc_table[2048] = {
 #else
 static const mp_limb_t ecc_unit[4] = {
   0x1ULL, 0x0ULL, 0x0ULL, 0x0ULL,
+};
+static const mp_limb_t ecc_sqrt_z[4] = {
+  0xc4ee1b274a0ea0b0ULL, 0x2f431806ad2fe478ULL, 0x2b4d00993dfbd7a7ULL, 0x2b8324804fc1df0bULL,
 };
 static const mp_limb_t ecc_table[2048] = {
   0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL,

@@ -97,6 +97,9 @@ EXPORTS
     nettle_cast5_set_key
     nettle_cbc_decrypt
     nettle_cbc_encrypt
+    nettle_cbc_aes128_encrypt
+    nettle_cbc_aes192_encrypt
+    nettle_cbc_aes256_encrypt
     nettle_ccm_aes128_decrypt
     nettle_ccm_aes128_decrypt_message
     nettle_ccm_aes128_digest
@@ -284,6 +287,10 @@ EXPORTS
     nettle_hmac_sha512_digest
     nettle_hmac_sha512_set_key
     nettle_hmac_sha512_update
+    nettle_hmac_sm3
+    nettle_hmac_sm3_set_key
+    nettle_hmac_sm3_update
+    nettle_hmac_sm3_digest
     nettle_hmac_streebog256_set_key
     nettle_hmac_streebog256_digest
     nettle_hmac_streebog512_set_key
@@ -311,6 +318,14 @@ EXPORTS
     nettle_memeql_sec
     nettle_memxor
     nettle_memxor3
+    nettle_nist_keywrap16
+    nettle_nist_keyunwrap16
+    nettle_aes128_keywrap
+    nettle_aes192_keywrap
+    nettle_aes256_keywrap
+    nettle_aes128_keyunwrap
+    nettle_aes192_keyunwrap
+    nettle_aes256_keyunwrap
     nettle_pbkdf2
     nettle_pbkdf2_hmac_gosthash94cp
     nettle_pbkdf2_hmac_sha1
@@ -391,6 +406,10 @@ EXPORTS
     nettle_siv_cmac_decrypt_message
     nettle_siv_cmac_encrypt_message
     nettle_siv_cmac_set_key
+    nettle_sm3
+    nettle_sm3_init
+    nettle_sm3_update
+    nettle_sm3_digest
     nettle_streebog256
     nettle_streebog256_init
     nettle_streebog256_digest

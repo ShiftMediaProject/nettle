@@ -309,6 +309,12 @@
     <ClInclude Include="..\streebog.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\sm3.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\nist-keywrap.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\umac96.c">
@@ -911,6 +917,57 @@
     <ClCompile Include="..\hmac-streebog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\aes128-decrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aes128-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aes192-decrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aes192-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aes256-decrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aes256-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aes-decrypt-table.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cbc-aes128-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cbc-aes192-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cbc-aes256-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ghash-set-key.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ghash-update.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hmac-sm3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hmac-sm3-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\nist-keywrap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sm3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sm3-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
@@ -918,12 +975,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <YASM Include="x86\aes-decrypt-internal.s">
-      <Filter>Source Files\x86</Filter>
-    </YASM>
-    <YASM Include="x86\aes-encrypt-internal.s">
-      <Filter>Source Files\x86</Filter>
-    </YASM>
     <YASM Include="x86\arcfour-crypt.s">
       <Filter>Source Files\x86</Filter>
     </YASM>
@@ -936,18 +987,6 @@
     <YASM Include="x86\sha1-compress.s">
       <Filter>Source Files\x86</Filter>
     </YASM>
-    <YASM Include="x86_64\aes-decrypt-internal-2-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\aes-decrypt-internal-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\aes-encrypt-internal-2-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\aes-encrypt-internal-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
     <YASM Include="x86_64\camellia-crypt-internal.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
@@ -955,9 +994,6 @@
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\cpuid-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\gcm-hash8.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\md5-compress.s">
@@ -1010,6 +1046,54 @@
     </YASM>
     <YASM Include="x86_64\salsa20-2core.s">
       <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes128-decrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes128-encrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes192-decrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes192-encrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes256-decrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes256-encrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes-decrypt-internal.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\aes-encrypt-internal.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\cbc-aes128-encrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\cbc-aes192-encrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\cbc-aes256-encrypt-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ghash-set-key-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ghash-update-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\ghash-update-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86\aes-decrypt-internal.s">
+      <Filter>Source Files\x86</Filter>
+    </YASM>
+    <YASM Include="x86\aes-encrypt-internal.s">
+      <Filter>Source Files\x86</Filter>
     </YASM>
   </ItemGroup>
 </Project>

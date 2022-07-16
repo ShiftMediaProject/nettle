@@ -11,21 +11,23 @@ _nettle_poly1305_set_key:
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
-	mov	$0x0ffffffc0fffffff, %r8
+	mov	$0x0ffffffc0fffffff,  %r8
 	mov	(%rsi), %rax
-	and	%r8, %rax
-	and	$-4, %r8
-	mov	%rax, (%rdi)
+	and	 %r8, %rax
+	and	$-4,  %r8
+	mov	%rax, 0 (%rdi)
+	imul	$5, %rax
+	mov	%rax, 16 (%rdi)
 	mov	8(%rsi), %rax
-	and	%r8, %rax
+	and	 %r8, %rax
 	mov	%rax, 8 (%rdi)
 	shr	$2, %rax
 	imul	$5, %rax
-	mov	%rax, 16 (%rdi)
+	mov	%rax, 24 (%rdi)
 	xor	%eax, %eax
+	mov	%rax, 32 (%rdi)
 	mov	%rax, 40 (%rdi)
 	mov	%rax, 48 (%rdi)
-	mov	%eax, 36 (%rdi)
       pop	%rsi
     pop	%rdi
 	ret
@@ -40,41 +42,49 @@ _nettle_poly1305_block:
             push	%rsi
       mov	%rdx, %rsi
       mov	%r8, %rdx
+	push	%r12
 	mov	(%rsi), %rcx
 	mov	8(%rsi), %rsi
-	mov	%edx,	%r8d
-	add	40 (%rdi), %rcx
-	adc	48 (%rdi), %rsi
-	adc	36 (%rdi), %r8d
-	mov	0 (%rdi), %rax
+	mov	%edx, %r8d
+	add	32 (%rdi), %rcx
+	adc	40 (%rdi), %rsi
+	adc	48 (%rdi), %r8
+	mov	8 (%rdi), %rax
+	mul	%rcx
+	mov	%rax, %r11
+	mov	%rdx, %r12
+	mov	%rcx, %rax
+	mov	0 (%rdi), %rcx
 	mul	%rcx
 	mov	%rax, %r9
 	mov	%rdx, %r10
-	mov	16 (%rdi), %rax
-	mov	%rax, %r11
-	mul	%rsi
-	imul	%r8, %r11
-	imul	0 (%rdi), %r8
-	add	%rax, %r9
-	adc	%rdx, %r10
-	mov	0 (%rdi), %rax
-	mul	%rsi
-	add	%rax, %r11
-	adc	%rdx, %r8
-	mov	8 (%rdi), %rax
+	mov	%rsi, %rax
 	mul	%rcx
 	add	%rax, %r11
-	adc	%rdx, %r8
-	mov	%r8, %rax
-	shr	$2, %rax
-	imul	$5, %rax
-	and	$3, %r8d
+	adc	%rdx, %r12
+	mov	24 (%rdi), %rcx
+	mov	%rsi, %rax
+	mul	%rcx
 	add	%rax, %r9
-	adc	%r11, %r10
-	adc	$0, %r8d
-	mov	%r9, 40 (%rdi)
-	mov	%r10, 48 (%rdi)
-	mov	%r8d, 36 (%rdi)
+	adc	%rdx, %r10
+	mov	%r8, %rax
+	mul	%rcx
+	add	%rax, %r11
+	adc	%rdx, %r12
+	mov	$3, %esi
+	and	%r8, %rsi
+	shr	$2, %r8
+	mov	16 (%rdi), %rax
+	mul	%r8
+	add	%rax, %r9
+	adc	%rdx, %r10
+	imul	0 (%rdi), %rsi
+	add	%r11, %r10
+	adc	%rsi, %r12
+	mov	%r9, 32 (%rdi)
+	mov	%r10, 40 (%rdi)
+	mov	%r12, 48 (%rdi)
+	pop	%r12
       pop	%rsi
     pop	%rdi
 	ret
@@ -88,30 +98,29 @@ _nettle_poly1305_digest:
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
-	mov	40 (%rdi), %r9
-	mov	48 (%rdi), %r10
-	mov	36 (%rdi), %r11d
-	mov	%r11d, %eax
-	shr	$2, %eax
-	and	$3, %r11
-	imul	$5, %eax
-	add	%rax, %r9
-	adc	$0, %r10
-	adc	$0, %r11d
-	mov	$5, %rcx
-	xor	%rax, %rax
-	add	%r9, %rcx
-	adc	%r10, %rax
-	adc	$0, %r11d
-	cmp	$4, %r11d
-	cmovnc	%rcx, %r9
-	cmovnc	%rax, %r10
-	add	%r9, (%rsi)
-	adc	%r10, 8(%rsi)
+	mov	32 (%rdi), %r9
+	mov	40 (%rdi), %r10
+	mov	48 (%rdi), %r11
 	xor	%eax, %eax
+	mov	%rax, 32 (%rdi)
 	mov	%rax, 40 (%rdi)
 	mov	%rax, 48 (%rdi)
-	mov	%eax, 36 (%rdi)
+	mov	$3, %eax
+	and 	%r11d, %eax
+	shr	$2, %r11
+	imul	$5, %r11
+	add	%r11, %r9
+	adc	$0, %r10
+	adc	$0, %eax
+	mov	$5, %rcx
+	xor	%r8, %r8
+	add	%r9, %rcx
+	adc	%r10, %r8
+	adc	$-4, %eax
+	cmovc	%rcx, %r9
+	cmovc	%r8, %r10
+	add	%r9, (%rsi)
+	adc	%r10, 8(%rsi)
       pop	%rsi
     pop	%rdi
 	ret

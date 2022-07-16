@@ -1,12 +1,12 @@
-	.file "gcm-hash8.asm"
+	.file "ghash-update.asm"
 	.text
 	.align 16
-.globl _nettle_gcm_hash8
-.def _nettle_gcm_hash8
+.globl _nettle_ghash_update_table
+.def _nettle_ghash_update_table
 .scl 2
 .type 32
 .endef
-_nettle_gcm_hash8:
+_nettle_ghash_update_table:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi
@@ -17,11 +17,11 @@ _nettle_gcm_hash8:
 	push	%rbp
 	push	%r12
 	push	%r13
-	sub	$16, %rdx
+	sub	$1, %rdx
 	lea	.Lshift_table(%rip), %r13
 	mov	(%rsi), %rax
 	mov	8(%rsi), %rbx
-	jc	.Lfinal
+	jc	.Ldone
 .align 16
 .Lblock_loop:
 	xor (%rcx), %rax
@@ -87,44 +87,18 @@ _nettle_gcm_hash8:
 	mov	8(%rdi, %r10), %rbx
 	xor	%r12, %rbx
 	add	$16, %rcx
-	sub	$16, %rdx
+	sub	$1, %rdx
 	jnc	.Lblock_loop
-.Lfinal:
-	add	$16, %rdx
-	jnz	.Lpartial
+.Ldone:
 	mov	%rax, (%rsi)
 	mov	%rbx, 8(%rsi)
+	mov	%rcx, %rax
 	pop	%r13
 	pop	%r12
 	pop	%rbp
 	pop	%rbx
       pop	%rsi
     pop	%rdi
-	ret
-.Lpartial:
-	cmp	$8, %rdx
-	jc	.Llt8
-	xor	(%rcx), %rax
-	add	$8, %rcx
-	sub	$8, %rdx
-	jz	.Lblock_mul
-	call	.Lread_bytes
-	xor	%r8, %rbx
-	jmp	.Lblock_mul
-.Llt8:
-	call	.Lread_bytes
-	xor	%r8, %rax
-	jmp	.Lblock_mul
-.Lread_bytes:
-	xor	%r8, %r8
-	sub	$1, %rcx
-.align 16
-.Lread_loop:
-	shl	$8, %r8
-	orb	(%rcx, %rdx), %r8b
-.Lread_next:
-	sub	$1, %rdx
-	jnz	.Lread_loop
 	ret
 	.section .rodata
 	.align 2

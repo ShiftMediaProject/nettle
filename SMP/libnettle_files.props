@@ -65,6 +65,7 @@
     <ClInclude Include="..\nettle-meta.h" />
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\nettle-write.h" />
+    <ClInclude Include="..\nist-keywrap.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
     <ClInclude Include="..\pkcs1-internal.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
     <ClInclude Include="..\siv-cmac.h" />
+    <ClInclude Include="..\sm3.h" />
     <ClInclude Include="..\streebog.h" />
     <ClInclude Include="..\twofish.h" />
     <ClInclude Include="..\umac-internal.h" />
@@ -100,18 +102,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\aes-decrypt.c" />
-    <ClCompile Include="..\aes-encrypt-table.c" />
+    <ClCompile Include="..\aes-decrypt-table.c" />
     <ClCompile Include="..\aes-encrypt.c" />
+    <ClCompile Include="..\aes-encrypt-table.c" />
     <ClCompile Include="..\aes-invert-internal.c" />
     <ClCompile Include="..\aes-set-decrypt-key.c" />
     <ClCompile Include="..\aes-set-encrypt-key.c" />
     <ClCompile Include="..\aes-set-key-internal.c" />
+    <ClCompile Include="..\aes128-decrypt.c" />
+    <ClCompile Include="..\aes128-encrypt.c" />
     <ClCompile Include="..\aes128-meta.c" />
     <ClCompile Include="..\aes128-set-decrypt-key.c" />
     <ClCompile Include="..\aes128-set-encrypt-key.c" />
+    <ClCompile Include="..\aes192-decrypt.c" />
+    <ClCompile Include="..\aes192-encrypt.c" />
     <ClCompile Include="..\aes192-meta.c" />
     <ClCompile Include="..\aes192-set-decrypt-key.c" />
     <ClCompile Include="..\aes192-set-encrypt-key.c" />
+    <ClCompile Include="..\aes256-decrypt.c" />
+    <ClCompile Include="..\aes256-encrypt.c" />
     <ClCompile Include="..\aes256-meta.c" />
     <ClCompile Include="..\aes256-set-decrypt-key.c" />
     <ClCompile Include="..\aes256-set-encrypt-key.c" />
@@ -150,6 +159,9 @@
     <ClCompile Include="..\cast128-meta.c" />
     <ClCompile Include="..\cast128.c" />
     <ClCompile Include="..\cbc.c" />
+    <ClCompile Include="..\cbc-aes128-encrypt.c" />
+    <ClCompile Include="..\cbc-aes192-encrypt.c" />
+    <ClCompile Include="..\cbc-aes256-encrypt.c" />
     <ClCompile Include="..\ccm-aes128.c" />
     <ClCompile Include="..\ccm-aes192.c" />
     <ClCompile Include="..\ccm-aes256.c" />
@@ -194,6 +206,8 @@
     <ClCompile Include="..\gcm-camellia256-meta.c" />
     <ClCompile Include="..\gcm-camellia256.c" />
     <ClCompile Include="..\gcm.c" />
+    <ClCompile Include="..\ghash-set-key.c" />
+    <ClCompile Include="..\ghash-update.c" />
     <ClCompile Include="..\gost28147.c" />
     <ClCompile Include="..\gosthash94-meta.c" />
     <ClCompile Include="..\gosthash94.c" />
@@ -213,6 +227,8 @@
     <ClCompile Include="..\hmac-sha384.c" />
     <ClCompile Include="..\hmac-sha512-meta.c" />
     <ClCompile Include="..\hmac-sha512.c" />
+    <ClCompile Include="..\hmac-sm3.c" />
+    <ClCompile Include="..\hmac-sm3-meta.c" />
     <ClCompile Include="..\hmac-streebog.c" />
     <ClCompile Include="..\hmac-streebog-meta.c" />
     <ClCompile Include="..\hmac.c" />
@@ -237,6 +253,7 @@
     <ClCompile Include="..\nettle-meta-ciphers.c" />
     <ClCompile Include="..\nettle-meta-hashes.c" />
     <ClCompile Include="..\nettle-meta-macs.c" />
+    <ClCompile Include="..\nist-keywrap.c" />
     <ClCompile Include="..\pbkdf2-hmac-gosthash94.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha1.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha256.c" />
@@ -299,6 +316,8 @@
     <ClCompile Include="..\siv-cmac-aes128.c" />
     <ClCompile Include="..\siv-cmac-aes256.c" />
     <ClCompile Include="..\siv-cmac.c" />
+    <ClCompile Include="..\sm3.c" />
+    <ClCompile Include="..\sm3-meta.c" />
     <ClCompile Include="..\streebog.c" />
     <ClCompile Include="..\streebog-meta.c" />
     <ClCompile Include="..\twofish-meta.c" />
@@ -350,16 +369,28 @@
     <YASM Include="x86\sha1-compress.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\aes-decrypt-internal-2-fat.s">
+    <YASM Include="x86_64\aes-decrypt-internal.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\aes-decrypt-internal-fat.s">
+    <YASM Include="x86_64\aes-encrypt-internal.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\aes-encrypt-internal-2-fat.s">
+    <YASM Include="x86_64\aes128-decrypt-2-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\aes-encrypt-internal-fat.s">
+    <YASM Include="x86_64\aes128-encrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes192-decrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes192-encrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes256-decrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\aes256-encrypt-2-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86_64\camellia-crypt-internal.s">
@@ -368,10 +399,25 @@
     <YASM Include="x86_64\chacha-core-internal.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
+    <YASM Include="x86_64\cbc-aes128-encrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\cbc-aes192-encrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\cbc-aes256-encrypt-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
     <YASM Include="x86_64\cpuid-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\gcm-hash8.s">
+    <YASM Include="x86_64\ghash-set-key-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ghash-update-2-fat.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="x86_64\ghash-update-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86_64\md5-compress.s">

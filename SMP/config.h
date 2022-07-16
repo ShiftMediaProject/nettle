@@ -1,35 +1,34 @@
-
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
    */
-/* #undef CRAY_STACKSEG_END */
+   /* #undef CRAY_STACKSEG_END */
 
-/* Define to 1 if using `alloca.c'. */
-/* #undef C_ALLOCA */
+   /* Define to 1 if using `alloca.c'. */
+   /* #undef C_ALLOCA */
 
-/* Define to 1 if you have `alloca', as a function or macro. */
+   /* Define to 1 if you have `alloca', as a function or macro. */
 #define HAVE_ALLOCA 1
 
 /* Define to 1 if you have <alloca.h> and it should be used (not on Ultrix).
    */
-/* #undef HAVE_ALLOCA_H */
+   /* #undef HAVE_ALLOCA_H */
 
-/* Define if clock_gettime is available */
-/* #undef HAVE_CLOCK_GETTIME */
+   /* Define if clock_gettime is available */
+   /* #undef HAVE_CLOCK_GETTIME */
 
-/* Define if fcntl file locking is available */
-/* #undef HAVE_FCNTL_LOCKING */
+   /* Define if fcntl file locking is available */
+   /* #undef HAVE_FCNTL_LOCKING */
 
-/* Define if the compiler understands __attribute__ */
-/* #undef HAVE_GCC_ATTRIBUTE */
+   /* Define if the compiler understands __attribute__ */
+   /* #undef HAVE_GCC_ATTRIBUTE */
 
-/* Define to 1 if you have the `getline' function. */
-/* #undef HAVE_GETLINE */
+   /* Define to 1 if you have the `getline' function. */
+   /* #undef HAVE_GETLINE */
 
-/* Define to 1 if you have the <inttypes.h> header file. */
+   /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `gmp' library (-lgmp). */
@@ -49,6 +48,15 @@
 #if defined(__x86_64) || defined(_M_X64)
 #define HAVE_NATIVE_aes_decrypt 1
 #define HAVE_NATIVE_aes_encrypt 1
+#define HAVE_NATIVE_aes128_decrypt 1
+#define HAVE_NATIVE_aes128_encrypt 1
+#define HAVE_NATIVE_aes192_decrypt 1
+#define HAVE_NATIVE_aes192_encrypt 1
+#define HAVE_NATIVE_aes256_decrypt 1
+#define HAVE_NATIVE_aes256_encrypt 1
+#define HAVE_NATIVE_cbc_aes128_encrypt 1
+#define HAVE_NATIVE_cbc_aes192_encrypt 1
+#define HAVE_NATIVE_cbc_aes256_encrypt 1
 #define HAVE_NATIVE_chacha_core 1
 #define HAVE_NATIVE_ecc_curve25519_modp 1
 #define HAVE_NATIVE_ecc_curve448_modp 1
@@ -62,7 +70,9 @@
 #define HAVE_NATIVE_ecc_secp384r1_redc 1
 #define HAVE_NATIVE_ecc_secp521r1_modp 1
 #define HAVE_NATIVE_ecc_secp521r1_redc 1
-#define HAVE_NATIVE_gcm_hash8 1
+#define HAVE_NATIVE_ghash_set_key 1
+#define HAVE_NATIVE_ghash_update 1
+#define HAVE_NATIVE_memxor3 1
 #define HAVE_NATIVE_salsa20_core 1
 #define HAVE_NATIVE_salsa20_2core 1
 #define HAVE_NATIVE_sha1_compress 1
@@ -77,16 +87,16 @@
 #define HAVE_NATIVE_sha1_compress 1
 #endif
 
-/* Define to 1 if you have the <openssl/evp.h> header file. */
-/* #undef HAVE_OPENSSL_EVP_H */
+    /* Define to 1 if you have the <openssl/evp.h> header file. */
+    /* #undef HAVE_OPENSSL_EVP_H */
 
-/* Define to 1 if you have the <openssl/ecdsa.h> header file. */
-/* #undef HAVE_OPENSSL_ECDSA_H */
+    /* Define to 1 if you have the <openssl/ecdsa.h> header file. */
+    /* #undef HAVE_OPENSSL_ECDSA_H */
 
-/* Define to 1 if you have the `secure_getenv' function. */
-/* #undef HAVE_SECURE_GETENV */
+    /* Define to 1 if you have the `secure_getenv' function. */
+    /* #undef HAVE_SECURE_GETENV */
 
-/* Define to 1 if you have the <stdint.h> header file. */
+    /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
@@ -142,12 +152,12 @@
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
    automatically deduced at runtime.
-	STACK_DIRECTION > 0 => grows toward higher addresses
-	STACK_DIRECTION < 0 => grows toward lower addresses
-	STACK_DIRECTION = 0 => direction of growth unknown */
-/* #undef STACK_DIRECTION */
+    STACK_DIRECTION > 0 => grows toward higher addresses
+    STACK_DIRECTION < 0 => grows toward lower addresses
+    STACK_DIRECTION = 0 => direction of growth unknown */
+    /* #undef STACK_DIRECTION */
 
-/* Define to 1 if you have the ANSI C header files. */
+    /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
@@ -167,7 +177,7 @@
 # endif
 #else
 # ifndef WORDS_BIGENDIAN
-/* #  undef WORDS_BIGENDIAN */
+   /* #  undef WORDS_BIGENDIAN */
 # endif
 #endif
 
@@ -180,7 +190,7 @@
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
 #ifndef __cplusplus
-/* #undef inline */
+   /* #undef inline */
 #endif
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
@@ -195,10 +205,10 @@
 #  include <alloca.h>
 # else
 #  ifdef _AIX
- #pragma alloca
+#pragma alloca
 #  else
 #   ifndef alloca /* predefined by HP cc +Olibcalls */
-char *alloca ();
+char* alloca();
 #   endif
 #  endif
 /* Needed for alloca on windows */
@@ -217,13 +227,11 @@ char *alloca ();
 # endif
 #endif
 
-
 #if HAVE_STRERROR
 #define STRERROR strerror
 #else
 #define STRERROR(x) (sys_errlist[x])
 #endif
-
 
 #if __GNUC__ && HAVE_GCC_ATTRIBUTE
 # define NORETURN __attribute__ ((__noreturn__))
@@ -235,11 +243,9 @@ char *alloca ();
 # define UNUSED
 #endif
 
-
 #if defined(__x86_64__) || defined(__arch64__) || defined(__x86_64) || defined(_M_X64)
 # define HAVE_NATIVE_64_BIT 1
 #else
 /* Needs include of <limits.h> before use. */
 # define HAVE_NATIVE_64_BIT (SIZEOF_LONG * CHAR_BIT >= 64)
 #endif
-

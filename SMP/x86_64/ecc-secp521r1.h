@@ -45,12 +45,6 @@ static const mp_limb_t ecc_redc_ppm1[1] = {
   0x200ULL,
 };
 #define ECC_REDC_SIZE 8
-#define ECC_SQRT_E 1
-#define ECC_SQRT_T_BITS 520
-static const mp_limb_t ecc_sqrt_t[9] = {
-  0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL, 0x0ULL,
-  0x80ULL,
-};
 #if USE_REDC
 #define ecc_unit ecc_Bmodp
 static const mp_limb_t ecc_table[2304] = {

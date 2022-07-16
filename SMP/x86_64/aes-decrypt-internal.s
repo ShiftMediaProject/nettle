@@ -1,12 +1,12 @@
 	.file "aes-decrypt-internal.asm"
 	.text
 	.align 16
-.globl _nettle_aes_decrypt_x86_64
-.def _nettle_aes_decrypt_x86_64
+.globl _nettle_aes_decrypt
+.def _nettle_aes_decrypt
 .scl 2
 .type 32
 .endef
-_nettle_aes_decrypt_x86_64:
+_nettle_aes_decrypt:
         push	%rdi
       mov	%rcx, %rdi
             push	%rsi

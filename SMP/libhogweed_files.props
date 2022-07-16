@@ -65,6 +65,7 @@
     <ClInclude Include="..\nettle-meta.h" />
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\nettle-write.h" />
+    <ClInclude Include="..\nist-keywrap.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
     <ClInclude Include="..\pkcs1-internal.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
     <ClInclude Include="..\siv-cmac.h" />
+    <ClInclude Include="..\sm3.h" />
     <ClInclude Include="..\twofish.h" />
     <ClInclude Include="..\umac-internal.h" />
     <ClInclude Include="..\umac.h" />
