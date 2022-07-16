@@ -1,6 +1,7 @@
 /*.d
 /Makefile
 /aes-test
+/aes-keywrap-test
 /arcfour-test
 /arctwo-test
 /base16-test
@@ -96,6 +97,7 @@
 /sha512-224-test
 /sha512-256-test
 /sha512-test
+/sm3-test
 /streebog-test
 /twofish-test
 /umac-test

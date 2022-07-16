@@ -15,8 +15,8 @@ build/x86-64:
   script:
   - ./.bootstrap &&
     ./configure --disable-static --disable-documentation && make -j4 &&
-    make check -j4 &&
-    make check-fat
+    NETTLE_TEST_SEED=0 make check -j4 &&
+    NETTLE_TEST_SEED=0 make check-fat
   tags:
   - shared
   - linux
@@ -38,7 +38,7 @@ build/c89:
   script:
   - ./.bootstrap &&
     ./configure CC='gcc -std=c89' --disable-static --disable-assembler --disable-documentation && make -j4 &&
-    make check -j4
+    NETTLE_TEST_SEED=0 make check -j4
   tags:
   - shared
   - linux
@@ -49,7 +49,7 @@ build/ndebug:
   script:
   - ./.bootstrap &&
     ./configure CPPFLAGS='-DNDEBUG' --disable-static --disable-assembler --disable-documentation && make -j4 &&
-    make check -j4
+    NETTLE_TEST_SEED=0 make check -j4
   tags:
   - shared
   - linux
@@ -60,7 +60,7 @@ build/ubsan:
   script:
   - ./.bootstrap && 
     CXXFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" CFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" ./configure --disable-assembler 
-    --disable-documentation && make -j4 && make check -j4
+    --disable-documentation && make -j4 && NETTLE_TEST_SEED=0 make check -j4
   tags:
   - shared
   - linux
@@ -71,7 +71,7 @@ build/asan:
   script:
   - ./.bootstrap && 
   - CXXFLAGS="-fsanitize=address -g -O2" CFLAGS="-fsanitize=address -g -O2" ./configure --disable-documentation --disable-assembler &&
-    make -j4 && make check -j4
+    make -j4 && NETTLE_TEST_SEED=0 make check -j4
   tags:
   - shared
   - linux
@@ -129,7 +129,7 @@ Debian.cross.x86:
   - export CC="$host-gcc"
   - ./.bootstrap &&
     CFLAGS="-O2 -g" ./configure --build=$build --host=$host --disable-documentation && make -j4 &&
-    make check -j4
+    NETTLE_TEST_SEED=0 make check -j4
   tags:
   - shared
   - linux
@@ -140,11 +140,13 @@ Debian.cross.x86:
   before_script:
   - host="${CI_JOB_NAME#*.cross.}"
   - dpkg --add-architecture ppc64el
+  - dpkg --add-architecture s390x
   - apt-get update -q
   # remove any previously installed nettle headers to avoid conflicts
-  - for arch in armhf mips arm64 ppc64el;do apt-get remove -y nettle-dev:$arch;done
-  - if [ "$host" == "powerpc64-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host && export QEMU_LD_PREFIX=/usr/$host;fi
-  - if [ "$host" == "powerpc64le-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host && export QEMU_LD_PREFIX=/usr/$host;fi
+  - for arch in armhf arm64 ppc64el;do apt-get remove -y nettle-dev:$arch;done
+  - if [ "$host" == "powerpc64-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host && export QEMU_LD_PREFIX=/usr/$host EXTRA_CONFIGURE_FLAGS='--enable-mini-gmp';fi
+  - if [ "$host" == "powerpc64le-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host libgmp-dev:ppc64el && export QEMU_LD_PREFIX=/usr/$host;fi
+  - if [ "$host" == "s390x-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host libgmp-dev:s390x && export EXTRA_CONFIGURE_FLAGS='--disable-assembler';fi
   script:
   - build=$(dpkg-architecture -qDEB_HOST_GNU_TYPE)
   - host="${CI_JOB_NAME#*.cross.}"
@@ -154,10 +156,10 @@ Debian.cross.x86:
   - export CC_FOR_BUILD="gcc"
   - export CC="$host-gcc"
   - ./.bootstrap
-  - ./configure --disable-static --disable-documentation --build=$build --host=$host
+  - ./configure --disable-static --disable-documentation $EXTRA_CONFIGURE_FLAGS --build=$build --host=$host
   - make -j$(nproc)
-  - make -j$(nproc) check
-  - make -j$(nproc) check-fat
+  - NETTLE_TEST_SEED=0 make -j$(nproc) check
+  - NETTLE_TEST_SEED=0 make -j$(nproc) check-fat
   tags:
   - shared
   - linux
@@ -165,11 +167,45 @@ Debian.cross.x86:
   - tags
 Debian.cross.arm-linux-gnueabihf:
   <<: *Debian_cross_template
-Debian.cross.mips-linux-gnu:
-  <<: *Debian_cross_template
 Debian.cross.aarch64-linux-gnu:
   <<: *Debian_cross_template
 Debian.cross.powerpc64-linux-gnu:
   <<: *Debian_cross_template
 Debian.cross.powerpc64le-linux-gnu:
   <<: *Debian_cross_template
+Debian.cross.s390x-linux-gnu:
+  <<: *Debian_cross_template
+
+remote/s390x:
+  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
+  before_script:
+  # File created as world-readable by gitlab ci machinery.
+  - chmod 0600 $SSH_PRIVATE_KEY
+  - ssh -o 'StrictHostKeyChecking no' -i "$SSH_PRIVATE_KEY" "$S390X_ACCOUNT"
+    "mkdir -p ci-work/$CI_PIPELINE_IID"
+  script:
+  - echo $CI_PIPELINE_IID
+  - ./.bootstrap &&
+    ./configure && make PACKAGE_VERSION=snapshot dist &&
+      ls -l *.tar.gz
+  - cat nettle-snapshot.tar.gz |
+    ssh -o 'StrictHostKeyChecking no' -i "$SSH_PRIVATE_KEY" "$S390X_ACCOUNT"
+    "cd ci-work/$CI_PIPELINE_IID && tar xzf -"
+  - ssh -o 'StrictHostKeyChecking no' -i "$SSH_PRIVATE_KEY" "$S390X_ACCOUNT"
+    "cd ci-work/$CI_PIPELINE_IID/nettle-snapshot && ./configure --disable-documentation --enable-s390x-msa"
+  - ssh -o 'StrictHostKeyChecking no' -i "$SSH_PRIVATE_KEY" "$S390X_ACCOUNT"
+    "cd ci-work/$CI_PIPELINE_IID/nettle-snapshot && make"
+  - ssh -o 'StrictHostKeyChecking no' -i "$SSH_PRIVATE_KEY" "$S390X_ACCOUNT"
+    "cd ci-work/$CI_PIPELINE_IID/nettle-snapshot && NETTLE_TEST_SEED=0 make check"
+  after_script:
+  - ssh -o 'StrictHostKeyChecking no' -i "$SSH_PRIVATE_KEY" "$S390X_ACCOUNT"
+    "rm -rf ci-work/$CI_PIPELINE_IID"
+  only:
+    variables:
+    - $SSH_PRIVATE_KEY != ""
+    - $S390X_ACCOUNT != ""
+  tags:
+  - shared
+  - linux
+  except:
+  - tags
