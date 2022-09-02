@@ -1,3 +1,21 @@
+2022-07-26  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released nettle-3.8.1.
+
+	* configure.ac: Bump package version, to 3.8.1.
+	(LIBNETTLE_MINOR): Bump minor number, to 8.6.
+	(LIBHOGWEED_MINOR): Bump minor number, to 6.6.
+
+2022-06-12  Niels Möller  <nisse@lysator.liu.se>
+
+	From Christian Weisgerber:
+	* fat-arm64.c (get_arm64_features): Enable runtime feature
+	detection for openbsd.
+
+2022-06-02  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released nettle-3.8.
+
 2022-05-23  Niels Möller  <nisse@lysator.liu.se>
 
 	* Makefile.in (OPT_SOURCES): Add missing file fat-arm64.c.
