@@ -1,7 +1,8 @@
-C s390x/fat/sha256-compress-2.asm
+/* siv-gcm-aes128.c
 
-ifelse(`
-   Copyright (C) 2021 Mamone Tarsha
+   AES-GCM-SIV, RFC8452
+
+   Copyright (C) 2022 Red Hat, Inc.
 
    This file is part of GNU Nettle.
 
@@ -28,9 +29,37 @@ ifelse(`
    You should have received copies of the GNU General Public License and
    the GNU Lesser General Public License along with this program.  If
    not, see http://www.gnu.org/licenses/.
-')
+*/
 
-dnl PROLOGUE(_nettle_sha256_compress) picked up by configure
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
 
-define(`fat_transform', `$1_s390x')
-include_src(`s390x/msa_x1/sha256-compress.asm')
+#include "nettle-meta.h"
+#include "siv-gcm.h"
+
+void
+siv_gcm_aes128_encrypt_message (const struct aes128_ctx *ctx,
+				size_t nlength, const uint8_t *nonce,
+				size_t alength, const uint8_t *adata,
+				size_t clength, uint8_t *dst, const uint8_t *src)
+{
+  struct aes128_ctx ctr_ctx;
+  siv_gcm_encrypt_message (&nettle_aes128, ctx, &ctr_ctx,
+			   nlength, nonce,
+			   alength, adata,
+			   clength, dst, src);
+}
+
+int
+siv_gcm_aes128_decrypt_message (const struct aes128_ctx *ctx,
+				size_t nlength, const uint8_t *nonce,
+				size_t alength, const uint8_t *adata,
+				size_t mlength, uint8_t *dst, const uint8_t *src)
+{
+  struct aes128_ctx ctr_ctx;
+  return siv_gcm_decrypt_message (&nettle_aes128, ctx, &ctr_ctx,
+				  nlength, nonce,
+				  alength, adata,
+				  mlength, dst, src);
+}

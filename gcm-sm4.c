@@ -1,6 +1,8 @@
-/* sec-tabselect.c
+/* gcm-sm4.c
 
-   Copyright (C) 2013 Niels Möller
+   Galois counter mode using SM4 as the underlying cipher.
+
+   Copyright (C) 2022 Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
    This file is part of GNU Nettle.
 
@@ -29,34 +31,51 @@
    not, see http://www.gnu.org/licenses/.
 */
 
-/* Development of Nettle's ECC support was funded by the .SE Internet Fund. */
-
 #if HAVE_CONFIG_H
 # include "config.h"
 #endif
 
 #include <assert.h>
 
-#include "ecc-internal.h"
+#include "gcm.h"
 
-/* Copy the k'th element of the table out tn elements, each of size
-   rn. Always read complete table. Similar to gmp's mpn_tabselect. */
-/* FIXME: Should we need to volatile declare anything? */
 void
-sec_tabselect (mp_limb_t *rp, mp_size_t rn,
-	       const mp_limb_t *table, unsigned tn,
-	       unsigned k)
+gcm_sm4_set_key(struct gcm_sm4_ctx *ctx, const uint8_t *key)
 {
-  const mp_limb_t *end = table + tn * rn;
-  const mp_limb_t *p;
-  mp_size_t i;
-  
-  assert (k < tn);
-  mpn_zero (rp, rn);
-  for (p = table; p < end; p += rn, k--)
-    {
-      mp_limb_t mask = - (mp_limb_t) (k == 0);
-      for (i = 0; i < rn; i++)
-	rp[i] += mask & p[i];
-    }
+  GCM_SET_KEY(ctx, sm4_set_encrypt_key, sm4_crypt, key);
+}
+
+void
+gcm_sm4_set_iv(struct gcm_sm4_ctx *ctx,
+	       size_t length, const uint8_t *iv)
+{
+  GCM_SET_IV (ctx, length, iv);
+}
+
+void
+gcm_sm4_update(struct gcm_sm4_ctx *ctx,
+	       size_t length, const uint8_t *data)
+{
+  GCM_UPDATE (ctx, length, data);
+}
+
+void
+gcm_sm4_encrypt(struct gcm_sm4_ctx *ctx,
+		size_t length, uint8_t *dst, const uint8_t *src)
+{
+  GCM_ENCRYPT(ctx, sm4_crypt, length, dst, src);
+}
+
+void
+gcm_sm4_decrypt(struct gcm_sm4_ctx *ctx,
+		size_t length, uint8_t *dst, const uint8_t *src)
+{
+  GCM_DECRYPT(ctx, sm4_crypt, length, dst, src);
+}
+
+void
+gcm_sm4_digest(struct gcm_sm4_ctx *ctx,
+	       size_t length, uint8_t *digest)
+{
+  GCM_DIGEST(ctx, sm4_crypt, length, digest);
 }

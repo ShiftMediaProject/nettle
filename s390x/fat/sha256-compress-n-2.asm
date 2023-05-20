@@ -1,8 +1,7 @@
-/* arcfour-crypt.c
+C s390x/fat/sha256-compress-n-2.asm
 
-   The arcfour/rc4 stream cipher.
-
-   Copyright (C) 2001, 2004 Niels Möller
+ifelse(`
+   Copyright (C) 2021 Mamone Tarsha
 
    This file is part of GNU Nettle.
 
@@ -29,33 +28,9 @@
    You should have received copies of the GNU General Public License and
    the GNU Lesser General Public License along with this program.  If
    not, see http://www.gnu.org/licenses/.
-*/
+')
 
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
+dnl PROLOGUE(_nettle_sha256_compress_n) picked up by configure
 
-#include <assert.h>
-
-#include "arcfour.h"
-
-void
-arcfour_crypt(struct arcfour_ctx *ctx,
-	      size_t length, uint8_t *dst,
-	      const uint8_t *src)
-{
-  register uint8_t i, j;
-  register int si, sj;
-
-  i = ctx->i; j = ctx->j;
-  while(length--)
-    {
-      i++; i &= 0xff;
-      si = ctx->S[i];
-      j += si; j &= 0xff;
-      sj = ctx->S[i] = ctx->S[j];
-      ctx->S[j] = si;
-      *dst++ = *src++ ^ ctx->S[ (si + sj) & 0xff ];
-    }
-  ctx->i = i; ctx->j = j;
-}
+define(`fat_transform', `$1_s390x')
+include_src(`s390x/msa_x1/sha256-compress-n.asm')

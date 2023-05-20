@@ -4,6 +4,7 @@
 /aes-keywrap-test
 /arcfour-test
 /arctwo-test
+/balloon-test
 /base16-test
 /base64-test
 /bignum-test
@@ -98,6 +99,7 @@
 /sha512-256-test
 /sha512-test
 /sm3-test
+/sm4-test
 /streebog-test
 /twofish-test
 /umac-test
@@ -106,6 +108,7 @@
 /xts-test
 /cmac-test
 /siv-test
+/siv-gcm-test
 /bcrypt-test
 /ed448-test
 /shake256-test

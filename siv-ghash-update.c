@@ -1,8 +1,10 @@
-C arm64/fat/sha256-compress-2.asm
+/* siv-ghash-update.c
 
+   POLYVAL implementation for AES-GCM-SIV, based on GHASH
 
-ifelse(`
-   Copyright (C) 2021 Mamone Tarsha
+   Copyright (C) 2011 Katholieke Universiteit Leuven
+   Copyright (C) 2011, 2013, 2018, 2022 Niels Möller
+   Copyright (C) 2018, 2022 Red Hat, Inc.
 
    This file is part of GNU Nettle.
 
@@ -29,9 +31,35 @@ ifelse(`
    You should have received copies of the GNU General Public License and
    the GNU Lesser General Public License along with this program.  If
    not, see http://www.gnu.org/licenses/.
-')
+*/
 
-dnl PROLOGUE(_nettle_sha256_compress) picked up by configure
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
 
-define(`fat_transform', `$1_arm64')
-include_src(`arm64/crypto/sha256-compress.asm')
+#include "ghash-internal.h"
+#include "block-internal.h"
+#include "macros.h"
+
+const uint8_t *
+_siv_ghash_update (const struct gcm_key *ctx, union nettle_block16 *state,
+		 size_t blocks, const uint8_t *data)
+{
+  for (; blocks-- > 0; data += GCM_BLOCK_SIZE)
+    {
+      union nettle_block16 b;
+
+#if WORDS_BIGENDIAN
+      b.u64[1] = LE_READ_UINT64(data);
+      b.u64[0] = LE_READ_UINT64(data + 8);
+#else
+      b.u64[1] = READ_UINT64(data);
+      b.u64[0] = READ_UINT64(data + 8);
+#endif
+
+      _ghash_update (ctx, state, 1, b.b);
+    }
+
+  return data;
+}
+
