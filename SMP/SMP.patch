@@ -1,5 +1,5 @@
 diff --git a/fat-x86_64.c b/fat-x86_64.c
-index 47cf78ae..9217a7c3 100644
+index 0a2fedf4..552ce939 100644
 --- a/fat-x86_64.c
 +++ b/fat-x86_64.c
 @@ -178,8 +178,7 @@ fat_init (void)

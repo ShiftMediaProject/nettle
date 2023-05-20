@@ -5,9 +5,15 @@
 .endef
 _nettle_ghash_update_pclmul:
         push	%rdi
-      sub	$32, %rsp
+      sub	$128, %rsp
       movdqa	%xmm6, 0(%rsp)
       movdqa	%xmm7, 16(%rsp)
+      movdqa	%xmm8, 32(%rsp)
+      movdqa	%xmm9, 48(%rsp)
+      movdqa	%xmm10, 64(%rsp)
+      movdqa	%xmm11, 80(%rsp)
+      movdqa	%xmm12, 96(%rsp)
+      movdqa	%xmm13, 112(%rsp)
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
@@ -17,39 +23,80 @@ _nettle_ghash_update_pclmul:
 	movdqa		.Lbswap(%rip), %xmm1
 	movups		(%rdi), %xmm2
 	movups		16(%rdi), %xmm3
-	movups		(%rsi), %xmm5
-	pshufb		%xmm1, %xmm5
-	sub		$1, %rdx
-	jc		.Ldone
+	movups		32(%rdi), %xmm4
+	movups		48(%rdi), %xmm5
+	movups		(%rsi), %xmm7
+	pshufb		%xmm1, %xmm7
+	mov		%rdx, %rax
+	shr		$1, %rax
+	jz		.L1_block
 .Loop:
-	movups		(%rcx), %xmm6
-	pshufb		%xmm1, %xmm6
-.Lblock:
-	pxor		%xmm6, %xmm5
-	movdqa		%xmm5, %xmm6
-	movdqa		%xmm5, %xmm7
-	movdqa		%xmm5, %xmm4
-	pclmullqlqdq	%xmm3, %xmm7
-	pclmullqhqdq	%xmm3, %xmm5
-	pclmulhqlqdq	%xmm2, %xmm4
-	pclmulhqhqdq	%xmm2, %xmm6
-	pxor		%xmm4, %xmm7
-	pxor		%xmm6, %xmm5
-	pshufd		$0x4e, %xmm7, %xmm4
-	pxor		%xmm4, %xmm5
-	pclmullqhqdq	%xmm0, %xmm7
-	pxor		%xmm7, %xmm5
+	movups		(%rcx), %xmm8
+	pshufb		%xmm1, %xmm8
+	pxor		%xmm8, %xmm7
+	movdqa		%xmm7, %xmm8
+	movdqa		%xmm7, %xmm9
+	movdqa		%xmm7, %xmm6
+	pclmullqlqdq	%xmm5, %xmm9
+	pclmullqhqdq	%xmm5, %xmm7
+	pclmulhqlqdq	%xmm4, %xmm6
+	pclmulhqhqdq	%xmm4, %xmm8
+	movups		16(%rcx), %xmm12
+	pshufb		%xmm1, %xmm12
+	movdqa		%xmm12, %xmm11
+	movdqa		%xmm12, %xmm13
+	movdqa		%xmm12, %xmm10
+	pclmullqlqdq	%xmm3, %xmm13
+	pclmullqhqdq	%xmm3, %xmm11
+	pclmulhqlqdq	%xmm2, %xmm10
+	pclmulhqhqdq	%xmm2, %xmm12
+	pxor		%xmm6, %xmm9
+	pxor		%xmm8, %xmm7
+	pxor		%xmm10, %xmm13
+	pxor		%xmm12, %xmm11
+	pxor		%xmm13, %xmm9
+	pxor		%xmm11, %xmm7
+	pshufd		$0x4e, %xmm9, %xmm6
+	pxor		%xmm6, %xmm7
+	pclmullqhqdq	%xmm0, %xmm9
+	pxor		%xmm9, %xmm7
+	add		$32, %rcx
+	dec		%rax
+	jnz		.Loop
+.L1_block:
+	test		$1, %rdx
+	jz		.Ldone
+	movups		(%rcx), %xmm8
+	pshufb		%xmm1, %xmm8
+	pxor		%xmm8, %xmm7
+	movdqa		%xmm7, %xmm8
+	movdqa		%xmm7, %xmm9
+	movdqa		%xmm7, %xmm6
+	pclmullqlqdq	%xmm3, %xmm9
+	pclmullqhqdq	%xmm3, %xmm7
+	pclmulhqlqdq	%xmm2, %xmm6
+	pclmulhqhqdq	%xmm2, %xmm8
+	pxor		%xmm6, %xmm9
+	pxor		%xmm8, %xmm7
+	pshufd		$0x4e, %xmm9, %xmm6
+	pxor		%xmm6, %xmm7
+	pclmullqhqdq	%xmm0, %xmm9
+	pxor		%xmm9, %xmm7
 	add		$16, %rcx
-	sub		$1, %rdx
-	jnc		.Loop
 .Ldone:
-	pshufb		%xmm1, %xmm5
-	movups		%xmm5, (%rsi)
+	pshufb		%xmm1, %xmm7
+	movups		%xmm7, (%rsi)
 	mov		%rcx, %rax
       pop	%rsi
+      movdqa	112(%rsp), %xmm13
+      movdqa	96(%rsp), %xmm12
+      movdqa	80(%rsp), %xmm11
+      movdqa	64(%rsp), %xmm10
+      movdqa	48(%rsp), %xmm9
+      movdqa	32(%rsp), %xmm8
       movdqa	16(%rsp), %xmm7
       movdqa	(%rsp), %xmm6
-      add	$32, %rsp
+      add	$128, %rsp
     pop	%rdi
 	ret
 	.section .rodata

@@ -62,6 +62,12 @@ EXPORTS
     nettle_base64url
     nettle_base64url_decode_init
     nettle_base64url_encode_init
+    nettle_balloon
+    nettle_balloon_itch
+    nettle_balloon_sha1
+    nettle_balloon_sha256
+    nettle_balloon_sha384
+    nettle_balloon_sha512
     nettle_blowfish128_set_key
     nettle_blowfish_bcrypt_hash
     nettle_blowfish_bcrypt_verify
@@ -233,6 +239,13 @@ EXPORTS
     nettle_gcm_camellia256_set_iv
     nettle_gcm_camellia256_set_key
     nettle_gcm_camellia256_update
+    nettle_gcm_sm4
+    nettle_gcm_sm4_set_key
+    nettle_gcm_sm4_set_iv
+    nettle_gcm_sm4_update
+    nettle_gcm_sm4_encrypt
+    nettle_gcm_sm4_decrypt
+    nettle_gcm_sm4_digest
     nettle_gcm_decrypt
     nettle_gcm_digest
     nettle_gcm_encrypt
@@ -320,6 +333,23 @@ EXPORTS
     nettle_memxor3
     nettle_nist_keywrap16
     nettle_nist_keyunwrap16
+    nettle_ocb_set_key
+    nettle_ocb_set_nonce
+    nettle_ocb_update
+    nettle_ocb_encrypt
+    nettle_ocb_decrypt
+    nettle_ocb_digest
+    nettle_ocb_encrypt_message
+    nettle_ocb_decrypt_message
+    nettle_ocb_aes128_set_encrypt_key
+    nettle_ocb_aes128_set_decrypt_key
+    nettle_ocb_aes128_set_nonce
+    nettle_ocb_aes128_update
+    nettle_ocb_aes128_encrypt
+    nettle_ocb_aes128_decrypt
+    nettle_ocb_aes128_digest
+    nettle_ocb_aes128_encrypt_message
+    nettle_ocb_aes128_decrypt_message
     nettle_aes128_keywrap
     nettle_aes192_keywrap
     nettle_aes256_keywrap
@@ -363,6 +393,7 @@ EXPORTS
     nettle_sha224_digest
     nettle_sha224_init
     nettle_sha256
+    nettle_sha256_compress
     nettle_sha256_digest
     nettle_sha256_init
     nettle_sha256_update
@@ -394,6 +425,7 @@ EXPORTS
     nettle_sha512_256
     nettle_sha512_256_digest
     nettle_sha512_256_init
+    nettle_sha512_compress
     nettle_sha512_digest
     nettle_sha512_init
     nettle_sha512_update
@@ -406,10 +438,19 @@ EXPORTS
     nettle_siv_cmac_decrypt_message
     nettle_siv_cmac_encrypt_message
     nettle_siv_cmac_set_key
+    nettle_siv_gcm_encrypt_message
+    nettle_siv_gcm_decrypt_message
+    nettle_siv_gcm_aes128_encrypt_message
+    nettle_siv_gcm_aes128_decrypt_message
+    nettle_siv_gcm_aes256_encrypt_message
+    nettle_siv_gcm_aes256_decrypt_message
     nettle_sm3
     nettle_sm3_init
     nettle_sm3_update
     nettle_sm3_digest
+    nettle_sm4_set_encrypt_key
+    nettle_sm4_set_decrypt_key
+    nettle_sm4_crypt
     nettle_streebog256
     nettle_streebog256_init
     nettle_streebog256_digest

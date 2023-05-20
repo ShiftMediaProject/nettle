@@ -8,6 +8,7 @@
     <ClInclude Include="..\asn1.h" />
     <ClInclude Include="..\base16.h" />
     <ClInclude Include="..\base64.h" />
+    <ClInclude Include="..\balloon.h" />
     <ClInclude Include="..\bignum.h" />
     <ClInclude Include="..\block-internal.h" />
     <ClInclude Include="..\blowfish.h" />
@@ -66,6 +67,7 @@
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\nettle-write.h" />
     <ClInclude Include="..\nist-keywrap.h" />
+    <ClInclude Include="..\ocb.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
     <ClInclude Include="..\pkcs1-internal.h" />
@@ -91,7 +93,9 @@
     <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
     <ClInclude Include="..\siv-cmac.h" />
+    <ClInclude Include="..\siv-gcm.h" />
     <ClInclude Include="..\sm3.h" />
+    <ClInclude Include="..\sm4.h" />
     <ClInclude Include="..\twofish.h" />
     <ClInclude Include="..\umac-internal.h" />
     <ClInclude Include="..\umac.h" />
@@ -155,6 +159,7 @@
     <ClCompile Include="..\ecc-mul-g-eh.c" />
     <ClCompile Include="..\ecc-mul-g.c" />
     <ClCompile Include="..\ecc-mul-m.c" />
+    <ClCompile Include="..\ecc-nonsec-add-jjj.c" />
     <ClCompile Include="..\ecc-pm1-redc.c" />
     <ClCompile Include="..\ecc-point-mul-g.c" />
     <ClCompile Include="..\ecc-point-mul.c" />
@@ -236,7 +241,6 @@
     <ClCompile Include="..\rsa2sexp.c" />
     <ClCompile Include="..\sec-add-1.c" />
     <ClCompile Include="..\sec-sub-1.c" />
-    <ClCompile Include="..\sec-tabselect.c" />
     <ClCompile Include="..\sexp-format.c" />
     <ClCompile Include="..\sexp-transport-format.c" />
     <ClCompile Include="..\sexp-transport.c" />

@@ -315,6 +315,18 @@
     <ClInclude Include="..\nist-keywrap.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\ocb.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\siv-gcm.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sm4.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\balloon.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\umac96.c">
@@ -588,9 +600,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sha256.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sha256-compress.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sha256-meta.c">
@@ -968,6 +977,60 @@
     <ClCompile Include="..\aes128-decrypt.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\balloon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\balloon-sha1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\balloon-sha256.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\balloon-sha384.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\balloon-sha512.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gcm-sm4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gcm-sm4-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocb-aes128.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\siv-gcm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\siv-gcm-aes128.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\siv-gcm-aes256.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\siv-ghash-set-key.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\siv-ghash-update.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sm4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sm4-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sha256-compress-n.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly1305-update.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
@@ -975,9 +1038,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <YASM Include="x86\arcfour-crypt.s">
-      <Filter>Source Files\x86</Filter>
-    </YASM>
     <YASM Include="x86\camellia-crypt-internal.s">
       <Filter>Source Files\x86</Filter>
     </YASM>
@@ -1027,12 +1087,6 @@
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\sha3-permute.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\sha256-compress-2-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\sha256-compress-fat.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\sha512-compress.s">
@@ -1094,6 +1148,15 @@
     </YASM>
     <YASM Include="x86\aes-decrypt-internal.s">
       <Filter>Source Files\x86</Filter>
+    </YASM>
+    <YASM Include="x86_64\sha256-compress-n-fat.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\poly1305-blocks.s">
+      <Filter>Source Files\x86_64</Filter>
+    </YASM>
+    <YASM Include="x86_64\sha256-compress-n-2-fat.s">
+      <Filter>Source Files\x86_64</Filter>
     </YASM>
   </ItemGroup>
 </Project>

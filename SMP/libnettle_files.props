@@ -8,6 +8,7 @@
     <ClInclude Include="..\asn1.h" />
     <ClInclude Include="..\base16.h" />
     <ClInclude Include="..\base64.h" />
+    <ClInclude Include="..\balloon.h" />
     <ClInclude Include="..\bignum.h" />
     <ClInclude Include="..\block-internal.h" />
     <ClInclude Include="..\blowfish.h" />
@@ -66,6 +67,7 @@
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\nettle-write.h" />
     <ClInclude Include="..\nist-keywrap.h" />
+    <ClInclude Include="..\ocb.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
     <ClInclude Include="..\pkcs1-internal.h" />
@@ -91,7 +93,9 @@
     <ClInclude Include="..\sha3-internal.h" />
     <ClInclude Include="..\sha3.h" />
     <ClInclude Include="..\siv-cmac.h" />
+    <ClInclude Include="..\siv-gcm.h" />
     <ClInclude Include="..\sm3.h" />
+    <ClInclude Include="..\sm4.h" />
     <ClInclude Include="..\streebog.h" />
     <ClInclude Include="..\twofish.h" />
     <ClInclude Include="..\umac-internal.h" />
@@ -125,9 +129,6 @@
     <ClCompile Include="..\aes256-set-decrypt-key.c" />
     <ClCompile Include="..\aes256-set-encrypt-key.c" />
     <ClCompile Include="..\aesdata.c" />
-    <ClCompile Include="..\arcfour-crypt.c">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\arcfour.c" />
     <ClCompile Include="..\arctwo-meta.c" />
     <ClCompile Include="..\arctwo.c" />
@@ -140,6 +141,11 @@
     <ClCompile Include="..\base64url-decode.c" />
     <ClCompile Include="..\base64url-encode.c" />
     <ClCompile Include="..\base64url-meta.c" />
+    <ClCompile Include="..\balloon.c" />
+    <ClCompile Include="..\balloon-sha1.c" />
+    <ClCompile Include="..\balloon-sha256.c" />
+    <ClCompile Include="..\balloon-sha384.c" />
+    <ClCompile Include="..\balloon-sha512.c" />
     <ClCompile Include="..\blowfish.c" />
     <ClCompile Include="..\blowfish-bcrypt.c" />
     <ClCompile Include="..\buffer-init.c" />
@@ -205,6 +211,8 @@
     <ClCompile Include="..\gcm-camellia128.c" />
     <ClCompile Include="..\gcm-camellia256-meta.c" />
     <ClCompile Include="..\gcm-camellia256.c" />
+    <ClCompile Include="..\gcm-sm4.c" />
+    <ClCompile Include="..\gcm-sm4-meta.c" />
     <ClCompile Include="..\gcm.c" />
     <ClCompile Include="..\ghash-set-key.c" />
     <ClCompile Include="..\ghash-update.c" />
@@ -254,6 +262,8 @@
     <ClCompile Include="..\nettle-meta-hashes.c" />
     <ClCompile Include="..\nettle-meta-macs.c" />
     <ClCompile Include="..\nist-keywrap.c" />
+    <ClCompile Include="..\ocb.c" />
+    <ClCompile Include="..\ocb-aes128.c" />
     <ClCompile Include="..\pbkdf2-hmac-gosthash94.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha1.c" />
     <ClCompile Include="..\pbkdf2-hmac-sha256.c" />
@@ -262,6 +272,7 @@
     <ClCompile Include="..\poly1305-internal.c">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\poly1305-update.c" />
     <ClCompile Include="..\realloc.c" />
     <ClCompile Include="..\ripemd160-compress.c" />
     <ClCompile Include="..\ripemd160-meta.c" />
@@ -287,7 +298,7 @@
     <ClCompile Include="..\sha1-meta.c" />
     <ClCompile Include="..\sha1.c" />
     <ClCompile Include="..\sha224-meta.c" />
-    <ClCompile Include="..\sha256-compress.c">
+    <ClCompile Include="..\sha256-compress-n.c">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\sha256-meta.c" />
@@ -316,8 +327,15 @@
     <ClCompile Include="..\siv-cmac-aes128.c" />
     <ClCompile Include="..\siv-cmac-aes256.c" />
     <ClCompile Include="..\siv-cmac.c" />
+    <ClCompile Include="..\siv-gcm-aes128.c" />
+    <ClCompile Include="..\siv-gcm-aes256.c" />
+    <ClCompile Include="..\siv-gcm.c" />
+    <ClCompile Include="..\siv-ghash-set-key.c" />
+    <ClCompile Include="..\siv-ghash-update.c" />
     <ClCompile Include="..\sm3.c" />
     <ClCompile Include="..\sm3-meta.c" />
+    <ClCompile Include="..\sm4.c" />
+    <ClCompile Include="..\sm4-meta.c" />
     <ClCompile Include="..\streebog.c" />
     <ClCompile Include="..\streebog-meta.c" />
     <ClCompile Include="..\twofish-meta.c" />
@@ -355,9 +373,6 @@
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86\aes-encrypt-internal.s">
-      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
-    </YASM>
-    <YASM Include="x86\arcfour-crypt.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86\camellia-crypt-internal.s">
@@ -432,6 +447,9 @@
     <YASM Include="x86_64\memxor3.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
+    <YASM Include="x86_64\poly1305-blocks.s">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
+    </YASM>
     <YASM Include="x86_64\poly1305-internal.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
@@ -453,10 +471,10 @@
     <YASM Include="x86_64\sha1-compress-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\sha256-compress-2-fat.s">
+    <YASM Include="x86_64\sha256-compress-n-2-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86_64\sha256-compress-fat.s">
+    <YASM Include="x86_64\sha256-compress-n-fat.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86_64\sha3-permute.s">

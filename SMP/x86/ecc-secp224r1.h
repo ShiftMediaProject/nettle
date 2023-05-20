@@ -6,22 +6,24 @@
 static const mp_limb_t ecc_p[7] = {
   0x1UL, 0x0UL, 0x0UL, 0xffffffffUL, 0xffffffffUL, 0xffffffffUL, 0xffffffffUL,
 };
-static const mp_limb_t ecc_b[7] = {
-  0x2355ffb4UL, 0x270b3943UL, 0xd7bfd8baUL, 0x5044b0b7UL, 0xf5413256UL, 0xc04b3abUL, 0xb4050a85UL,
-};
-static const mp_limb_t ecc_q[7] = {
-  0x5c5c2a3dUL, 0x13dd2945UL, 0xe0b8f03eUL, 0xffff16a2UL, 0xffffffffUL, 0xffffffffUL, 0xffffffffUL,
-};
 static const mp_limb_t ecc_Bmodp[7] = {
   0xffffffffUL, 0xffffffffUL, 0xffffffffUL, 0x0UL, 0x0UL, 0x0UL, 0x0UL,
 };
 #define ECC_BMODP_SIZE 3
+#define ecc_Bm2p ecc_Bmodp
+#define ecc_Bmodp_shifted ecc_Bmodp
+static const mp_limb_t ecc_q[7] = {
+  0x5c5c2a3dUL, 0x13dd2945UL, 0xe0b8f03eUL, 0xffff16a2UL, 0xffffffffUL, 0xffffffffUL, 0xffffffffUL,
+};
 static const mp_limb_t ecc_Bmodq[7] = {
   0xa3a3d5c3UL, 0xec22d6baUL, 0x1f470fc1UL, 0xe95dUL, 0x0UL, 0x0UL, 0x0UL,
 };
 #define ECC_BMODQ_SIZE 4
-#define ecc_Bmodp_shifted ecc_Bmodp
+#define ecc_Bm2q ecc_Bmodq
 #define ecc_Bmodq_shifted ecc_Bmodq
+static const mp_limb_t ecc_b[7] = {
+  0x2355ffb4UL, 0x270b3943UL, 0xd7bfd8baUL, 0x5044b0b7UL, 0xf5413256UL, 0xc04b3abUL, 0xb4050a85UL,
+};
 static const mp_limb_t ecc_pp1h[7] = {
   0x1UL, 0x0UL, 0x80000000UL, 0xffffffffUL, 0xffffffffUL, 0xffffffffUL, 0x7fffffffUL,
 };

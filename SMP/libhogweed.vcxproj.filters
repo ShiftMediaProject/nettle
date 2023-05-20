@@ -309,6 +309,18 @@
     <ClInclude Include="..\nist-keywrap.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\balloon.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocb.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\siv-gcm.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sm4.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ecc-hash.c">
@@ -450,9 +462,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sec-sub-1.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sec-tabselect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sexp.c">
@@ -744,6 +753,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gostdsa-vko.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ecc-nonsec-add-jjj.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
