@@ -28,6 +28,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -67,6 +68,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -84,6 +87,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -143,6 +149,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -182,6 +189,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -199,6 +208,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -259,6 +271,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -298,6 +311,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -315,6 +330,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -375,6 +393,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -414,6 +433,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -431,6 +452,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -490,6 +514,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -529,6 +554,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -546,6 +573,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -605,6 +635,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -644,6 +675,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -661,6 +694,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -721,6 +757,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -760,6 +797,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -777,6 +816,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -837,6 +879,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -876,6 +919,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -893,6 +938,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -953,6 +1001,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -992,6 +1041,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -1009,6 +1060,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle
@@ -1069,6 +1123,7 @@ copy ..\aes.h "$(OutDir)"\include\nettle
 copy ..\arcfour.h "$(OutDir)"\include\nettle
 copy ..\arctwo.h "$(OutDir)"\include\nettle
 copy ..\asn1.h "$(OutDir)"\include\nettle
+copy ..\balloon.h "$(OutDir)"\include\nettle
 copy ..\base16.h "$(OutDir)"\include\nettle
 copy ..\base64.h "$(OutDir)"\include\nettle
 copy ..\bignum.h "$(OutDir)"\include\nettle
@@ -1108,6 +1163,8 @@ copy ..\memops.h "$(OutDir)"\include\nettle
 copy ..\memxor.h "$(OutDir)"\include\nettle
 copy ..\nettle-meta.h "$(OutDir)"\include\nettle
 copy ..\nettle-types.h "$(OutDir)"\include\nettle
+copy ..\nist-keywrap.h "$(OutDir)"\include\nettle
+copy ..\ocb.h "$(OutDir)"\include\nettle
 copy ..\pbkdf2.h "$(OutDir)"\include\nettle
 copy ..\pgp.h "$(OutDir)"\include\nettle
 copy ..\pkcs1.h "$(OutDir)"\include\nettle
@@ -1125,6 +1182,9 @@ copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
+copy ..\siv-gcm.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
 copy ..\twofish.h "$(OutDir)"\include\nettle
 copy ..\umac.h "$(OutDir)"\include\nettle

@@ -392,9 +392,6 @@
     <ClCompile Include="..\arcfour.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\arcfour-crypt.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\arctwo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
