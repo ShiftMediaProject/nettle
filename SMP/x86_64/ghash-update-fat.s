@@ -8,6 +8,9 @@
 .endef
 _nettle_ghash_update_table:
         push	%rdi
+      sub	$32, %rsp
+      movdqa	%xmm6, 0(%rsp)
+      movdqa	%xmm7, 16(%rsp)
       mov	%rcx, %rdi
             push	%rsi
       mov	%rdx, %rsi
@@ -32,10 +35,14 @@ _nettle_ghash_update_table:
 	pshufd	$0xaa, %xmm5, %xmm4
 	pshufd	$0xff, %xmm5, %xmm5
 	pslld	$1, %xmm0
-	pand	(%rdi, %rax), %xmm2
-	pand	(%r8, %rax), %xmm3
-	pand	16(%rdi, %rax), %xmm4
-	pand	16(%r8, %rax), %xmm5
+	movups	(%rdi, %rax), %xmm6
+	movups	(%r8, %rax), %xmm7
+	pand	%xmm6, %xmm2
+	pand	%xmm7, %xmm3
+	movups	16(%rdi, %rax), %xmm6
+	movups	16(%r8, %rax), %xmm7
+	pand	%xmm6, %xmm4
+	pand	%xmm7, %xmm5
 	pxor	%xmm2, %xmm3
 	pxor	%xmm4, %xmm5
 	pxor	%xmm3, %xmm1
@@ -50,5 +57,8 @@ _nettle_ghash_update_table:
 	movups	%xmm0, (%rsi)
 	mov	%rcx, %rax
       pop	%rsi
+      movdqa	16(%rsp), %xmm7
+      movdqa	(%rsp), %xmm6
+      add	$32, %rsp
     pop	%rdi
 	ret
