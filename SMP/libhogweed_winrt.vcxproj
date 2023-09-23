@@ -86,6 +86,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -205,6 +207,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -325,6 +329,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -445,6 +451,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -564,6 +572,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -683,6 +693,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -803,6 +815,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -923,6 +937,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -1043,6 +1059,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
@@ -1163,6 +1181,8 @@ copy ..\sha.h "$(OutDir)"\include\nettle
 copy ..\sha1.h "$(OutDir)"\include\nettle
 copy ..\sha2.h "$(OutDir)"\include\nettle
 copy ..\sha3.h "$(OutDir)"\include\nettle
+copy ..\sm3.h "$(OutDir)"\include\nettle
+copy ..\sm4.h "$(OutDir)"\include\nettle
 copy ..\siv-cmac.h "$(OutDir)"\include\nettle
 copy ..\siv-gcm.h "$(OutDir)"\include\nettle
 copy ..\streebog.h "$(OutDir)"\include\nettle
