@@ -76,6 +76,7 @@
 /rsa-compute-root-test
 /rsa-encrypt-test
 /rsa-keygen-test
+/rsa-oaep-encrypt-test
 /rsa-pss-sign-tr-test
 /rsa-sign-tr-test
 /rsa-test
@@ -111,8 +112,10 @@
 /siv-gcm-test
 /bcrypt-test
 /ed448-test
+/shake128-test
 /shake256-test
 /x86-ibt-test
+/drbg-ctr-aes256-test
 
 /test.in
 /test1.out

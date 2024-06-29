@@ -1,91 +1,99 @@
 variables:
-  BUILD_IMAGES_PROJECT: gnutls/build-images
-  DEBIAN_CROSS_BUILD: buildenv-debian-cross
-  FEDORA_BUILD: buildenv-fedora31
-  DEBIAN_X86_CROSS_BUILD: buildenv-debian-x86-cross
+  BUILDENV_NATIVE_IMAGE: gnutls/nettle-build-images:buildenv-native
+  BUILDENV_CLANG_IMAGE: gnutls/nettle-build-images:buildenv-clang
+  BUILDENV_CROSS_IMAGE: gnutls/nettle-build-images:buildenv-cross
   GET_SOURCES_ATTEMPTS: "3"
 
-# remove any pre-installed headers from nettle
-before_script:
- - yum remove -y nettle-devel
+# "Native" means x86-64; no jobs run on anything else.
+.native-build:
+  image: $CI_REGISTRY/$BUILDENV_NATIVE_IMAGE
+  script:
+  - ./.bootstrap
+  - './configure $EXTRA_CONFIGURE_ARGS --disable-documentation'
+  - 'make -j$(nproc)'
+  - 'make -j$(nproc) check $EXTRA_CHECK_TARGET'
+  tags:
+  - saas-linux-small-amd64
+  except:
+  - tags
+  variables:
+    NETTLE_TEST_SEED: '0'
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - "config.log"
 
-# See http://doc.gitlab.com/ce/ci/yaml/ for documentation.
-build/x86-64:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
-  script:
-  - ./.bootstrap &&
-    ./configure --disable-static --disable-documentation && make -j4 &&
-    NETTLE_TEST_SEED=0 make check -j4 &&
-    NETTLE_TEST_SEED=0 make check-fat
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-build/mini-gmp:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
-  script:
-  - ./.bootstrap &&
-    ./configure --disable-documentation --disable-fat --enable-mini-gmp && make -j4 &&
-    make check -j4
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-build/c89:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
-  script:
-  - ./.bootstrap &&
-    ./configure CC='gcc -std=c89' --disable-static --disable-assembler --disable-documentation && make -j4 &&
-    NETTLE_TEST_SEED=0 make check -j4
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-build/ndebug:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
-  script:
-  - ./.bootstrap &&
-    ./configure CPPFLAGS='-DNDEBUG' --disable-static --disable-assembler --disable-documentation && make -j4 &&
-    NETTLE_TEST_SEED=0 make check -j4
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-build/ubsan:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
-  script:
-  - ./.bootstrap && 
-    CXXFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" CFLAGS="-fsanitize=undefined -fno-sanitize-recover -g -O2" ./configure --disable-assembler 
-    --disable-documentation && make -j4 && NETTLE_TEST_SEED=0 make check -j4
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-build/asan:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
-  script:
-  - ./.bootstrap && 
-  - CXXFLAGS="-fsanitize=address -g -O2" CFLAGS="-fsanitize=address -g -O2" ./configure --disable-documentation --disable-assembler &&
-    make -j4 && NETTLE_TEST_SEED=0 make check -j4
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
+native/fat:
+  extends: .native-build
+  variables:
+    EXTRA_CHECK: check-fat
+
+native/no-fat:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-fat'
+
+native/no-static:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-static'
+
+native/no-shared:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-static'
+
+native/32-bit:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--enable-mini-gmp'
+    CC: 'gcc -m32'
+    CXX: '/bin/false'
+
+native/mini-gmp:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--enable-mini-gmp'
+
+native/c89:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-assembler'
+    CC: '$CI_PROJECT_DIR/misc/c89'
+
+native/extra-asserts:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--enable-extra-asserts'
+
+native/ndebug:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: 'CPPFLAGS=-DNDEBUG --disable-assembler'
+
+native/ubsan:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-assembler'
+    CFLAGS: '-fsanitize=undefined -fno-sanitize-recover -g -O2'
+    CXXFLAGS: '-fsanitize=undefined -fno-sanitize-recover -g -O2'
+
+native/asan:
+  extends: .native-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-assembler'
+    CFLAGS: '-fsanitize=address -g -O2'
+    CXXFLAGS: '-fsanitize=address -g -O2'
+
 build/static-analyzers:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
+  image: $CI_REGISTRY/$BUILDENV_CLANG_IMAGE
   script:
   - ./.bootstrap
   - scan-build ./configure --disable-documentation --disable-assembler
   - scan-build --status-bugs -o scan-build-lib make -j$(nproc)
   tags:
-  - shared
-  - linux
+  - saas-linux-small-amd64
   except:
   - tags
   artifacts:
@@ -93,8 +101,9 @@ build/static-analyzers:
     when: on_failure
     paths:
       - scan-build-lib/*
+
 build/gnutls:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
+  image: $CI_REGISTRY/$BUILDENV_NATIVE_IMAGE
   script:
   - ./.bootstrap &&
     ./configure --disable-documentation --prefix="$(pwd)/local" --libdir="$(pwd)/local/lib" &&
@@ -102,11 +111,11 @@ build/gnutls:
   - git clone --depth 1 --branch master https://gitlab.com/gnutls/gnutls.git gnutls-git
   - cd gnutls-git && git submodule update --init && ./bootstrap &&
     ./configure PKG_CONFIG_PATH="$(pwd)/../local/lib/pkgconfig" CPPFLAGS="-I$(pwd)/../local/include"
-      LDFLAGS="-L$(pwd)/../local/lib -Wl,-rpath,$(pwd)/../local/lib" --disable-cxx --disable-guile --disable-doc &&
+      LDFLAGS="-L$(pwd)/../local/lib -Wl,-rpath,$(pwd)/../local/lib"
+      --disable-cxx --disable-guile --without-p11-kit --disable-doc &&
     make -j$(nproc) && make -j $(nproc) check
   tags:
-  - shared
-  - linux
+  - saas-linux-small-amd64
   except:
   - tags
   artifacts:
@@ -118,66 +127,9 @@ build/gnutls:
       - gnutls-git/*.log
       - gnutls-git/tests/*/*.log
       - gnutls-git/tests/suite/*/*.log
-Debian.cross.x86:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$DEBIAN_X86_CROSS_BUILD
-  before_script:
-  - apt-get remove -y nettle-dev:i386
-  script:
-  - build=$(dpkg-architecture -qDEB_HOST_GNU_TYPE)
-  - host=i686-linux-gnu
-  - export CC_FOR_BUILD="gcc"
-  - export CC="$host-gcc"
-  - ./.bootstrap &&
-    CFLAGS="-O2 -g" ./configure --build=$build --host=$host --disable-documentation && make -j4 &&
-    NETTLE_TEST_SEED=0 make check -j4
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-.Debian.cross.template: &Debian_cross_template
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$DEBIAN_CROSS_BUILD
-  before_script:
-  - host="${CI_JOB_NAME#*.cross.}"
-  - dpkg --add-architecture ppc64el
-  - dpkg --add-architecture s390x
-  - apt-get update -q
-  # remove any previously installed nettle headers to avoid conflicts
-  - for arch in armhf arm64 ppc64el;do apt-get remove -y nettle-dev:$arch;done
-  - if [ "$host" == "powerpc64-linux-gnu" ];then apt-get install -y software-properties-common && add-apt-repository "deb http://deb.debian.org/debian bullseye-backports main" && apt-get update && apt-get install -y -t bullseye-backports binfmt-support qemu-user && apt-get install -y gcc-$host g++-$host && export QEMU_LD_PREFIX=/usr/$host EXTRA_CONFIGURE_FLAGS='--enable-mini-gmp';fi
-  - if [ "$host" == "powerpc64le-linux-gnu" ];then apt-get install -y software-properties-common && add-apt-repository "deb http://deb.debian.org/debian bullseye-backports main" && apt-get update && apt-get install -y -t bullseye-backports binfmt-support qemu-user && apt-get install -y gcc-$host g++-$host libgmp-dev:ppc64el && export QEMU_LD_PREFIX=/usr/$host;fi
-  - if [ "$host" == "s390x-linux-gnu" ];then apt-get update && apt-get install -y gcc-$host g++-$host libgmp-dev:s390x && export EXTRA_CONFIGURE_FLAGS='--disable-assembler';fi
-  script:
-  - build=$(dpkg-architecture -qDEB_HOST_GNU_TYPE)
-  - host="${CI_JOB_NAME#*.cross.}"
-  # not setting CC_FOR_BUILD paired with qemu-user/binfmt somehow causes
-  # config.guess to detect the target as the build platform and not activate
-  # cross-compile mode even though --build is given
-  - export CC_FOR_BUILD="gcc"
-  - export CC="$host-gcc"
-  - ./.bootstrap
-  - ./configure --disable-static --disable-documentation $EXTRA_CONFIGURE_FLAGS --build=$build --host=$host
-  - make -j$(nproc)
-  - NETTLE_TEST_SEED=0 make -j$(nproc) check
-  - NETTLE_TEST_SEED=0 make -j$(nproc) check-fat
-  tags:
-  - shared
-  - linux
-  except:
-  - tags
-Debian.cross.arm-linux-gnueabihf:
-  <<: *Debian_cross_template
-Debian.cross.aarch64-linux-gnu:
-  <<: *Debian_cross_template
-Debian.cross.powerpc64-linux-gnu:
-  <<: *Debian_cross_template
-Debian.cross.powerpc64le-linux-gnu:
-  <<: *Debian_cross_template
-Debian.cross.s390x-linux-gnu:
-  <<: *Debian_cross_template
 
 remote/s390x:
-  image: $CI_REGISTRY/$BUILD_IMAGES_PROJECT:$FEDORA_BUILD
+  image: $CI_REGISTRY/$BUILDENV_NATIVE_IMAGE
   before_script:
   # File created as world-readable by gitlab ci machinery.
   - chmod 0600 $SSH_PRIVATE_KEY
@@ -205,7 +157,74 @@ remote/s390x:
     - $SSH_PRIVATE_KEY != ""
     - $S390X_ACCOUNT != ""
   tags:
-  - shared
-  - linux
+  - saas-linux-small-amd64
   except:
   - tags
+
+.cross-build:
+  image: $CI_REGISTRY/$BUILDENV_CROSS_IMAGE
+  script:
+  - build=$(dpkg-architecture -qDEB_HOST_GNU_TYPE)
+  - host="${CI_JOB_NAME#cross/}"
+  # Not setting CC_FOR_BUILD paired with qemu-user/binfmt somehow causes
+  # config.guess to detect the target as the build platform and not activate
+  # cross-compile mode, even though --build is given.
+  - export CC_FOR_BUILD="gcc"
+  - export CC="$host-gcc"
+  # Disable C++, to not depend on cross g++.
+  - export CXX=/bin/false
+  - ./.bootstrap
+  - ./configure --disable-documentation $EXTRA_CONFIGURE_ARGS --build=$build --host=$host
+  - make -j$(nproc)
+  - make EMULATOR=${EMULATOR} -j$(nproc) check
+  - make EMULATOR=${EMULATOR} -j$(nproc) check-fat
+  tags:
+  - saas-linux-small-amd64
+  except:
+  - tags
+  variables:
+    NETTLE_TEST_SEED: '0'
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - "config.log"
+
+cross/arm-linux-gnueabihf:
+  extends: .cross-build
+  variables:
+    EMULATOR: qemu-arm
+
+cross/aarch64-linux-gnu:
+  extends: .cross-build
+  variables:
+    EMULATOR: qemu-aarch64
+
+# Setting QEMU_LD_PREFIX works around the error "qemu-ppc64: Could not
+# open '/lib64/ld64.so.1".
+cross/powerpc64-linux-gnu:
+  extends: .cross-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--enable-mini-gmp'
+    QEMU_LD_PREFIX: /usr/powerpc64-linux-gnu
+    EMULATOR: qemu-ppc64
+
+cross/powerpc64le-linux-gnu:
+  extends: .cross-build
+  variables:
+    EMULATOR: qemu-ppc64le
+
+# Disable assembly files, because current qemu doesn't support all
+# needed instructions.
+cross/s390x-linux-gnu:
+  extends: .cross-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--disable-assembler'
+    EMULATOR: qemu-s390x
+
+cross/sparc64-linux-gnu:
+  extends: .cross-build
+  variables:
+    EXTRA_CONFIGURE_ARGS: '--enable-mini-gmp'
+    QEMU_LD_PREFIX: /usr/sparc64-linux-gnu
+    EMULATOR: qemu-sparc64

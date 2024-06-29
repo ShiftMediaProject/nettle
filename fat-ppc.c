@@ -163,6 +163,10 @@ DECLARE_FAT_FUNC(_nettle_aes_decrypt, aes_crypt_internal_func)
 DECLARE_FAT_FUNC_VAR(aes_decrypt, aes_crypt_internal_func, c)
 DECLARE_FAT_FUNC_VAR(aes_decrypt, aes_crypt_internal_func, ppc64)
 
+DECLARE_FAT_FUNC(_nettle_aes_invert, aes_invert_internal_func)
+DECLARE_FAT_FUNC_VAR(aes_invert, aes_invert_internal_func, c)
+DECLARE_FAT_FUNC_VAR(aes_invert, aes_invert_internal_func, ppc64)
+
 DECLARE_FAT_FUNC(_nettle_ghash_set_key, ghash_set_key_func)
 DECLARE_FAT_FUNC_VAR(ghash_set_key, ghash_set_key_func, c)
 DECLARE_FAT_FUNC_VAR(ghash_set_key, ghash_set_key_func, ppc64)
@@ -170,6 +174,14 @@ DECLARE_FAT_FUNC_VAR(ghash_set_key, ghash_set_key_func, ppc64)
 DECLARE_FAT_FUNC(_nettle_ghash_update, ghash_update_func)
 DECLARE_FAT_FUNC_VAR(ghash_update, ghash_update_func, c)
 DECLARE_FAT_FUNC_VAR(ghash_update, ghash_update_func, ppc64)
+
+DECLARE_FAT_FUNC(_nettle_gcm_aes_encrypt, gcm_aes_crypt_func)
+DECLARE_FAT_FUNC_VAR(gcm_aes_encrypt, gcm_aes_crypt_func, c)
+DECLARE_FAT_FUNC_VAR(gcm_aes_encrypt, gcm_aes_crypt_func, ppc64)
+
+DECLARE_FAT_FUNC(_nettle_gcm_aes_decrypt, gcm_aes_crypt_func)
+DECLARE_FAT_FUNC_VAR(gcm_aes_decrypt, gcm_aes_crypt_func, c)
+DECLARE_FAT_FUNC_VAR(gcm_aes_decrypt, gcm_aes_crypt_func, ppc64)
 
 DECLARE_FAT_FUNC(_nettle_chacha_core, chacha_core_func)
 DECLARE_FAT_FUNC_VAR(chacha_core, chacha_core_func, c);
@@ -199,6 +211,17 @@ DECLARE_FAT_FUNC(_nettle_poly1305_blocks, poly1305_blocks_func)
 DECLARE_FAT_FUNC_VAR(poly1305_blocks, poly1305_blocks_func, c)
 DECLARE_FAT_FUNC_VAR(poly1305_blocks, poly1305_blocks_func, ppc64)
 
+DECLARE_FAT_FUNC(_nettle_sha256_compress_n, sha256_compress_n_func)
+DECLARE_FAT_FUNC_VAR(sha256_compress_n, sha256_compress_n_func, c)
+DECLARE_FAT_FUNC_VAR(sha256_compress_n, sha256_compress_n_func, ppc64)
+
+/* Nop implementation for _gcm_aes_encrypt and _gcm_aes_decrypt. */
+static size_t
+gcm_aes_crypt_c (struct gcm_key *key UNUSED, unsigned rounds UNUSED,
+		 size_t size UNUSED, uint8_t *dst UNUSED, const uint8_t *src UNUSED)
+{
+  return 0;
+}
 
 static void CONSTRUCTOR
 fat_init (void)
@@ -219,6 +242,7 @@ fat_init (void)
 	fprintf (stderr, "libnettle: enabling arch 2.07 code.\n");
       _nettle_aes_encrypt_vec = _nettle_aes_encrypt_ppc64;
       _nettle_aes_decrypt_vec = _nettle_aes_decrypt_ppc64;
+      _nettle_aes_invert_vec = _nettle_aes_invert_ppc64;
 
       /* Make sure _nettle_ghash_set_key_vec function is compatible
          with _nettle_ghash_update_vec function e.g. _nettle_ghash_key_c()
@@ -226,13 +250,20 @@ fat_init (void)
          _nettle_ghash_update_arm64() */
       _nettle_ghash_set_key_vec = _nettle_ghash_set_key_ppc64;
       _nettle_ghash_update_vec = _nettle_ghash_update_ppc64;
+      _nettle_gcm_aes_encrypt_vec = _nettle_gcm_aes_encrypt_ppc64;
+      _nettle_gcm_aes_decrypt_vec = _nettle_gcm_aes_decrypt_ppc64;
+      _nettle_sha256_compress_n_vec = _nettle_sha256_compress_n_ppc64;
     }
   else
     {
       _nettle_aes_encrypt_vec = _nettle_aes_encrypt_c;
       _nettle_aes_decrypt_vec = _nettle_aes_decrypt_c;
+      _nettle_aes_invert_vec = _nettle_aes_invert_c;
       _nettle_ghash_set_key_vec = _nettle_ghash_set_key_c;
       _nettle_ghash_update_vec = _nettle_ghash_update_c;
+      _nettle_gcm_aes_encrypt_vec = gcm_aes_crypt_c;
+      _nettle_gcm_aes_decrypt_vec = gcm_aes_crypt_c;
+      _nettle_sha256_compress_n_vec = _nettle_sha256_compress_n_c;
     }
   if (features.have_altivec)
     {
@@ -281,6 +312,10 @@ DEFINE_FAT_FUNC(_nettle_aes_decrypt, void,
  const uint8_t *src),
  (rounds, keys, T, length, dst, src))
 
+DEFINE_FAT_FUNC(_nettle_aes_invert, void,
+ (unsigned rounds, uint32_t *dst, const uint32_t *src),
+ (rounds, dst, src))
+
 DEFINE_FAT_FUNC(_nettle_ghash_set_key, void,
 		(struct gcm_key *ctx, const union nettle_block16 *key),
 		(ctx, key))
@@ -288,6 +323,16 @@ DEFINE_FAT_FUNC(_nettle_ghash_update, const uint8_t *,
 		(const struct gcm_key *ctx, union nettle_block16 *state,
 		 size_t blocks, const uint8_t *data),
 		(ctx, state, blocks, data))
+
+DEFINE_FAT_FUNC(_nettle_gcm_aes_encrypt, size_t,
+		(struct gcm_key *key, unsigned rounds,
+                 size_t len, uint8_t *dst, const uint8_t *src),
+		(key, rounds, len, dst, src))
+
+DEFINE_FAT_FUNC(_nettle_gcm_aes_decrypt, size_t,
+		(struct gcm_key *key, unsigned rounds,
+                 size_t len, uint8_t *dst, const uint8_t *src),
+		(key, rounds, len, dst, src))
 
 DEFINE_FAT_FUNC(_nettle_chacha_core, void,
 		(uint32_t *dst, const uint32_t *src, unsigned rounds),
@@ -328,3 +373,8 @@ DEFINE_FAT_FUNC(_nettle_poly1305_blocks, const uint8_t *,
      size_t blocks,
 		 const uint8_t *m),
 		(ctx, blocks, m))
+
+DEFINE_FAT_FUNC(_nettle_sha256_compress_n, const uint8_t *,
+		(uint32_t *state, const uint32_t *k,
+		 size_t blocks, const uint8_t *input),
+		(state, k, blocks, input))

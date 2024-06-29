@@ -73,11 +73,20 @@ tstring_print_hex(const struct tstring *s);
 void
 print_hex(size_t length, const uint8_t *data);
 
+/* If side-channel tests are requested, attach valgrind annotations on
+   given memory area. */
+void
+mark_bytes_undefined (size_t size, const void *p);
+
+void
+mark_bytes_defined (size_t size, const void *p);
+
 /* The main program */
 void
 test_main(void);
 
 extern int verbose;
+extern int test_side_channel;
 
 typedef void
 nettle_encrypt_message_func(void *ctx,
@@ -216,6 +225,10 @@ write_mpn (FILE *f, int base, const mp_limb_t *xp, mp_size_t n);
 
 void
 test_rsa_set_key_1(struct rsa_public_key *pub,
+		   struct rsa_private_key *key);
+
+void
+test_rsa_set_key_2(struct rsa_public_key *pub,
 		   struct rsa_private_key *key);
 
 void
