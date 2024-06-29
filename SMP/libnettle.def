@@ -184,7 +184,9 @@ EXPORTS
     nettle_des_decrypt
     nettle_des_encrypt
     nettle_des_fix_parity
-    nettle_des_set_key
+    nettle_des_set_key    
+    nettle_drbg_ctr_aes256_init
+    nettle_drbg_ctr_aes256_random
     nettle_eax_aes128
     nettle_eax_aes128_decrypt
     nettle_eax_aes128_digest
@@ -400,6 +402,10 @@ EXPORTS
     nettle_sha384
     nettle_sha384_digest
     nettle_sha384_init
+    nettle_sha3_128_init
+    nettle_sha3_128_update
+    nettle_sha3_128_shake
+    nettle_sha3_128_shake_output
     nettle_sha3_224
     nettle_sha3_224_digest
     nettle_sha3_224_init
@@ -408,6 +414,7 @@ EXPORTS
     nettle_sha3_256_digest
     nettle_sha3_256_init
     nettle_sha3_256_shake
+    nettle_sha3_256_shake_output
     nettle_sha3_256_update
     nettle_sha3_384
     nettle_sha3_384_digest

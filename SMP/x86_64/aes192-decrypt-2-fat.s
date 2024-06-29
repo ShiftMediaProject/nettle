@@ -26,19 +26,19 @@ _nettle_aes192_decrypt_aesni:
 	shr	$4, %rsi
 	test	%rsi, %rsi
 	jz	.Lend
-	movups	(%rdi), %xmm0
-	movups	16(%rdi), %xmm1
-	movups	32(%rdi), %xmm2
-	movups	48(%rdi), %xmm3
-	movups	64(%rdi), %xmm4
-	movups	80(%rdi), %xmm5
+	movups	192(%rdi), %xmm0
+	movups	176(%rdi), %xmm1
+	movups	160(%rdi), %xmm2
+	movups	144(%rdi), %xmm3
+	movups	128(%rdi), %xmm4
+	movups	112(%rdi), %xmm5
 	movups	96(%rdi), %xmm6
-	movups	112(%rdi), %xmm7
-	movups	128(%rdi), %xmm8
-	movups	144(%rdi), %xmm9
-	movups	160(%rdi), %xmm10
-	movups	176(%rdi), %xmm11
-	movups	192(%rdi), %xmm12
+	movups	80(%rdi), %xmm7
+	movups	64(%rdi), %xmm8
+	movups	48(%rdi), %xmm9
+	movups	32(%rdi), %xmm10
+	movups	16(%rdi), %xmm11
+	movups	(%rdi), %xmm12
 	shr	%rsi
 	jnc	.Lblock_loop
 	movups	(%rcx), %xmm13

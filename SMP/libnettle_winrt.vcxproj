@@ -45,6 +45,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -165,6 +166,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -286,6 +288,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -407,6 +410,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -527,6 +531,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -647,6 +652,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -768,6 +774,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -889,6 +896,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1010,6 +1018,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle
@@ -1131,6 +1140,7 @@ copy ..\curve25519.h "$(OutDir)"\include\nettle
 copy ..\curve448.h "$(OutDir)"\include\nettle
 copy ..\ctr.h "$(OutDir)"\include\nettle
 copy ..\des.h "$(OutDir)"\include\nettle
+copy ..\drbg-ctr.h "$(OutDir)"\include\nettle
 copy ..\dsa.h "$(OutDir)"\include\nettle
 copy ..\dsa-compat.h "$(OutDir)"\include\nettle
 copy ..\eax.h "$(OutDir)"\include\nettle

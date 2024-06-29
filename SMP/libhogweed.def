@@ -140,6 +140,12 @@ EXPORTS
     nettle_rsa_md5_sign_tr
     nettle_rsa_md5_verify
     nettle_rsa_md5_verify_digest
+    nettle_rsa_oaep_sha256_encrypt
+    nettle_rsa_oaep_sha256_decrypt
+    nettle_rsa_oaep_sha384_encrypt
+    nettle_rsa_oaep_sha384_decrypt
+    nettle_rsa_oaep_sha512_encrypt
+    nettle_rsa_oaep_sha512_decrypt
     nettle_rsa_pkcs1_sign
     nettle_rsa_pkcs1_sign_tr
     nettle_rsa_pkcs1_verify

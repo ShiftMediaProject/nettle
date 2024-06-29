@@ -27,20 +27,20 @@ _nettle_aes256_decrypt_aesni:
 	shr	$4, %rsi
 	test	%rsi, %rsi
 	jz	.Lend
-	movups	(%rdi), %xmm0
-	movups	16(%rdi), %xmm1
-	movups	32(%rdi), %xmm2
-	movups	48(%rdi), %xmm3
-	movups	64(%rdi), %xmm4
-	movups	80(%rdi), %xmm5
-	movups	96(%rdi), %xmm6
-	movups	128(%rdi), %xmm7
-	movups	144(%rdi), %xmm8
-	movups	160(%rdi), %xmm9
-	movups	176(%rdi), %xmm10
-	movups	192(%rdi), %xmm11
-	movups	208(%rdi), %xmm12
-	movups	224(%rdi), %xmm13
+	movups	224(%rdi), %xmm0
+	movups	208(%rdi), %xmm1
+	movups	192(%rdi), %xmm2
+	movups	176(%rdi), %xmm3
+	movups	160(%rdi), %xmm4
+	movups	144(%rdi), %xmm5
+	movups	128(%rdi), %xmm6
+	movups	96(%rdi), %xmm7
+	movups	80(%rdi), %xmm8
+	movups	64(%rdi), %xmm9
+	movups	48(%rdi), %xmm10
+	movups	32(%rdi), %xmm11
+	movups	16(%rdi), %xmm12
+	movups	(%rdi), %xmm13
 	shr	%rsi
 	jnc	.Lblock_loop
 	movups	(%rcx), %xmm14
@@ -53,7 +53,7 @@ _nettle_aes256_decrypt_aesni:
 	aesdec	%xmm5, %xmm14
 	aesdec	%xmm6, %xmm14
 	aesdec	%xmm0, %xmm14
-	movups	(%rdi), %xmm0
+	movups	224(%rdi), %xmm0
 	aesdec	%xmm7, %xmm14
 	aesdec	%xmm8, %xmm14
 	aesdec	%xmm9, %xmm14
@@ -86,7 +86,7 @@ _nettle_aes256_decrypt_aesni:
 	aesdec	%xmm6, %xmm15
 	aesdec	%xmm0, %xmm14
 	aesdec	%xmm0, %xmm15
-	movups	(%rdi), %xmm0
+	movups	224(%rdi), %xmm0
 	aesdec	%xmm7, %xmm14
 	aesdec	%xmm7, %xmm15
 	aesdec	%xmm8, %xmm14

@@ -40,7 +40,7 @@ _nettle_aes_decrypt:
 	xorl	12(%r15),%edx
 	add	$16, %r9
 	movl	(%rsp), %edi
-	add	$16, %r15
+	sub	$16, %r15
 	.align 16
 .Lround_loop:
 	movzbq	%al, %rbp
@@ -94,7 +94,7 @@ _nettle_aes_decrypt:
 	xorl	4(%r15),%ebx
 	xorl	8(%r15),%ecx
 	xorl	12(%r15),%edx
-	add	$16, %r15
+	sub	$16, %r15
 	decl	%edi
 	jnz	.Lround_loop
 	movzbq	%al,%rbp

@@ -327,6 +327,18 @@
     <ClInclude Include="..\balloon.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\drbg-ctr.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gcm-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\non-nettle.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\oaep.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\umac96.c">
@@ -1028,6 +1040,15 @@
     <ClCompile Include="..\poly1305-update.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\shake128.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\drbg-ctr-aes256.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sha3-shake.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
@@ -1036,9 +1057,6 @@
   </ItemGroup>
   <ItemGroup>
     <YASM Include="x86\camellia-crypt-internal.s">
-      <Filter>Source Files\x86</Filter>
-    </YASM>
-    <YASM Include="x86\md5-compress.s">
       <Filter>Source Files\x86</Filter>
     </YASM>
     <YASM Include="x86\sha1-compress.s">
@@ -1051,9 +1069,6 @@
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\cpuid-fat.s">
-      <Filter>Source Files\x86_64</Filter>
-    </YASM>
-    <YASM Include="x86_64\md5-compress.s">
       <Filter>Source Files\x86_64</Filter>
     </YASM>
     <YASM Include="x86_64\memxor-2-fat.s">

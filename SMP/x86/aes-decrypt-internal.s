@@ -16,7 +16,7 @@ __nettle_aes_decrypt:
 	testl	%ebp,%ebp
 	jz	.Lend
 	shrl	$4, 52(%esp)
-	subl	$1, 40(%esp)
+	decl	40(%esp)
 .Lblock_loop:
 	movl	44(%esp), %esi
 	movl	60(%esp), %edi
@@ -32,7 +32,7 @@ __nettle_aes_decrypt:
 	movl	48(%esp), %ebp
 	movl	40(%esp), %edi
 	movl	%edi, 12(%esp)
-	addl	$16,%esi
+	subl	$16,%esi
 	movl	%esi,16(%esp)
 	.align 16
 .Lround_loop:
@@ -91,7 +91,7 @@ __nettle_aes_decrypt:
 	xorl	4(%esi),%ebx
 	xorl	8(%esi),%ecx
 	xorl	12(%esi),%edx
-	addl	$16,16(%esp)
+	subl	$16,16(%esp)
 	decl	12(%esp)
 	jnz	.Lround_loop
 	movzbl	%al,%edi

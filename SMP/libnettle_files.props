@@ -31,6 +31,7 @@
     <ClInclude Include="..\des.h" />
     <ClInclude Include="..\desCode.h" />
     <ClInclude Include="..\desinfo.h" />
+    <ClInclude Include="..\drbg-ctr.h" />
     <ClInclude Include="..\dsa-compat.h" />
     <ClInclude Include="..\dsa-internal.h" />
     <ClInclude Include="..\dsa.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="..\eddsa.h" />
     <ClInclude Include="..\fat-setup.h" />
     <ClInclude Include="..\gcm.h" />
+    <ClInclude Include="..\gcm-internal.h" />
     <ClInclude Include="..\getopt.h" />
     <ClInclude Include="..\getopt_int.h" />
     <ClInclude Include="..\gmp-glue.h" />
@@ -67,6 +69,8 @@
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\nettle-write.h" />
     <ClInclude Include="..\nist-keywrap.h" />
+    <ClInclude Include="..\non-nettle.h" />
+    <ClInclude Include="..\oaep.h" />
     <ClInclude Include="..\ocb.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
@@ -194,6 +198,7 @@
     <ClCompile Include="..\ctr16.c" />
     <ClCompile Include="..\des.c" />
     <ClCompile Include="..\des3.c" />
+    <ClCompile Include="..\drbg-ctr-aes256.c" />
     <ClCompile Include="..\eax-aes128-meta.c" />
     <ClCompile Include="..\eax-aes128.c" />
     <ClCompile Include="..\eax.c" />
@@ -315,6 +320,7 @@
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\sha3.c" />
+    <ClCompile Include="..\sha3-shake.c" />
     <ClCompile Include="..\sha384-meta.c" />
     <ClCompile Include="..\sha512-224-meta.c" />
     <ClCompile Include="..\sha512-256-meta.c" />
@@ -323,6 +329,7 @@
     </ClCompile>
     <ClCompile Include="..\sha512-meta.c" />
     <ClCompile Include="..\sha512.c" />
+    <ClCompile Include="..\shake128.c" />
     <ClCompile Include="..\shake256.c" />
     <ClCompile Include="..\siv-cmac-aes128.c" />
     <ClCompile Include="..\siv-cmac-aes256.c" />
@@ -378,9 +385,6 @@
     <YASM Include="x86\camellia-crypt-internal.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </YASM>
-    <YASM Include="x86\md5-compress.s">
-      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
-    </YASM>
     <YASM Include="x86\sha1-compress.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </YASM>
@@ -433,9 +437,6 @@
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86_64\ghash-update-fat.s">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
-    </YASM>
-    <YASM Include="x86_64\md5-compress.s">
       <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
     </YASM>
     <YASM Include="x86_64\memxor-2-fat.s">

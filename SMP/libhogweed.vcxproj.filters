@@ -321,11 +321,23 @@
     <ClInclude Include="..\sm4.h">
       <Filter>Header Files\nettle</Filter>
     </ClInclude>
+    <ClInclude Include="..\streebog.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\drbg-ctr.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gcm-internal.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\non-nettle.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\oaep.h">
+      <Filter>Header Files\nettle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\ecc-hash.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ecc-j-to-a.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -756,6 +768,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ecc-nonsec-add-jjj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-oaep-encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\oaep.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rsa-oaep-decrypt.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

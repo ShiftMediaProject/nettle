@@ -31,6 +31,7 @@
     <ClInclude Include="..\des.h" />
     <ClInclude Include="..\desCode.h" />
     <ClInclude Include="..\desinfo.h" />
+    <ClInclude Include="..\drbg-ctr.h" />
     <ClInclude Include="..\dsa-compat.h" />
     <ClInclude Include="..\dsa-internal.h" />
     <ClInclude Include="..\dsa.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="..\eddsa.h" />
     <ClInclude Include="..\fat-setup.h" />
     <ClInclude Include="..\gcm.h" />
+    <ClInclude Include="..\gcm-internal.h" />
     <ClInclude Include="..\getopt.h" />
     <ClInclude Include="..\getopt_int.h" />
     <ClInclude Include="..\gmp-glue.h" />
@@ -67,6 +69,8 @@
     <ClInclude Include="..\nettle-types.h" />
     <ClInclude Include="..\nettle-write.h" />
     <ClInclude Include="..\nist-keywrap.h" />
+    <ClInclude Include="..\non-nettle.h" />
+    <ClInclude Include="..\oaep.h" />
     <ClInclude Include="..\ocb.h" />
     <ClInclude Include="..\pbkdf2.h" />
     <ClInclude Include="..\pgp.h" />
@@ -96,6 +100,7 @@
     <ClInclude Include="..\siv-gcm.h" />
     <ClInclude Include="..\sm3.h" />
     <ClInclude Include="..\sm4.h" />
+    <ClInclude Include="..\streebog.h" />
     <ClInclude Include="..\twofish.h" />
     <ClInclude Include="..\umac-internal.h" />
     <ClInclude Include="..\umac.h" />
@@ -149,7 +154,6 @@
     <ClCompile Include="..\ecc-gost-gc512a.c" />
     <ClCompile Include="..\ecc-gostdsa-sign.c" />
     <ClCompile Include="..\ecc-gostdsa-verify.c" />
-    <ClCompile Include="..\ecc-hash.c" />
     <ClCompile Include="..\ecc-j-to-a.c" />
     <ClCompile Include="..\ecc-mod-arith.c" />
     <ClCompile Include="..\ecc-mod-inv.c" />
@@ -207,6 +211,7 @@
     <ClCompile Include="..\pkcs1.c" />
     <ClCompile Include="..\pss-mgf1.c" />
     <ClCompile Include="..\pss.c" />
+    <ClCompile Include="..\oaep.c" />
     <ClCompile Include="..\rsa-blind.c" />
     <ClCompile Include="..\rsa-decrypt-tr.c" />
     <ClCompile Include="..\rsa-decrypt.c" />
@@ -222,6 +227,8 @@
     <ClCompile Include="..\rsa-pss-sha256-verify.c" />
     <ClCompile Include="..\rsa-pss-sha512-sign-tr.c" />
     <ClCompile Include="..\rsa-pss-sha512-verify.c" />
+    <ClCompile Include="..\rsa-oaep-encrypt.c" />
+    <ClCompile Include="..\rsa-oaep-decrypt.c" />
     <ClCompile Include="..\rsa-sec-compute-root.c" />
     <ClCompile Include="..\rsa-sec-decrypt.c" />
     <ClCompile Include="..\rsa-sha1-sign-tr.c" />

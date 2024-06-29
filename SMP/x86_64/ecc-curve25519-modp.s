@@ -1,4 +1,4 @@
-	.file "ecc-25519-modp.asm"
+	.file "ecc-curve25519-modp.asm"
 .globl _nettle_ecc_curve25519_modp
 .def _nettle_ecc_curve25519_modp
 .scl 2
