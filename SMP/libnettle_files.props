@@ -226,6 +226,7 @@
     <ClCompile Include="..\gosthash94.c" />
     <ClCompile Include="..\hkdf.c" />
     <ClCompile Include="..\hmac-gosthash94.c" />
+    <ClCompile Include="..\hmac-gosthash94-meta.c" />
     <ClCompile Include="..\hmac-md5-meta.c" />
     <ClCompile Include="..\hmac-md5.c" />
     <ClCompile Include="..\hmac-ripemd160-meta.c" />

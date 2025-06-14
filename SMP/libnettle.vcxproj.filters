@@ -1049,6 +1049,9 @@
     <ClCompile Include="..\sha3-shake.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\hmac-gosthash94-meta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libnettle.def">
