@@ -141,9 +141,9 @@ mark_bytes_defined (size_t size, const void *p)
 }
 #else
 void
-mark_bytes_undefined (size_t size, const void *p) {}
+mark_bytes_undefined (size_t size UNUSED, const void *p UNUSED) {}
 void
-mark_bytes_defined (size_t size, const void *p) {}
+mark_bytes_defined (size_t size UNUSED, const void *p UNUSED) {}
 #endif
 
 int
@@ -1103,9 +1103,7 @@ test_hash(const struct nettle_hash *hash,
   uint8_t *input;
   unsigned offset;
 
-  /* Here, hash->digest_size zero means arbitrary size. */
-  if (hash->digest_size)
-    ASSERT (digest->length == hash->digest_size);
+  ASSERT (digest->length == hash->digest_size);
 
   hash->init(ctx);
   for (offset = 0; offset <= msg->length && offset < 40; offset++)
@@ -1158,6 +1156,91 @@ test_hash(const struct nettle_hash *hash,
 }
 
 void
+test_xof (const struct nettle_xof *xof,
+	  const struct tstring *msg,
+	  const struct tstring *digest)
+{
+  void *ctx = xalloc (xof->context_size);
+  uint8_t *buffer = xalloc (digest->length);
+  uint8_t *input;
+  unsigned offset, size;
+
+  xof->init (ctx);
+  for (offset = 0; offset <= msg->length && offset < 40; offset++)
+    {
+      xof->update (ctx, offset, msg->data);
+      xof->update (ctx, 0, NULL);
+      xof->update (ctx, msg->length - offset, msg->data + offset);
+
+      xof->digest (ctx, digest->length, buffer);
+
+      if (MEMEQ (digest->length, digest->data, buffer) == 0)
+	{
+	  fprintf (stdout, "Offset %u\nGot:\n", offset);
+	  print_hex (digest->length, buffer);
+	  fprintf (stdout, "\nExpected:\n");
+	  print_hex (digest->length, digest->data);
+	  abort ();
+	}
+    }
+
+  input = xalloc (msg->length + 16);
+  for (offset = 0; offset < 16; offset++)
+    {
+      memset (input, 0, msg->length + 16);
+      memcpy (input + offset, msg->data, msg->length);
+      xof->update (ctx, msg->length, input + offset);
+      xof->digest (ctx, digest->length, buffer);
+      if (MEMEQ(digest->length, digest->data, buffer) == 0)
+	{
+	  fprintf(stdout, "xof input address: %p\nGot:\n", input + offset);
+	  print_hex(digest->length, buffer);
+	  fprintf(stdout, "\nExpected:\n");
+	  print_hex(digest->length, digest->data);
+	  abort();
+	}
+    }
+
+  /* Test producing output incrementally. */
+  for (size = 1; size <= xof->block_size + 2; )
+    {
+      xof->init (ctx);
+      xof->update (ctx, msg->length, msg->data);
+      memset (buffer, 0, digest->length);
+
+      for (offset = 0; offset + size < digest->length; offset += size)
+	{
+	  xof->output (ctx, size, buffer + offset);
+
+	  ASSERT (MEMEQ (offset + size, digest->data, buffer));
+	  ASSERT (buffer[offset + size] == 0);
+	}
+      xof->output (ctx, digest->length - offset, buffer + offset);
+
+      if (MEMEQ(digest->length, digest->data, buffer) == 0)
+	{
+	  fprintf(stdout, "xof output increment: %u\nGot:\n", size);
+	  print_hex(digest->length, buffer);
+	  fprintf(stdout, "\nExpected:\n");
+	  print_hex(digest->length, digest->data);
+	  abort();
+	}
+      /* Try sizes 1, 2, 4, 7, 11, ..., and sizes around the block size. */
+      if (size < xof->block_size - 2)
+	{
+	  size += 1 + size/2;
+	  if (size > xof->block_size - 2)
+	    size = xof->block_size - 2;
+	}
+      else
+	size++;
+    }
+  free(ctx);
+  free(buffer);
+  free(input);
+}
+
+void
 test_hash_large(const struct nettle_hash *hash,
 		size_t count, size_t length,
 		uint8_t c,
@@ -1194,6 +1277,7 @@ test_hash_large(const struct nettle_hash *hash,
 
 void
 test_mac(const struct nettle_mac *mac,
+	 nettle_hash_update_func *set_key,
 	 const struct tstring *key,
 	 const struct tstring *msg,
 	 const struct tstring *digest)
@@ -1203,8 +1287,13 @@ test_mac(const struct nettle_mac *mac,
   unsigned i;
 
   ASSERT (digest->length <= mac->digest_size);
-  ASSERT (key->length == mac->key_size);
-  mac->set_key (ctx, key->data);
+  if (set_key)
+    set_key (ctx, key->length, key->data);
+  else
+    {
+      ASSERT (key->length == mac->key_size);
+      mac->set_key (ctx, key->data);
+    }
   mac->update (ctx, msg->length, msg->data);
   mac->digest (ctx, digest->length, hash);
 
@@ -1236,13 +1325,12 @@ test_mac(const struct nettle_mac *mac,
     }
 
   /* attempt byte-by-byte hashing */
-  mac->set_key (ctx, key->data);
   for (i=0;i<msg->length;i++)
     mac->update (ctx, 1, msg->data+i);
   mac->digest (ctx, digest->length, hash);
   if (!MEMEQ (digest->length, digest->data, hash))
     {
-      fprintf (stderr, "cmac_hash failed on byte-by-byte, msg: ");
+      fprintf (stderr, "test_mac failed on byte-by-byte, msg: ");
       print_hex (msg->length, msg->data);
       fprintf(stderr, "Output:");
       print_hex (16, hash);

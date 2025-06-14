@@ -1,4 +1,69 @@
+2024-12-30  Niels Möller  <nisse@lysator.liu.se>
+
+	* Released Nettle-3.10.1.
+
+2024-12-28  Niels Möller  <nisse@lysator.liu.se>
+
+	* testsuite/testutils.c (mark_bytes_undefined)
+	(mark_bytes_defined) [!HAVE_VALGRIND_MEMCHECK_H]: Add UNUSED
+	attribute on dummy version of these functions.
+
+2024-12-14  Niels Möller  <nisse@lysator.liu.se>
+
+	* configure.ac: Bump package version, to 3.10.1.
+	(LIBNETTLE_MINOR): Bump minor number, to 8.10.
+	(LIBHOGWEED_MINOR): Bump minor number, to 6.10.
+
+2024-12-13  Niels Möller  <nisse@lysator.liu.se>
+
+	* aclocal.m4 (NETTLE_PROG_VALGRIND): Check if executable appears
+	to include lsan, asan or msan symbols, and if so, don't attempt to
+	run valgrind.
+
+2024-10-16  Niels Möller  <nisse@lysator.liu.se>
+
+	* run-tests: Cleanup, guided by shellcheck warnings. Use $()
+	rather than `` and $(()) rather than expr.
+
+2024-09-08  Niels Möller  <nisse@lysator.liu.se>
+
+	From Brad Smith: Support elf_aux_info (OpenBSD and FreeBSD).
+	* configure.ac: Check for elf_aux_info.
+	* fat-arm64.c (get_arm64_features): Use elf_aux_info if available.
+	* fat-ppc.c (get_ppc_features): Likewise.
+
+2024-06-23  Niels Möller  <nisse@lysator.liu.se>
+
+	* testsuite/testutils.h (struct nettle_xof): New struct type.
+	* testsuite/testutils.c (test_hash): Delete support for tests with
+	arbitrary digest size, reverting part of 2019-12-25 change.
+	(test_xof): New function, test both digest and output functions.
+	* testsuite/shake128-test.c (test_main): Change from using
+	test_hash to test_xof.
+	* testsuite/shake256-test.c (test_incremental): Deleted function,
+	superseded by test_xof.
+	(test_main): Change from using test_hash to test_xof, delete use
+	of test_incremental.
+
 2024-06-16  Niels Möller  <nisse@lysator.liu.se>
+
+	* testsuite/testutils.c (test_mac): Add set_key function argument,
+	to support tests with key size != mac->key_size.
+	* testsuite/cmac-test.c: Update test_mac usage.
+	* testsuite/hmac-test.c (HMAC_TEST): Deleted macro, replace with
+	test_mac, passing set_key function when needed.
+	(test_main): Add more test vectors from RFC 4868, previously
+	draft-kelly-ipsec-ciph-sha2.
+
+	* hmac-gosthash94-meta.c: New file.
+	* nettle-meta.h (nettle_hmac_gosthash94)
+	(nettle_hmac_gosthash94cp): Declare.
+	* nettle-meta-macs.c (_nettle_macs): Add nettle_hmac_gosthash94
+	and nettle_hmac_gosthash94cp.
+	* Makefile.in (nettle_SOURCES): Add hmac-gosthash94-meta.c.
+	* testsuite/meta-mac-test.c: Update test.
+
+	* Released Nettle-3.10.
 
 	* examples/rsa-encrypt-test: Consistently add $EXEEXT to
 	executable names.

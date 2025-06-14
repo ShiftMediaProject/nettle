@@ -48,14 +48,14 @@
 #  include <asm/cputable.h>
 #  include <sys/auxv.h>
 # endif
-#elif defined(__FreeBSD__)
+#elif defined(__FreeBSD__) || defined(__OpenBSD__)
 # include <machine/cpu.h>
 # ifdef PPC_FEATURE2_HAS_VEC_CRYPTO
 # define PPC_FEATURE2_VEC_CRYPTO PPC_FEATURE2_HAS_VEC_CRYPTO
 # endif
-# if __FreeBSD__ >= 12
+# ifdef HAVE_ELF_AUX_INFO
 #  include <sys/auxv.h>
-# else
+# elif defined(__FreeBSD__)
 #  include <sys/sysctl.h>
 # endif
 #endif
@@ -129,17 +129,15 @@ get_ppc_features (struct ppc_features *features)
 # if USE_GETAUXVAL
       hwcap = getauxval(AT_HWCAP);
       hwcap2 = getauxval(AT_HWCAP2);
-# elif defined(__FreeBSD__)
-#  if __FreeBSD__ >= 12
+# elif defined(HAVE_ELF_AUX_INFO)
       elf_aux_info(AT_HWCAP, &hwcap, sizeof(hwcap));
       elf_aux_info(AT_HWCAP2, &hwcap2, sizeof(hwcap2));
-#  else
+# elif defined(__FreeBSD__)
       size_t len;
       len = sizeof(hwcap);
       sysctlbyname("hw.cpu_features", &hwcap, &len, NULL, 0);
       len = sizeof(hwcap2);
       sysctlbyname("hw.cpu_features2", &hwcap2, &len, NULL, 0);
-#  endif
 # endif
       features->have_crypto_ext
 	= ((hwcap2 & PPC_FEATURE2_VEC_CRYPTO) == PPC_FEATURE2_VEC_CRYPTO);

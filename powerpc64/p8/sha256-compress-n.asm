@@ -44,10 +44,7 @@ define(`T1', `r8')
 define(`TK', `r9')
 define(`COUNT', `r10')
 define(`TC0', `0')	C Index instructions allow literal 0 instead of a GPR
-define(`TC4', `r11')
-define(`TC8', `r12')
-define(`TC12', `r14')
-define(`TC16', `r15')
+define(`TC16', `r11')
 
 C State registers
 define(`VSA', `v0')
@@ -177,34 +174,34 @@ define(`EXTENDROUNDS', `
 ')
 
 define(`LOAD', `
-	IF_BE(`lxvw4x	VSR(IV($1)), m4_unquote(TC`'eval(($1 % 4) * 4)), INPUT')
+	IF_BE(`lxvw4x	VSR(IV($1)), $2, INPUT')
 	IF_LE(`
-		lxvd2x	VSR(IV($1)), m4_unquote(TC`'eval(($1 % 4) * 4)), INPUT
+		lxvd2x	VSR(IV($1)), $2, INPUT
 		vperm	IV($1), IV($1), IV($1), VT0
 	')
 ')
 
 define(`DOLOADS', `
 	IF_LE(`DATA_LOAD_VEC(VT0, .load_swap, T1)')
-	LOAD(0)
-	LOAD(1)
-	LOAD(2)
-	LOAD(3)
+	LOAD(0, TC0)
+	vsldoi	IV(1), IV(0), IV(0), 4
+	vsldoi	IV(2), IV(0), IV(0), 8
+	vsldoi	IV(3), IV(0), IV(0), 12
 	addi	INPUT, INPUT, 16
-	LOAD(4)
-	LOAD(5)
-	LOAD(6)
-	LOAD(7)
+	LOAD(4, TC0)
+	vsldoi	IV(5), IV(4), IV(4), 4
+	vsldoi	IV(6), IV(4), IV(4), 8
+	vsldoi	IV(7), IV(4), IV(4), 12
 	addi	INPUT, INPUT, 16
-	LOAD(8)
-	LOAD(9)
-	LOAD(10)
-	LOAD(11)
+	LOAD(8, TC0)
+	vsldoi	IV(9), IV(8), IV(8), 4
+	vsldoi	IV(10), IV(8), IV(8), 8
+	vsldoi	IV(11), IV(8), IV(8), 12
 	addi	INPUT, INPUT, 16
-	LOAD(12)
-	LOAD(13)
-	LOAD(14)
-	LOAD(15)
+	LOAD(12, TC0)
+	vsldoi	IV(13), IV(12), IV(12), 4
+	vsldoi	IV(14), IV(12), IV(12), 8
+	vsldoi	IV(15), IV(12), IV(12), 12
 	addi	INPUT, INPUT, 16
 ')
 
@@ -216,8 +213,10 @@ PROLOGUE(_nettle_sha256_compress_n)
 
 	C Store non-volatile registers
 
-	li	T0, -8
-	li	T1, -24
+	ALIGN(16)	C Appears necessary for optimal stores
+	li	TC16, 16
+	li	T0, -16
+	li	T1, -32
 	stvx	v20, T0, SP
 	stvx	v21, T1, SP
 	subi	T0, T0, 32
@@ -240,15 +239,8 @@ PROLOGUE(_nettle_sha256_compress_n)
 	subi	T1, T1, 32
 	stvx	v30, T0, SP
 	stvx	v31, T1, SP
-	subi	T0, T0, 32
-	subi	T1, T1, 32
-	stdx	r14, T0, SP
-	stdx	r15, T1, SP
 
-	li	TC4, 4
-	li	TC8, 8
-	li	TC12, 12
-	li	TC16, 16
+	ALIGN(16)	C Appears necessary for optimal loads
 
 	C Load state values
 	lxvw4x	VSR(VSA), 0, STATE	C VSA contains A,B,C,D
@@ -321,8 +313,8 @@ PROLOGUE(_nettle_sha256_compress_n)
 
 
 	C Restore nonvolatile registers
-	li	T0, -8
-	li	T1, -24
+	li	T0, -16
+	li	T1, -32
 	lvx	v20, T0, SP
 	lvx	v21, T1, SP
 	subi	T0, T0, 32
@@ -345,10 +337,6 @@ PROLOGUE(_nettle_sha256_compress_n)
 	subi	T1, T1, 32
 	lvx	v30, T0, SP
 	lvx	v31, T1, SP
-	subi	T0, T0, 32
-	subi	T1, T1, 32
-	ldx	r14, T0, SP
-	ldx	r15, T1, SP
 
 .done:
 	mr r3, INPUT
